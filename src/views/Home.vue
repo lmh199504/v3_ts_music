@@ -1,9 +1,8 @@
 <template>
 	<div class="home">
-		<img alt="Vue logo" src="../assets/logo.png">
 		{{ token }}
-		<div>{{ isLogin }}</div>
-		<van-button type="primary">dsfads</van-button>
+		<div>{{ count }}</div>
+		<van-button type="primary" @click="tapFun">dsfads</van-button>
 	</div>
 </template>
 
@@ -11,7 +10,10 @@
 	import { useUserStore } from '@/store'
 	import { storeToRefs } from 'pinia'
 	const userStore = useUserStore()
-	const { token, isLogin } = storeToRefs(userStore)
+	const { token, count } = storeToRefs(userStore)
+	const tapFun = () => {
+		userStore.setCount()
+	}
 </script>
 
 <style scoped lang="less">

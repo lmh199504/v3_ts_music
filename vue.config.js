@@ -1,4 +1,5 @@
 const path = require('path')
+
 function resolve(dir) {
 	return path.join(__dirname, dir)
 }
@@ -8,6 +9,7 @@ module.exports = {
 	assetsDir: 'static', //放置生成的静态资源
 	devServer: {
 		open: true,
+		hot: true,
 		disableHostCheck: true,
 		proxy: {
 			'/api': {
@@ -22,7 +24,15 @@ module.exports = {
 			}
 		}
 	},
-
+	pluginOptions: {
+		"style-resources-loader": {
+			preProcessor: "less",
+			patterns: [
+				// 全局变量路径，不能使用路径别名
+				path.resolve(__dirname, "./src/assets/css/variables.less"),
+			],
+		},
+	},
 	chainWebpack: config => {
 		config
 			.plugin('html')
