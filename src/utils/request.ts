@@ -1,16 +1,17 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import {
 	Toast
 } from 'vant'
+import { getToken } from '@/utils/auth'
 const service = axios.create({
 	baseURL: '/api',
 	timeout: 60 * 1000
 })
 
 service.interceptors.request.use(
-	config => {
+	(config: AxiosRequestConfig) => {
 		const token = getToken()
-		if (token) {
+		if (token && config.headers) {
 			config.headers['X-Auth-Token'] = token
 		}
 		return config
@@ -22,9 +23,10 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-	response => {
+	(response: AxiosResponse) => {
 		const res = response.data
 		const code = res.code
+		let msg = ''
 		switch (code) {
 			case 200:
 				if (res.data && (typeof res.data == 'object')) {
@@ -37,8 +39,11 @@ service.interceptors.response.use(
 				case 403:
 					return Promise.reject()
 				case 400:
+					msg = res && res.msg
+					Toast.fail(msg ? msg : '网络异常稍后再试~')
+					return Promise.reject(res)
 				case 500:
-					var msg = res && res.msg
+					msg = res && res.msg
 					Toast.fail(msg ? msg : '网络异常稍后再试~')
 					return Promise.reject(res)
 				default:

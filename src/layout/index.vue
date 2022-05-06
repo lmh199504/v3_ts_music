@@ -1,6 +1,6 @@
 <template>
 	<div class="layout">
-		<van-swipe-cell @open="open" @close="close" ref="swipercell">
+		<van-swipe-cell @open="open" @close="close" ref="swipercell" stop-propagation>
 			<template #left>
 				<SideMenu />
 			</template>

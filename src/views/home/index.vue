@@ -1,30 +1,48 @@
 <template>
 	<div class="home">
-		<div class="nav">
-			<div class="flex_box_center_column" @click="openMenu">
-				<i class="iconfont icon-caidan"></i>
-			</div>
-			<div class="search_wrapper">
-				<div class="flex_box_center_column">
-					<i class="iconfont icon-sousuo"></i>
+		<van-sticky>
+			<div class="nav">
+				<div class="flex_box_center_column" @click="openMenu">
+					<i class="iconfont icon-caidan"></i>
 				</div>
-				<div class="search_text flex_box_center_column">古风</div>
+				<div class="search_wrapper">
+					<div class="flex_box_center_column">
+						<i class="iconfont icon-sousuo"></i>
+					</div>
+					<div class="search_text flex_box_center_column">古风</div>
+				</div>
+				<div class="flex_box_center_column">
+					<i class="iconfont icon-yuyin"></i>
+				</div>
 			</div>
-			<div class="flex_box_center_column">
-				<i class="iconfont icon-yuyin"></i>
-			</div>
+		</van-sticky>
+		<div class="main_content">
+			<Swiper />
+			<Menu />
+			<div class="line"></div>
+			<RecommendSongList />
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	import $bus from '@/utils/eventBus'
+	import Swiper from './components/swiper.vue'
+	import Menu from './components/menu'
+	import RecommendSongList from './components/recommendSongList'
 	function openMenu(): void {
 		$bus.emit('opne_menu')
 	}
 </script>
 
 <style scoped lang="less">
+	.home{
+		overflow-y: scroll;
+		height: 100vh;
+		padding-bottom: 200px;
+		background: #f5f5f5;
+		box-sizing: border-box;
+	}
 	.nav {
 		display: flex;
 		align-items: center;
@@ -53,7 +71,13 @@
 			}
 		}
 	}
-
+	.main_content{
+		padding: 0 20px 20px 20px;
+		.line{
+			background: #f5f6f8;
+			height: 2px;
+		}
+	}
 	.iconfont {
 		font-size: 30px;
 	}
@@ -64,4 +88,5 @@
 		color: #2e2e2e;
 		font-weight: 600;
 	}
+	
 </style>

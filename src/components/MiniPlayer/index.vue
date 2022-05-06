@@ -42,6 +42,7 @@
 	.mini_player{
 		display: flex;
 		padding: 5px 20px;
+		background: #fff;
 		.m_cover_bg{
 			height: 80px;
 			width: 80px;

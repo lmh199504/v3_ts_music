@@ -13,7 +13,7 @@ module.exports = {
 		disableHostCheck: true,
 		proxy: {
 			'/api': {
-				target: 'http://192.168.1.28:3200',
+				target: 'http://101.35.109.105:3006',
 				// target: 'http://10.0.9.62:8080', //代理地址，这里设置的地址会代替axios中设置的baseURL
 				changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
 				//ws: true, // proxy websockets
@@ -29,7 +29,7 @@ module.exports = {
 			preProcessor: "less",
 			patterns: [
 				// 全局变量路径，不能使用路径别名
-				path.resolve(__dirname, "./src/assets/css/variables.less"),
+				path.resolve(__dirname, "./src/assets/styles/variables.less"),
 			],
 		},
 	},
