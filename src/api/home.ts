@@ -15,3 +15,9 @@ export const reqRecommendList = (params: RecommendListParams): Promise<AxiosResp
 	method: 'GET',
 	params
 })
+// 获取推荐新歌
+export const reqRecommendNewSongs = (params: RecommendListParams) :Promise<AxiosResponse> => request({
+	url: '/personalized/newsong',
+	method: 'GET',
+	params
+})

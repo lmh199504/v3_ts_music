@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7594155",
+      "name": "24gf-play",
+      "font_class": "24gf-play",
+      "unicode": "ea82",
+      "unicode_decimal": 60034
+    },
+    {
       "icon_id": "1018",
       "name": "收音机",
       "font_class": "shouyinji",

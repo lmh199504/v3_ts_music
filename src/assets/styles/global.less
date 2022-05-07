@@ -19,9 +19,16 @@ html{
 	flex-direction: column;
 }
 .text_over_two_lines{
-	overflow:hidden; 
-	text-overflow:ellipsis;
-	display:-webkit-box; 
-	-webkit-box-orient:vertical;
-	-webkit-line-clamp:2; 
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	display: -webkit-box; 
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2; 
+}
+.text_over_three_lines {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }

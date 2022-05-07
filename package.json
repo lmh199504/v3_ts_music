@@ -17,9 +17,11 @@
     "mitt": "^3.0.0",
     "pinia": "^2.0.13",
     "postcss-pxtorem": "^5.1.1",
+    "swiper": "^8.1.4",
     "ts-import-plugin": "^2.0.0",
     "vant": "^3.4.8",
     "vue": "^3.0.0",
+    "vue-awesome-swiper": "^5.0.1",
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {

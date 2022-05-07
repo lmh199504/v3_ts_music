@@ -12,3 +12,16 @@ export interface songListFace{
 	trackNumberUpdateTime: number;
 	type: number;
 }
+// 推荐歌曲数据类型
+export interface songData{
+	alg: string
+	canDislike: boolean
+	copywriter: string
+	id: number
+	name: string
+	picUrl: string
+	// eslint-disable-next-line
+	song: any
+	trackNumberUpdateTime: number | null
+	type: number
+}

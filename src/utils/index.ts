@@ -36,3 +36,15 @@ export function IsPC(): boolean {
 	}
 	return flag;
 }
+
+export function formatCountNumber(num: number): string {
+	if (num < 1000) {
+		return num + ''
+	} else if (num < 10000) {
+		return (num / 1000).toFixed(0) + 'k'
+	} else if (num < 100000000) {
+		return (num / 10000) + 'w'
+	} else {
+		return (num / 100000000).toFixed(0) + '亿'
+	}
+}

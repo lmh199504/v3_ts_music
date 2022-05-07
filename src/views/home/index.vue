@@ -21,6 +21,7 @@
 			<Menu />
 			<div class="line"></div>
 			<RecommendSongList />
+			<NewSong />
 		</div>
 	</div>
 </template>
@@ -30,6 +31,7 @@
 	import Swiper from './components/swiper.vue'
 	import Menu from './components/menu'
 	import RecommendSongList from './components/recommendSongList'
+	import NewSong from './components/newSong'
 	function openMenu(): void {
 		$bus.emit('opne_menu')
 	}
