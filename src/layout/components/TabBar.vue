@@ -54,7 +54,7 @@
 		padding-bottom: env(safe-area-inset-bottom);
 		box-shadow: -2px 0 20px 0 rgb(0 0 0 / 20%);
 		background: #fff;
-		z-index: 10;
+		z-index: 1;
 	}
 	.iconfont{
 		font-size: 30px;

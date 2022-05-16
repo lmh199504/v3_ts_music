@@ -5,7 +5,8 @@ import {
 import { getToken } from '@/utils/auth'
 const service = axios.create({
 	baseURL: '/api',
-	timeout: 60 * 1000
+	timeout: 60 * 1000,
+	withCredentials: true
 })
 
 service.interceptors.request.use(
@@ -14,6 +15,21 @@ service.interceptors.request.use(
 		if (token && config.headers) {
 			config.headers['X-Auth-Token'] = token
 		}
+		if (!config.data) {
+			config.data = {
+				cookie: token
+			}
+		} else {
+			config.data = Object.assign(config.data, { cookie: token })
+		}
+		if (!config.params) {
+			config.params = {
+				cookie: token
+			}
+		} else {
+			config.params = Object.assign(config.params, { cookie: token })
+		}
+		
 		return config
 	},
 	error => {

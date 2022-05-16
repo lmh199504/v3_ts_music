@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { RecommendListParams } from '@/types/api/home'
+import { RecommendListParams, HistoryRecommendParams } from '@/types/api/home'
 // 获取banner
 export const reqBanner = (): Promise<AxiosResponse> => request({
 	url: '/banner',
@@ -18,6 +18,17 @@ export const reqRecommendList = (params: RecommendListParams): Promise<AxiosResp
 // 获取推荐新歌
 export const reqRecommendNewSongs = (params: RecommendListParams) :Promise<AxiosResponse> => request({
 	url: '/personalized/newsong',
+	method: 'GET',
+	params
+})
+// 每日推荐歌曲
+export const reqDaysRecommend = () :Promise<AxiosResponse> => request({
+	url: '/recommend/songs',
+	method: 'GET'
+})
+// 获取历史日推可用日期列表  
+export const reqHistoryRecommend = (params: HistoryRecommendParams) :Promise<AxiosResponse> => request({
+	url: '/history/recommend/songs/detail',
 	method: 'GET',
 	params
 })

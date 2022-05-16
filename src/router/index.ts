@@ -49,6 +49,30 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			}
 		]
+	},
+	{
+		path: '/daysRecommend',
+		name: 'DaysRecommend',
+		component: () => import('@/views/daysRecommend/index.vue'),
+		meta: {
+			title: '每日推荐'
+		}
+	},
+	{
+		path: '/phoneLogin',
+		name: 'PhoneLogin',
+		component: () => import('@/views/login/phoneLogin.vue'),
+		meta: {
+			title: '手机号登录'
+		}
+	},
+	{
+		path: '/inputCode',
+		name: 'InputCode',
+		component: () => import('@/views/login/inputCode.vue'),
+		meta: {
+			title: '输入验证码'
+		}
 	}
 ]
 

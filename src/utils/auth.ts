@@ -1,5 +1,5 @@
 import Cookie from 'js-cookie'
-const tokenKey = 'token'
+const tokenKey = 'Cookie'
 
 export const getToken = (): string => {
 	return Cookie.get(tokenKey)
