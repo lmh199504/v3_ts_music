@@ -1,9 +1,19 @@
 import request from '@/utils/request'
 import { AxiosResponse } from 'axios'
-import { SendCodeParams } from '@/types/api/user'
+import { SendCodeParams, PhoneLoginParams } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams) :Promise<AxiosResponse> => request({
 	url: '/captcha/sent',
 	method: 'GET',
 	params
 })
+// 手机号登录
+export const reqLoginByPhone = (params: PhoneLoginParams) :Promise<AxiosResponse> => request({
+	url: '/login/cellphone',
+	method: 'GET',
+	params
+})
+
+interface Response{
+	token: string
+}

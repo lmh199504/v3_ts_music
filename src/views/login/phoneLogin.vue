@@ -29,9 +29,11 @@
 			reqSendCode({ phone: phone.value })
 			.then(res => {
 				console.log(res)
+				sessionStorage.setItem('loginPhone', phone.value)
+				Toast.success('验证码发送成功')
+				router.push('/inputCode')
 			})
 		} else {
-			router.push('/inputCode')
 			Toast('请输入正确的手机号')
 		}
 	}
@@ -47,6 +49,8 @@
 			color: #333;
 			font-size: 26px;
 			font-weight: bold;
+			padding-top: 30px;
+			margin-bottom: 20px;
 		}
 		.phone_form{
 			border-bottom: 1px solid #e0e0e0;

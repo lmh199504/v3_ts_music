@@ -29,7 +29,7 @@ service.interceptors.request.use(
 		} else {
 			config.params = Object.assign(config.params, { cookie: token })
 		}
-		
+
 		return config
 	},
 	error => {
@@ -45,25 +45,21 @@ service.interceptors.response.use(
 		let msg = ''
 		switch (code) {
 			case 200:
-				if (res.data && (typeof res.data == 'object')) {
-					return Promise.resolve(res.data)
-				} else {
-					return Promise.resolve(res)
-				}
-				case 401:
-					return Promise.reject()
-				case 403:
-					return Promise.reject()
-				case 400:
-					msg = res && res.msg
-					Toast.fail(msg ? msg : '网络异常稍后再试~')
-					return Promise.reject(res)
-				case 500:
-					msg = res && res.msg
-					Toast.fail(msg ? msg : '网络异常稍后再试~')
-					return Promise.reject(res)
-				default:
-					return Promise.resolve(res)
+				return Promise.resolve(res)
+			case 401:
+				return Promise.reject()
+			case 403:
+				return Promise.reject()
+			case 400:
+				msg = res && res.msg
+				Toast.fail(msg ? msg : '网络异常稍后再试~')
+				return Promise.reject(res)
+			case 500:
+				msg = res && res.msg
+				Toast.fail(msg ? msg : '网络异常稍后再试~')
+				return Promise.reject(res)
+			default:
+				return Promise.resolve(res)
 		}
 	},
 	error => {
@@ -74,6 +70,9 @@ service.interceptors.response.use(
 				return Promise.reject(error)
 			case 403:
 				Toast.fail('登录状态失效')
+				return Promise.reject(error)
+			case 503:
+				Toast.fail(error.response.data?.message || '登录状态失效')
 				return Promise.reject(error)
 			default:
 				Toast.fail('网络异常稍后再试~')

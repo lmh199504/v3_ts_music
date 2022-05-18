@@ -1,6 +1,6 @@
 // JS判断手机是安卓还是IOS
 
-interface deviceType{
+interface deviceType {
 	ios: boolean
 	android: boolean
 	iPhone: boolean
@@ -47,4 +47,8 @@ export function formatCountNumber(num: number): string {
 	} else {
 		return (num / 100000000).toFixed(0) + '亿'
 	}
+}
+// 手机好加***
+export function phone(num: number, len = 3): string {
+	return String(num).slice(0, len * -1) + "*".repeat(len);
 }
