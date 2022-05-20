@@ -27,8 +27,8 @@
 		const reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
 		if (reg.test(phone.value)) {
 			reqSendCode({ phone: phone.value })
-			.then(res => {
-				console.log(res)
+			.then(() => {
+				// console.log(res)
 				sessionStorage.setItem('loginPhone', phone.value)
 				Toast.success('验证码发送成功')
 				router.push('/inputCode')

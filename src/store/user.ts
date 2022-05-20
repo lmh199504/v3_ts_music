@@ -38,10 +38,8 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 				reqLoginByPhone(params)
 				.then(res => {
 					console.log(res)
-					if (res && typeof res == 'object' && res.token) {
-						this.token = res.token
-						setToken(res.token)
-					}
+					this.token = res.data.token
+					setToken(res.data.token)
 					resolve(res)
 				})
 				.catch(err => {
