@@ -28,14 +28,15 @@
 	const list = ref<Array<Array<songData>>>([])
 	reqRecommendNewSongs({ limit: 12 })
 		.then(res => {
+			const { data } = res
 			const tempList = []
-			const len = res.result.length
+			const len = data.result.length
 			for(let i = 0;i < len; i++) {
 				const l = Math.floor(i / 2)
 				if (!tempList[l]) {
 					tempList[l] = []
 				}
-				tempList[l].push(res.result[i])
+				tempList[l].push(data.result[i])
 			}
 			list.value = tempList
 		})

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3367645 */
-  src: url('iconfont.woff2?t=1651907314761') format('woff2'),
-       url('iconfont.woff?t=1651907314761') format('woff'),
-       url('iconfont.ttf?t=1651907314761') format('truetype');
+  src: url('iconfont.woff2?t=1653292956466') format('woff2'),
+       url('iconfont.woff?t=1653292956466') format('woff'),
+       url('iconfont.ttf?t=1653292956466') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bofang1:before {
+  content: "\e611";
+}
+
+.icon-Androidgengduo:before {
+  content: "\eb00";
 }
 
 .icon-24gf-play:before {

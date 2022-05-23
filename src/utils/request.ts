@@ -17,14 +17,14 @@ service.interceptors.request.use(
 		}
 		if (!config.data) {
 			config.data = {
-				cookie: token
+				cookie: encodeURIComponent(token)
 			}
 		} else {
-			config.data = Object.assign(config.data, { cookie: token })
+			config.data = Object.assign(config.data, { cookie: encodeURIComponent(token) })
 		}
 		if (!config.params) {
 			config.params = {
-				cookie: token
+				cookie: encodeURIComponent(token)
 			}
 		} else {
 			config.params = Object.assign(config.params, { cookie: token })
@@ -45,7 +45,7 @@ service.interceptors.response.use(
 		let msg = ''
 		switch (code) {
 			case 200:
-				return Promise.resolve(res)
+				return Promise.resolve(response)
 			case 401:
 				return Promise.reject()
 			case 403:
@@ -59,7 +59,7 @@ service.interceptors.response.use(
 				Toast.fail(msg ? msg : '网络异常稍后再试~')
 				return Promise.reject(res)
 			default:
-				return Promise.resolve(res)
+				return Promise.resolve(response)
 		}
 	},
 	error => {

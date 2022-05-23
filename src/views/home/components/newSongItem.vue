@@ -27,7 +27,7 @@
 	interface Props{
 		songData: songDataInterface
 	}
-	// eslint-disable-next-line
+	
 	const props = withDefaults(defineProps < Props > (), {
 		songData: (): songDataInterface => { return {} }
 	})
@@ -76,8 +76,11 @@
 				}
 			}
 			.song_info{
+				white-space: nowrap;
+				text-overflow: ellipsis;
 				font-size: 24px;
 				flex: 1;
+				padding-right: 10px;
 				overflow: hidden;
 			}
 			.song_name{

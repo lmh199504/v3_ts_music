@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8019591",
+      "name": "播放",
+      "font_class": "bofang1",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "5387556",
+      "name": "Android更多",
+      "font_class": "Androidgengduo",
+      "unicode": "eb00",
+      "unicode_decimal": 60160
+    },
+    {
       "icon_id": "7594155",
       "name": "24gf-play",
       "font_class": "24gf-play",

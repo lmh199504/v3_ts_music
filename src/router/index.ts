@@ -73,6 +73,22 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '输入验证码'
 		}
+	},
+	{
+		path: '/daysRecommendHistory',
+		name: 'DaysRecommendHistory',
+		component: () => import('@/views/daysRecommend/history.vue'),
+		meta: {
+			title: '历史日推'
+		},
+	},
+	{
+		path: '/scrollView',
+		name: 'ScrollView',
+		component: () => import('@/views/scrollView/index.vue'),
+		meta: {
+			title: '滚动测试'
+		},
 	}
 ]
 

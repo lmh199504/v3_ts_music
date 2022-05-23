@@ -30,6 +30,9 @@
 				phone: loginPhone,
 				captcha: code.value
 			})
+			.then(() => {
+				router.replace('/')
+			})
 		}
 	})
 </script>

@@ -19,7 +19,7 @@
 	const songsList = ref([])
 	reqRecommendList({ limit: 10 })
 	.then(res => {
-		songsList.value = res.result
+		songsList.value = res.data.result
 	})
 	function scroll(e: Event): void {
 		e.stopPropagation()

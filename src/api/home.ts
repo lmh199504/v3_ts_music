@@ -32,3 +32,8 @@ export const reqHistoryRecommend = (params: HistoryRecommendParams) :Promise<Axi
 	method: 'GET',
 	params
 })
+// 获取可用推荐日期
+export const reqGetRecommendDate = () :Promise<AxiosResponse> => request({
+	url: '/history/recommend/songs',
+	method: 'GET'
+})

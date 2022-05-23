@@ -14,7 +14,7 @@
 	const imgList = ref([])
 	reqBanner()
 	.then(res => {
-		imgList.value = res.banners
+		imgList.value = res.data.banners
 	})
 </script>
 

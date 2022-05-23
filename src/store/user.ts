@@ -30,7 +30,6 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 			this.userInfo = info
 		},
 		setCount() {
-			console.log(this)
 			this.count ++
 		},
 		loginByPhone(params: PhoneLoginParams) {
@@ -38,8 +37,8 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 				reqLoginByPhone(params)
 				.then(res => {
 					console.log(res)
-					this.token = res.data.token
-					setToken(res.data.token)
+					this.token = res.data.cookie
+					setToken(res.data.cookie)
 					resolve(res)
 				})
 				.catch(err => {
