@@ -45,10 +45,18 @@
 			.song-name{
 				font-size: 26px;
 				color: #000;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				max-width: 450px;
+				white-space: nowrap;
 			}
 			.singer{
 				color: #999;
 				font-size: 24px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				max-width: 450px;
+				white-space: nowrap;
 			}
 		}
 		.right{

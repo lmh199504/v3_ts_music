@@ -15,15 +15,21 @@
 <script setup lang="ts">
 	import { reqRecommendList } from '@/api/home'
 	import SongListItem from '@/components/songListItem'
-	import { ref } from 'vue'
+	import { ref, defineExpose } from 'vue'
 	const songsList = ref([])
-	reqRecommendList({ limit: 10 })
-	.then(res => {
-		songsList.value = res.data.result
-	})
+	function getList() {
+		reqRecommendList({ limit: 10 })
+		.then(res => {
+			songsList.value = res.data.result
+		})
+	}
 	function scroll(e: Event): void {
 		e.stopPropagation()
 	}
+	getList()
+	defineExpose({
+		getList
+	})
 </script>
 
 <style scoped lang="less">

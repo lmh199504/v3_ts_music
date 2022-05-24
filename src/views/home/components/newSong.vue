@@ -19,27 +19,34 @@
 		reqRecommendNewSongs
 	} from '@/api/home'
 	import {
-		ref
+		ref, defineExpose
 	} from 'vue'
 	import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
 	import "swiper/swiper.min.css";	
 	import NewSongItem from './newSongItem'
 	import { songData } from '@/types/public'
 	const list = ref<Array<Array<songData>>>([])
-	reqRecommendNewSongs({ limit: 12 })
-		.then(res => {
-			const { data } = res
-			const tempList = []
-			const len = data.result.length
-			for(let i = 0;i < len; i++) {
-				const l = Math.floor(i / 2)
-				if (!tempList[l]) {
-					tempList[l] = []
+	
+	function getList() {
+		reqRecommendNewSongs({ limit: 12 })
+			.then(res => {
+				const { data } = res
+				const tempList = []
+				const len = data.result.length
+				for(let i = 0;i < len; i++) {
+					const l = Math.floor(i / 2)
+					if (!tempList[l]) {
+						tempList[l] = []
+					}
+					tempList[l].push(data.result[i])
 				}
-				tempList[l].push(data.result[i])
-			}
-			list.value = tempList
-		})
+				list.value = tempList
+			})
+	}	
+	getList()
+	defineExpose({
+		getList
+	})
 </script>
 
 <style scoped lang="less">

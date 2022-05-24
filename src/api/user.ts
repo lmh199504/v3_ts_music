@@ -13,7 +13,8 @@ export const reqLoginByPhone = (params: PhoneLoginParams) :Promise<AxiosResponse
 	method: 'GET',
 	params
 })
-
-interface Response{
-	token: string
-}
+// 获取用户信息
+export const reqGetUserInfo = () :Promise<AxiosResponse> => request({
+	url: '/user/account',
+	method: 'GET'
+})

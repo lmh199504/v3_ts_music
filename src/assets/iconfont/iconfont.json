@@ -6,6 +6,90 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "297880",
+      "name": "优活宝－票据",
+      "font_class": "youhuobaopiaoju",
+      "unicode": "e973",
+      "unicode_decimal": 59763
+    },
+    {
+      "icon_id": "831728",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e853",
+      "unicode_decimal": 59475
+    },
+    {
+      "icon_id": "909106",
+      "name": "i-白天",
+      "font_class": "baitian",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "1076756",
+      "name": "商城",
+      "font_class": "shangcheng",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "3216049",
+      "name": "铃声",
+      "font_class": "icon--",
+      "unicode": "e70a",
+      "unicode_decimal": 59146
+    },
+    {
+      "icon_id": "3267390",
+      "name": "灯泡",
+      "font_class": "dengpao",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "5388008",
+      "name": "云_o",
+      "font_class": "yun_o",
+      "unicode": "ebb3",
+      "unicode_decimal": 60339
+    },
+    {
+      "icon_id": "5835480",
+      "name": "夜间模式",
+      "font_class": "yejianmoshi",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "15643762",
+      "name": "忠诚度交易",
+      "font_class": "zhongchengdujiaoyi",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "16391912",
+      "name": "游戏",
+      "font_class": "youxi",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "5767876",
+      "name": "消息通知",
+      "font_class": "xiaoxitongzhi",
+      "unicode": "ec35",
+      "unicode_decimal": 60469
+    },
+    {
+      "icon_id": "162869",
+      "name": "扫码",
+      "font_class": "iconfontscan",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "8019591",
       "name": "播放",
       "font_class": "bofang1",

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
-
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
@@ -80,14 +79,6 @@ const routes: Array<RouteRecordRaw> = [
 		component: () => import('@/views/daysRecommend/history.vue'),
 		meta: {
 			title: '历史日推'
-		},
-	},
-	{
-		path: '/scrollView',
-		name: 'ScrollView',
-		component: () => import('@/views/scrollView/index.vue'),
-		meta: {
-			title: '滚动测试'
 		},
 	}
 ]

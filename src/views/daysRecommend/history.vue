@@ -1,23 +1,63 @@
 <template>
-	<div>
-		<van-tabs v-model:active="active">
-			<van-tab title="标签 1">内容 1</van-tab>
-			<van-tab title="标签 2">内容 2</van-tab>
-			<van-tab title="标签 3">内容 3</van-tab>
-			<van-tab title="标签 4">内容 4</van-tab>
-		</van-tabs>
+	<div class="history">
+		<van-nav-bar left-arrow fixed placeholder title="历史推荐" @click-left="onClickLeft"></van-nav-bar>
+		<ScrollBanner>
+			<template #btn>
+				<div class="btn_wrapper">
+					<van-button round color="rgba(0,0,0,0.5)">
+						<i class="iconfont icon-bofang"></i>
+						播放全部
+					</van-button>
+				</div>
+			</template>	
+			<van-tabs v-model:active="active">
+				<van-tab :title="item" v-for="item in dataList" :key="item">
+					<DateList :date="item" />
+				</van-tab>
+			</van-tabs>
+		</ScrollBanner>	
 	</div>
 </template>
 
 <script setup lang="ts">
+	import ScrollBanner from '@/components/Scroll/scrollBanner'
 	import { ref } from 'vue'
 	import {
-		reqHistoryRecommend,
 		reqGetRecommendDate
 	} from '@/api/home'
+	import DateList from './components/dateList.vue'
+	import { useRouter } from 'vue-router'
+	const router = useRouter()
 	
 	const active: number = ref(0)
+	const dataList = ref<Array<string>>([])
+	
+	async function initData() {
+		const resDate = await reqGetRecommendDate()
+		dataList.value = resDate.data.data.dates
+	}
+	function onClickLeft() {
+		router.back()
+	}
+	
+	initData()
+	
 </script>
 
-<style>
+<style scoped lang="less">
+	.history{
+		height: 100vh;
+		.btn_wrapper{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			.iconfont{
+				font-size: 30px;
+			}
+			/deep/ .van-button{
+				border: 1px solid #fff;
+			}
+		}
+	}
 </style>

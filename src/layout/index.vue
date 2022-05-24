@@ -21,7 +21,6 @@
 	import SideMenu from './components/SideMenu.vue'
 	import $bus from '@/utils/eventBus'
 	import type { SwipeCellInstance } from 'vant'
-	
 	const show = ref<boolean>(false)
 	const swipercell = ref<SwipeCellInstance>()
 	function open(): void {
@@ -36,6 +35,7 @@
 			swipercell.value?.open('left')
 		})
 	})
+	
 </script>
 
 <style scoped lang="less">
@@ -50,6 +50,9 @@
 
 			.van-swipe-cell__wrapper {
 				height: 100%;
+			}
+			.van-swipe-cell__left{
+				width: 70vw;
 			}
 		}
 	}

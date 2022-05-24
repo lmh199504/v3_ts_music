@@ -1,5 +1,7 @@
 <template>
 	<div class="home">
+		<van-pull-refresh v-model="loading" @refresh="onRefresh">
+		
 		<van-sticky>
 			<div class="nav">
 				<div class="flex_box_center_column" @click="openMenu">
@@ -17,16 +19,18 @@
 			</div>
 		</van-sticky>
 		<div class="main_content">
-			<Swiper />
+			<Swiper ref="swiper" />
 			<Menu />
 			<div class="line"></div>
-			<RecommendSongList />
-			<NewSong />
+			<RecommendSongList ref="recommendSongList" />
+			<NewSong ref="newSong" />
 		</div>
+		</van-pull-refresh>	
 	</div>
 </template>
 
 <script lang="ts" setup>
+	import { ref, Component } from 'vue'
 	import $bus from '@/utils/eventBus'
 	import Swiper from './components/swiper.vue'
 	import Menu from './components/menu'
@@ -34,6 +38,18 @@
 	import NewSong from './components/newSong'
 	function openMenu(): void {
 		$bus.emit('opne_menu')
+	}
+	const loading = ref<boolean>(false)
+	const swiper = ref<Component>()
+	const recommendSongList = ref<Component>()
+	const newSong = ref<Component>()
+	function onRefresh() {
+		swiper.value.getBanner()
+		recommendSongList.value.getList()
+		newSong.value.getList()
+		setTimeout(() => {
+			loading.value = false
+		}, 2000)
 	}
 </script>
 

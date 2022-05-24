@@ -1,5 +1,26 @@
 import { App } from 'vue'
-import { Button, Tabbar, TabbarItem, SwipeCell, Cell, Overlay, Popup, CellGroup, Swipe, SwipeItem, Sticky, Divider, NavBar, Form, Field, Tab, Tabs } from 'vant'
+import {
+	Button, 
+	Tabbar, 
+	TabbarItem, 
+	SwipeCell, 
+	Cell, 
+	Overlay, 
+	Popup, 
+	CellGroup, 
+	Swipe, 
+	SwipeItem, 
+	Sticky, 
+	Divider, 
+	NavBar, 
+	Form, 
+	Field, 
+	Tab,
+	Tabs,
+	PullRefresh,
+	Icon,
+	Switch
+} from 'vant'
 export default {
 	install(app: App): void {
 		app.use(Button)
@@ -20,5 +41,8 @@ export default {
 		app.use(Field)
 		app.use(Tab)
 		app.use(Tabs)
+		app.use(PullRefresh)
+		app.use(Icon)
+		app.use(Switch)
 	}
 }

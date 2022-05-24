@@ -10,11 +10,18 @@
 
 <script lang="ts" setup>
 	import { reqBanner } from '@/api/home'
-	import { ref } from 'vue'
+	import { ref, defineExpose } from 'vue'
+	
 	const imgList = ref([])
-	reqBanner()
-	.then(res => {
-		imgList.value = res.data.banners
+	function getBanner() {
+		reqBanner()
+		.then(res => {
+			imgList.value = res.data.banners
+		})
+	}
+	getBanner()
+	defineExpose({
+		getBanner
 	})
 </script>
 
