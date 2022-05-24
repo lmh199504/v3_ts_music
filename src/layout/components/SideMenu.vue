@@ -34,69 +34,80 @@
 				</van-cell-group>
 			</div>
 
-			<div class="box-container">
-				<van-cell-group inset>
-					<van-cell title="我的消息">
-						<template #title>
-							<span class="box_title">音乐服务</span>
-						</template>
-					</van-cell>
-					<van-cell title="云村有票" is-link>
-						<template #icon>
-							<i class="iconfont icon-youhuobaopiaoju"></i>
-						</template>
-					</van-cell>
-					<van-cell title="商城" is-link>
-						<template #icon>
-							<i class="iconfont icon-shangcheng"></i>
-						</template>
-					</van-cell>
-					<van-cell title="Beat交易平台" is-link>
-						<template #icon>
-							<i class="iconfont icon-zhongchengdujiaoyi"></i>
-						</template>
-					</van-cell>
-					<van-cell title="游戏专区" is-link>
-						<template #icon>
-							<i class="iconfont icon-youxi"></i>
-						</template>
-					</van-cell>
-					<van-cell title="口袋彩铃" is-link>
-						<template #icon>
-							<i class="iconfont icon-icon--"></i>
-						</template>
-					</van-cell>
-				</van-cell-group>
-			</div>
-			<div class="box-container">
-				<van-cell-group inset>
-					<van-cell title="我的消息">
-						<template #title>
-							<span class="box_title">其他设置</span>
-						</template>
-					</van-cell>
-					<van-cell title="设置" is-link>
-						<template #icon>
-							<i class="iconfont icon-shezhi"></i>
-						</template>
-					</van-cell>
-					<van-cell title="夜间模式">
-						<template #icon>
-							<i class="iconfont icon-yejianmoshi"></i>
-						</template>
-						<template #value>
-							<div class="flex_box_center_column" style="align-items: flex-end;height: 100%;">
-								<van-switch v-model="checked" size="small" @change="changeMode" />
-							</div>
-						</template>
-					</van-cell>
-				</van-cell-group>
-			</div>
+			
+			
 
 			<van-button block round class="out-btn">退出登录</van-button>
 		</div>
 		<!-- 还没有登录 -->
-		<div v-else>还没有登录</div>
+		<div v-else>
+			<div class="unlogin">
+				<div>
+					<i class="iconfont icon-morentouxiang"></i>
+				</div>
+				<div class="text">
+					前往登录
+				</div>
+			</div>
+		</div>
+		<div class="box-container">
+			<van-cell-group inset>
+				<van-cell title="音乐服务">
+					<template #title>
+						<span class="box_title">音乐服务</span>
+					</template>
+				</van-cell>
+				<van-cell title="云村有票" is-link>
+					<template #icon>
+						<i class="iconfont icon-youhuobaopiaoju"></i>
+					</template>
+				</van-cell>
+				<van-cell title="商城" is-link>
+					<template #icon>
+						<i class="iconfont icon-shangcheng"></i>
+					</template>
+				</van-cell>
+				<van-cell title="Beat交易平台" is-link>
+					<template #icon>
+						<i class="iconfont icon-zhongchengdujiaoyi"></i>
+					</template>
+				</van-cell>
+				<van-cell title="游戏专区" is-link>
+					<template #icon>
+						<i class="iconfont icon-youxi"></i>
+					</template>
+				</van-cell>
+				<van-cell title="口袋彩铃" is-link>
+					<template #icon>
+						<i class="iconfont icon-icon--"></i>
+					</template>
+				</van-cell>
+			</van-cell-group>
+		</div>
+		<div class="box-container">
+			<van-cell-group inset>
+				<van-cell title="其他设置">
+					<template #title>
+						<span class="box_title">其他设置</span>
+					</template>
+				</van-cell>
+				<van-cell title="设置" is-link>
+					<template #icon>
+						<i class="iconfont icon-shezhi"></i>
+					</template>
+				</van-cell>
+				<van-cell title="夜间模式">
+					<template #icon>
+						<i class="iconfont icon-yejianmoshi"></i>
+					</template>
+					<template #value>
+						<div class="flex_box_center_column" style="align-items: flex-end;height: 100%;">
+							<van-switch v-model="checked" active-color="#404341" size="small" @change="changeMode" />
+						</div>
+					</template>
+				</van-cell>
+			</van-cell-group>
+		</div>
 	</div>
 </template>
 
@@ -118,7 +129,7 @@
 	const checked = ref < boolean > (false)
 	const systemStore = useSystemStore()
 	function changeMode(value) {
-		if (value) {
+		if (!value) {
 			systemStore.setMode('light')
 		} else {
 			systemStore.setMode('dark')
@@ -186,6 +197,19 @@
 		.out-btn {
 			margin-top: 30px;
 			color: red;
+		}
+		.unlogin{
+			display: flex;
+			align-items: center;
+			.iconfont{
+				font-size: 60px;
+				color: var(--my-text-color-black);
+			}
+			.text{
+				margin-left: 20px;
+				font-size: 30px;
+				color: var(--my-text-color-black);
+			}
 		}
 	}
 </style>
