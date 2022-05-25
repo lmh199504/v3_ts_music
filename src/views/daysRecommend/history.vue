@@ -1,7 +1,7 @@
 <template>
 	<div class="history">
 		<van-nav-bar left-arrow fixed placeholder title="历史推荐" @click-left="onClickLeft"></van-nav-bar>
-		<ScrollBanner>
+		<ScrollBanner ref="scroll">
 			<template #btn>
 				<div class="btn_wrapper">
 					<van-button round color="rgba(0,0,0,0.5)">
@@ -21,20 +21,23 @@
 
 <script setup lang="ts">
 	import ScrollBanner from '@/components/Scroll/scrollBanner'
-	import { ref } from 'vue'
+	import { ref, Component, nextTick } from 'vue'
 	import {
 		reqGetRecommendDate
 	} from '@/api/home'
 	import DateList from './components/dateList.vue'
 	import { useRouter } from 'vue-router'
 	const router = useRouter()
-	
+	const scroll = ref<Component>()
 	const active: number = ref(0)
 	const dataList = ref<Array<string>>([])
 	
 	async function initData() {
 		const resDate = await reqGetRecommendDate()
 		dataList.value = resDate.data.data.dates
+		nextTick(() => {
+			scroll.value.refresh()
+		})	
 	}
 	function onClickLeft() {
 		router.back()

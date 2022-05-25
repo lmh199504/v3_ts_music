@@ -16,7 +16,7 @@
 			</div>
 			<!-- 还没有登录 -->
 			<div v-if="!isLogin">
-				<div class="unlogin">
+				<div class="unlogin" @click="toLogin">
 					<div>
 						<i class="iconfont icon-morentouxiang"></i>
 					</div>
@@ -103,7 +103,7 @@
 				</van-cell-group>
 			</div>
 			
-			<van-button block round class="out-btn" :loading="btnLoading" @click="logout">退出登录</van-button>
+			<van-button v-if="isLogin" block round class="out-btn" :loading="btnLoading" @click="logout">退出登录</van-button>
 		</div>
 		
 	</div>
@@ -126,7 +126,8 @@
 		isLogin,
 		userInfo
 	} = storeToRefs(useStore)
-	
+	import { useRouter } from 'vue-router'
+	const router = useRouter()
 	const checked = computed({
 		get() {
 			systemStore.setMode(systemStore.mode)
@@ -147,15 +148,20 @@
 	
 	const btnLoading = ref<boolean>(false)
 	function logout() {
+		btnLoading.value = true
 		useStore.logout()
 		.then(() => {
-			btnLoading.value = true
+			btnLoading.value = false
 		})
 		.catch(() => {
 			btnLoading.value = false
 		})
 	}
-	
+	function toLogin() {
+		router.push({
+			path: '/login'
+		})
+	}
 </script>
 
 <style scoped lang="less">

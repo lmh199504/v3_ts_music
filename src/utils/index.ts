@@ -52,3 +52,8 @@ export function formatCountNumber(num: number): string {
 export function phone(num: number, len = 3): string {
 	return String(num).slice(0, len * -1) + "*".repeat(len);
 }
+export function validEmail(email: string): boolean {
+	// eslint-disable-next-line  
+	const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	return reg.test(email)
+}

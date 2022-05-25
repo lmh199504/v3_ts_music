@@ -13,3 +13,9 @@ export const reqCanPlayMusic = (params: SongUrlParams) :Promise<AxiosResponse> =
 	method: 'GET',
 	params
 })
+// 获取歌词
+export const reqGetLyric = (params: SongUrlParams) :Promise<AxiosResponse> => request({
+	url: '/lyric',
+	method: 'GET',
+	params
+})

@@ -58,11 +58,27 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: '/login',
+		name: 'Login',
+		component: () => import('@/views/login/index.vue'),
+		meta: {
+			title: '登录方式'
+		}
+	},
+	{
 		path: '/phoneLogin',
 		name: 'PhoneLogin',
 		component: () => import('@/views/login/phoneLogin.vue'),
 		meta: {
 			title: '手机号登录'
+		}
+	},
+	{
+		path: '/emailLogin',
+		name: 'EmailLogin',
+		component: () => import('@/views/login/emailLogin.vue'),
+		meta: {
+			title: '邮箱登录'
 		}
 	},
 	{

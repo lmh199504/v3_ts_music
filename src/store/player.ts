@@ -5,6 +5,7 @@ export interface playerState{
 	showBigPlayer: boolean;
 	currentSong: SongData;
 	playList: Array<SongData>;
+	playing: boolean
 }
 export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 	state: (): playerState => ({
@@ -23,7 +24,8 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				pic_str: '',
 				tns: []
 			}
-		}
+		},
+		playing: false
 	}),
 	getters: {
 		singerName() :string {
@@ -31,6 +33,13 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				return this.currentSong.ar.map((item: arData) => item.name).join('/')
 			} else {
 				return '歌手名字'
+			}
+		},
+		coverImg() :string {
+			if (this.currentSong.name) {
+				return this.currentSong.al.picUrl
+			} else {
+				return require('../assets/images/player/disc_default.png')
 			}
 		}
 	},
@@ -61,12 +70,17 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 					const resList = res.data.data
 					song.url = resList[0].url
 					this.currentSong = song
+					this.playing = true
 					this.setPlayerVisible(true)
 				})
 			} else {
 				this.currentSong = song
+				this.playing = true
 				this.setPlayerVisible(true)
 			}
+		},
+		setPlaying(val: boolean): void {
+			this.playing = val
 		}
 	}
 })

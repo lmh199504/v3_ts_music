@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import { AxiosResponse } from 'axios'
-import { SendCodeParams, PhoneLoginParams } from '@/types/api/user'
+import { SendCodeParams, PhoneLoginParams, EmaiLoginParams } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams) :Promise<AxiosResponse> => request({
 	url: '/captcha/sent',
@@ -22,4 +22,10 @@ export const reqGetUserInfo = () :Promise<AxiosResponse> => request({
 export const reqLogout = () :Promise<AxiosResponse> => request({
 	url: '/logout',
 	method: 'GET'
+})
+// 邮箱登录
+export const reqLoginByEmail = (params: EmaiLoginParams) :Promise<AxiosResponse> => request({
+	url: '/login',
+	method: 'GET',
+	params
 })

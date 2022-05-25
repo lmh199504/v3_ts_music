@@ -3,7 +3,7 @@
 		<van-nav-bar title="每日推荐" left-arrow fixed placeholder @click-left="onClickLeft" right-text="历史日推"
 			@click-right="onClickRight"></van-nav-bar>
 		<div class="scroll">
-			<ScrollBanner>
+			<ScrollBanner ref="scroll">
 				<template #btn>
 					<div class="btn_wrapper">
 						<van-button round color="rgba(0,0,0,0.5)" @click="playAll">
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 	import {
-		ref, toRaw
+		ref, toRaw, Component, nextTick
 	} from 'vue'
 	import {
 		reqDaysRecommend
@@ -36,6 +36,7 @@
 	import { usePlayerStore } from '@/store'
 	const router = useRouter()
 	const playerStore = usePlayerStore()
+	const scroll = ref<Component>()
 	const list = ref([])
 	const loading = Toast.loading({
 		message: '加载中...',
@@ -44,11 +45,14 @@
 	reqDaysRecommend()
 		.then(res => {
 			list.value = res.data.data.dailySongs
+			nextTick(() => {
+				scroll.value.refresh()
+			})	
 		})
 		.finally(() => {
 			loading.clear()
 		})
-
+	
 	function onClickLeft(): void {
 		router.back()
 	}

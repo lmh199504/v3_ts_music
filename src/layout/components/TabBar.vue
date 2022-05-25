@@ -1,6 +1,6 @@
 <template>
 	<div class="tabbar" :class="{ 'hide_tabbar': showBigPlayer }">
-		<MiniPlayer />
+		<MiniPlayer v-if="playing" />
 		<van-tabbar route :fixed="false" :border="false" active-color="#e20001">
 			<van-tabbar-item replace :to="item.url" v-for="item in menuList" :key="item.icon">
 				<span>{{ item.name }}</span>
@@ -45,7 +45,7 @@
 			icon: 'icon-shequ-active'
 		}
 	])
-	const { showBigPlayer } = storeToRefs(palyerStore)
+	const { showBigPlayer, playing } = storeToRefs(palyerStore)
 </script>
 
 <style scoped>

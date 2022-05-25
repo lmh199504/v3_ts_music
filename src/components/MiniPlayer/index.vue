@@ -4,13 +4,13 @@
 			<!-- 歌曲图片 -->
 			<div class="m_cover">
 				<div class="m_cover_bg flex_box_center_column">
-					<img class="m_cover_img" src="https://y.gtimg.cn/music/photo_new/T002R90x90M000001RbJHh2dr7nu_1.jpg?max_age=2592000" alt="">
+					<img class="m_cover_img" :src="coverImg" alt="">
 				</div>
 			</div>
 			<!-- 歌曲名字 -->
 			<div class="m_info">
-				<div class="m_name">清明雨上</div>
-				<div class="m_singer">- 许嵩</div>
+				<div class="m_name">{{ currentSong.name }}</div>
+				<div class="m_singer">- {{ singerName }}</div>
 			</div>
 			<!-- 操作按钮 -->
 			<div class="m_play_menu">
@@ -29,6 +29,7 @@
 	</div>
 </template>
 <script lang="ts" setup>
+	import { storeToRefs } from 'pinia'
 	import { usePlayerStore } from '@/store'
 	import { ref } from 'vue'
 	import PlayListPopup from '@/components/PlayList/listPopup'
@@ -41,6 +42,8 @@
 	function tapMiniPlayer() {
 		playerStore.setPlayerVisible(true)
 	}
+	const { currentSong, singerName, coverImg } = storeToRefs(playerStore)
+	
 </script>
 
 <style scoped lang="less">

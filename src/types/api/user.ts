@@ -8,3 +8,8 @@ export interface PhoneLoginParams{
 	captcha?: number;
 	password?: string;
 }
+// 邮箱登录
+export interface EmaiLoginParams{
+	email: string;
+	password: string;
+}

@@ -15,11 +15,11 @@
 			</div>
 			<div class="center_music">
 				<!-- 歌曲图片 -->
-				<div class="disc" v-show="!showLyric" @click="showLyric = true">
-					<div class="m-song-turn">
+				<div class="disc" :class="{ 'disc_pause': !playing }" v-show="!showLyric" @click="showLyric = true">
+					<div class="m-song-turn animate__rotate" :class="{ 'rotate_pause': !playing }">
 						<div class="m-song-rollwrap">
 							<div class="m-song-img">
-								<img class="u-img" src="../../assets/images/player/disc_default.png" alt="">
+								<img class="u-img" :src="coverImg" alt="">
 							</div>
 						</div>
 					</div>
@@ -65,7 +65,7 @@
 					<div class="play_menu_item">
 						<i class="iconfont icon-shangyishou"></i>
 					</div>
-					<div class="play_menu_item center_icon">
+					<div class="play_menu_item center_icon" @click="setPlaying">
 						<i class="iconfont icon-zanting"></i>
 					</div>
 					<div class="play_menu_item">
@@ -92,9 +92,10 @@
 		usePlayerStore
 	} from '@/store'
 	import Scroll from '@/components/Scroll'
+	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
 	const {
-		showBigPlayer, currentSong, singerName
+		showBigPlayer, currentSong, singerName, coverImg, playing
 	} = storeToRefs(playerStore)
 	const srcoll = ref<Component>()
 	const showLyric = ref<boolean>(false)
@@ -131,6 +132,23 @@
 	
 	function onChange(val) {
 		console.log(val)
+	}
+	function setPlaying() {
+		if (playing.value) {
+			playerStore.setPlaying(false)
+		} else {
+			playerStore.setPlaying(true)
+		}
+	}
+	watch(currentSong, val => {
+		getLyric(val.id)
+	})
+	
+	function getLyric(id: number): void {
+		reqGetLyric({ id: id })
+		.then(res => {
+			console.log(res.data.lrc.lyric)
+		})
 	}
 	
 </script>
@@ -241,6 +259,8 @@
 						background-size: contain;
 						position: absolute;
 						z-index: 3;
+						transition: all 0.4s ease; 
+						transform-origin: 26px 26px; 
 					}
 
 					.m-song-turn {
@@ -282,6 +302,12 @@
 								}
 							}
 						}
+					}
+				}
+				.disc_pause{
+					&::after{
+						transform: rotate(-35deg);
+						transform-origin: 26px 26px; 
 					}
 				}
 				.lyric{
@@ -367,5 +393,19 @@
 
 	.activePlayer {
 		top: 0;
+	}
+	@keyframes rotating{
+		0%{
+			transform: rotate(0);
+		}
+		100%{
+			transform: rotate(360deg);
+		}
+	}
+	.animate__rotate{
+		animation: rotating 4s linear infinite;
+	}
+	.rotate_pause{
+		animation-play-state: paused;
 	}
 </style>

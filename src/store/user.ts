@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { reqLoginByPhone, reqGetUserInfo, reqLogout } from '@/api/user' 
-import { PhoneLoginParams } from '@/types/api/user'
+import { reqLoginByPhone, reqGetUserInfo, reqLogout, reqLoginByEmail } from '@/api/user' 
+import { PhoneLoginParams, EmaiLoginParams } from '@/types/api/user'
 import { setToken, getToken, removeToken } from '@/utils/auth'
 export interface userInfo {
 	accountStatus: number
@@ -108,6 +108,20 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 		loginByPhone(params: PhoneLoginParams) {
 			return new Promise((resolve, reject) => {
 				reqLoginByPhone(params)
+				.then(res => {
+					console.log(res)
+					this.token = res.data.cookie
+					setToken(res.data.cookie)
+					resolve(res)
+				})
+				.catch(err => {
+					reject(err)
+				})
+			})
+		},
+		loginByEmail(params: EmaiLoginParams) {
+			return new Promise((resolve, reject) => {
+				reqLoginByEmail(params)
 				.then(res => {
 					console.log(res)
 					this.token = res.data.cookie

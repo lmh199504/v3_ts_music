@@ -1,7 +1,7 @@
 <template>
 	<div class="song-item">
 		<div class="left">
-			<img class="left_al_img" :src="songData.al.picUrl" alt="">
+			<img class="left_al_img" :src="songData.al.picUrl" alt="" v-lazy="songData.al.picUrl">
 		</div>
 		<div class="center">
 			<div class="song-name">{{ songData.name }}</div>
