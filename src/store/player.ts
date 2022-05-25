@@ -5,13 +5,15 @@ export interface playerState{
 	showBigPlayer: boolean;
 	currentSong: SongData;
 	playList: Array<SongData>;
-	playing: boolean
+	playing: boolean;
+	currentTime: number;
 }
 export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 	state: (): playerState => ({
 		showBigPlayer: false,
 		playList: [],
 		currentSong: {
+			dt: 0,
 			url: '',
 			name: '',
 			id: 0,
@@ -25,7 +27,8 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				tns: []
 			}
 		},
-		playing: false
+		playing: false,
+		currentTime: 0
 	}),
 	getters: {
 		singerName() :string {
@@ -40,6 +43,13 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				return this.currentSong.al.picUrl
 			} else {
 				return require('../assets/images/player/disc_default.png')
+			}
+		},
+		percent(): number {
+			if (this.currentSong.dt) {
+				return (this.currentTime * 1000 / this.currentSong.dt) * 100
+			} else {
+				return 0
 			}
 		}
 	},
@@ -81,6 +91,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		},
 		setPlaying(val: boolean): void {
 			this.playing = val
+		},
+		setCurrentTime(time: number): void{
+			this.currentTime = time
 		}
 	}
 })

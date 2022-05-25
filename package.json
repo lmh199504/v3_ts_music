@@ -15,6 +15,7 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
+    "lyric-parser": "^1.0.1",
     "mitt": "^3.0.0",
     "pinia": "^2.0.13",
     "postcss-pxtorem": "^5.1.1",

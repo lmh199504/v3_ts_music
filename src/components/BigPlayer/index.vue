@@ -28,7 +28,7 @@
 				<div class="lyric" v-show="showLyric" @click="showLyric = false">
 					<Scroll :probeType="3" ref="srcoll">
 						<div class="lyric_div">
-							<div v-for="i in 100" :key="i" class="lyrclines" :class="[ `lyrcline${ i }`, activeIndex == i ? 'lyrclactive': '' ]">{{ i }}</div>
+							<div v-for="(item, index) in lyricLines" :key="index" class="lyrclines" :class="[ `lyrcline${ index  }`, activeIndex == index ? 'lyrclactive': '' ]">{{ item.txt }}</div>
 						</div>
 					</Scroll>	
 				</div>
@@ -52,11 +52,11 @@
 					</div>
 				</div>
 				<div class="process">
-					<div class="left_time">00:00</div>
+					<div class="left_time">{{ currentTime }}</div>
 					<div class="center_process">
 						<van-slider v-model="percent" @change="onChange" />
 					</div>
-					<div class="right_time">08:00</div>
+					<div class="right_time">{{ currentSong.dt }}</div>
 				</div>
 				<div class="play_menu">
 					<div class="play_menu_item">
@@ -77,14 +77,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="player_bg"></div>
+		<div class="player_bg" :style="{ 'background-image': coverImg }"></div>
 		<div class="player_mask"></div>
 		<audio :src="currentSong.url" autoplay ref="audio"></audio>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { ref, Component, watch, nextTick } from 'vue'
+	import Lyric from 'lyric-parser'
+	import { ref, Component, watch, nextTick, onMounted } from 'vue'
 	import {
 		storeToRefs
 	} from 'pinia'
@@ -95,7 +96,7 @@
 	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
 	const {
-		showBigPlayer, currentSong, singerName, coverImg, playing
+		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent
 	} = storeToRefs(playerStore)
 	const srcoll = ref<Component>()
 	const showLyric = ref<boolean>(false)
@@ -107,18 +108,22 @@
 	// 当前第几行歌词
 	const activeIndex = ref<number>(0)
 	// 播放进度
-	const percent = ref<number>(15)
-	setInterval(() => {
-		if (activeIndex.value < 50) {
-			activeIndex.value++ 
+	// const percent = ref<number>(15)
+	// 歌词对象
+	let lyric = null
+	// 歌词列表
+	interface LinesData{
+		time: number;
+		txt: string;
+	}
+	// 歌词列表
+	const lyricLines = ref<Array<LinesData>>([])
+
+	watch(showBigPlayer, (val) => {
+		console.log(val)
+		if (val) {
+			showLyric.value = false
 		}
-		
-		if (activeIndex.value > 5) {
-			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value  - 5 }`)[0], 1000)
-		}
-	}, 1000)
-	
-	watch(showBigPlayer, () => {
 		nextTick(() => {
 			srcoll.value && srcoll.value.refresh()
 		})
@@ -142,15 +147,46 @@
 	}
 	watch(currentSong, val => {
 		getLyric(val.id)
-	})
+	}, { immediate: true })
 	
 	function getLyric(id: number): void {
 		reqGetLyric({ id: id })
 		.then(res => {
-			console.log(res.data.lrc.lyric)
+			if (res.data?.lrc?.lyric) {
+				initPlayer(res.data.lrc.lyric)
+			}
 		})
 	}
+	function handler({ lineNum, txt }) {
+		console.log(lineNum)
+		console.log(txt)
+		activeIndex.value = lineNum
+		if (activeIndex.value > 5) {
+			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value  - 5 }`)[0], 1000)
+		} else {
+			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ 0 }`)[0], 1000)
+		}
+	}
+	function initPlayer(lyricText: string) :void {
+		if (lyric) {
+			lyric.stop()
+			activeIndex.value = 0
+			lyric = null
+		}
+		lyric = new Lyric(lyricText, handler)
+		console.log(lyric)
+		lyricLines.value = lyric.lines
+		lyric.play()
+		lyric.seek(audio.value.currentTime*1000)
+	}
 	
+	onMounted(() => {
+		audio.value.addEventListener('timeupdate', () => {
+			// console.log(audio.value.currentTime)
+			console.log(audio.value.duration)
+			playerStore.setCurrentTime(audio.value.currentTime)
+		})
+	})
 </script>
 
 <style scoped lang="less">
@@ -321,7 +357,7 @@
 						padding: 0 40px;
 						.lyrclines{
 							font-size: 36px;
-							line-height: 50px;
+							line-height: 60px;
 							transition: all 0.4s ease; 
 						}
 						.lyrclactive{
@@ -351,6 +387,8 @@
 					padding: 20px;
 					font-size: 28px;
 					.left_time{
+						width: 100px;
+						overflow: hidden;
 						flex-shrink: 0;
 					}
 					/deep/ .center_process{

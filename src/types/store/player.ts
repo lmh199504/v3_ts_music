@@ -4,6 +4,7 @@ export interface SongData{
 	id: number;
 	ar: Array<arData>;
 	al: alData;
+	dt: number;
 }
 
 export interface alData{
