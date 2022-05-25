@@ -6,7 +6,7 @@
 			<ScrollBanner>
 				<template #btn>
 					<div class="btn_wrapper">
-						<van-button round color="rgba(0,0,0,0.5)">
+						<van-button round color="rgba(0,0,0,0.5)" @click="playAll">
 							<i class="iconfont icon-bofang"></i>
 							播放全部
 						</van-button>
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 	import {
-		ref
+		ref, toRaw
 	} from 'vue'
 	import {
 		reqDaysRecommend
@@ -33,7 +33,9 @@
 	import SongItem from '@/components/songItem'
 	import ScrollBanner from '@/components/Scroll/scrollBanner'
 	import { Toast } from 'vant'
+	import { usePlayerStore } from '@/store'
 	const router = useRouter()
+	const playerStore = usePlayerStore()
 	const list = ref([])
 	const loading = Toast.loading({
 		message: '加载中...',
@@ -56,27 +58,19 @@
 			path: '/daysRecommendHistory'
 		})
 	}
+	function playAll() :void {
+		playerStore.resetList(toRaw(list.value))
+	}
 </script>
 
 <style scoped lang="less">
 	.daysRecommend {
 		.list {
 			padding: 30px;
+			background-color: var(--my-back-color-white);
 		}
 		.scroll{
 			height: 100vh;
-		}
-		.playAll{
-			background: #fff;
-			padding: 15px 30px;
-			font-size: 28px;
-			display: flex;
-			align-items: center;
-			.iconfont{
-				color: #fd352c;
-				font-size: 40px;
-				margin-right: 20px;
-			}
 		}
 		.btn_wrapper{
 			position: absolute;

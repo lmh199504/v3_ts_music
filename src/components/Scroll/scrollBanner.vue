@@ -20,7 +20,8 @@
 		onMounted,
 		ref,
 		watch,
-		nextTick
+		nextTick,
+		defineExpose
 	} from 'vue'
 
 	interface Props {
@@ -52,11 +53,14 @@
 			bs.on('scroll', (position) => {
 				scrollY.value = position.y
 			})
-		}, 100)
+		}, 1000)
 	})
 	nextTick(() => {
 		bs && bs.refesh()
 	})
+	function refresh() {
+		bs && bs.refresh.apply(bs, arguments)
+	}
 	watch(scrollY, (val) => {
 		if (val >= 0) {
 			imgStyle.value = {
@@ -97,6 +101,9 @@
 			}
 		}
 	})
+	defineExpose({
+		refresh
+	})
 </script>
 
 <style scoped lang="less">
@@ -105,17 +112,18 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-
+		background-color: var(--my-back-color-white);
 	}
 
 	.scroll_wrapper {
 		height: 100%;
 		overflow: hidden;
 		flex: 1;
-		background: #fff;
+		background-color: var(--my-back-color-white);
 
 		.scroll_content {
 			padding-bottom: 100px;
+			background-color: var(--my-back-color-white);
 		}
 	}
 
@@ -135,5 +143,6 @@
 
 	.layer {
 		height: 400px;
+		background-color: var(--my-back-color-white);
 	}
 </style>

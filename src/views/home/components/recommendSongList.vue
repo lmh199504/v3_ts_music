@@ -34,7 +34,7 @@
 
 <style scoped lang="less">
 	.recomend{
-		background-color: #fff;
+		background-color: var(--van-white);
 		padding: 20px;
 		box-sizing: border-box;
 		border-radius: 0 15px 15px 0;
@@ -46,6 +46,7 @@
 			.recomend_title{
 				font-size: 30px;
 				font-weight: bold;
+				color: var(--my-text-color-black);
 			}
 		}
 		.sroll_wrapper{

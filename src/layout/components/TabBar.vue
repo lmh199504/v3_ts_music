@@ -1,5 +1,5 @@
 <template>
-	<div class="tabbar">
+	<div class="tabbar" :class="{ 'hide_tabbar': showBigPlayer }">
 		<MiniPlayer />
 		<van-tabbar route :fixed="false" :border="false" active-color="#e20001">
 			<van-tabbar-item replace :to="item.url" v-for="item in menuList" :key="item.icon">
@@ -13,8 +13,11 @@
 </template>
 
 <script lang="ts" setup>
+	import { storeToRefs } from 'pinia'
 	import MiniPlayer from '@/components/MiniPlayer'
+	import { usePlayerStore } from '@/store'
 	import { reactive } from 'vue'
+	const palyerStore = usePlayerStore()
 	const menuList = reactive([
 		{ 
 			name: '发现',
@@ -42,6 +45,7 @@
 			icon: 'icon-shequ-active'
 		}
 	])
+	const { showBigPlayer } = storeToRefs(palyerStore)
 </script>
 
 <style scoped>
@@ -55,6 +59,10 @@
 		box-shadow: -2px 0 20px 0 rgb(0 0 0 / 20%);
 		background: #fff;
 		z-index: 1;
+		transition: all 0.4s ease;
+	}
+	.hide_tabbar{
+		bottom: -200px;
 	}
 	.iconfont{
 		font-size: 30px;

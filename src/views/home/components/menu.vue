@@ -54,7 +54,7 @@
 	.menu_wrapper{
 		padding: 20px 0;
 		box-sizing: border-box;
-		background: #fff;
+		background: var(--van-white);
 		width: 100%;
 		overflow-x: scroll;
 		// margin-top: 10px;
@@ -71,7 +71,7 @@
 				flex-direction: column;
 				align-items: center;
 				.icon_wrapper{
-					background: #fef1f1;
+					background: var(--my-home-menu-back);
 					width: 80px;
 					height: 80px;
 					border-radius: 50%;

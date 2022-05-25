@@ -42,13 +42,16 @@
 		padding: 30px;
 		height: 100vh;
 		box-sizing: border-box;
+		background: var(--my-back-color-white);
 		.input_text{
 			padding-top: 30px;
 			font-size: 28px;
 			letter-spacing: 2px;
+			color: var(--my-text-color-black);
 		}
 		.send_text{
 			font-size: 28px;
+			color: var(--my-text-color-black);
 		}
 	}
 </style>

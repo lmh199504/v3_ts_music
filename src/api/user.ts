@@ -18,3 +18,8 @@ export const reqGetUserInfo = () :Promise<AxiosResponse> => request({
 	url: '/user/account',
 	method: 'GET'
 })
+// 退出登录
+export const reqLogout = () :Promise<AxiosResponse> => request({
+	url: '/logout',
+	method: 'GET'
+})

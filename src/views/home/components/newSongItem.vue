@@ -44,7 +44,7 @@
 		padding: 20px;
 	}
 	.newSongItem{
-		border-bottom: 2px solid #f5f6f8;
+		border-bottom: 2px solid var(--van-gray-3);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -87,6 +87,7 @@
 				font-size: 28px;
 				color: #000;
 				margin-right: 10px;
+				color: var(--my-text-color-black);
 			}
 			.singer{
 				font-size: 24px;

@@ -1,17 +1,28 @@
 <template>
 	<div class="sideMenu" @click="(e) => e.stopPropagation()">
-		<!-- 已经登录了 -->
-		<div v-if="isLogin">
-			<div class="user_info">
+		<div>
+			<!-- 已经登录了 -->
+			<div class="user_info" v-if="isLogin">
 				<div class="left">
 					<img class="avatarUrl" :src="userInfo.avatarUrl" alt="">
 					<div class="nickname">{{ userInfo.nickname }}</div>
 					<div class="flex_box_center_column">
-						<van-icon name="arrow" color="#000" />
+						<van-icon name="arrow" />
 					</div>
 				</div>
 				<div class="right flex_box_center_column">
 					<i class="iconfont icon-iconfontscan"></i>
+				</div>
+			</div>
+			<!-- 还没有登录 -->
+			<div v-if="!isLogin">
+				<div class="unlogin">
+					<div>
+						<i class="iconfont icon-morentouxiang"></i>
+					</div>
+					<div class="text">
+						前往登录
+					</div>
 				</div>
 			</div>
 			<div class="box-container">
@@ -33,87 +44,75 @@
 					</van-cell>
 				</van-cell-group>
 			</div>
-
-			
-			
-
-			<van-button block round class="out-btn">退出登录</van-button>
-		</div>
-		<!-- 还没有登录 -->
-		<div v-else>
-			<div class="unlogin">
-				<div>
-					<i class="iconfont icon-morentouxiang"></i>
-				</div>
-				<div class="text">
-					前往登录
-				</div>
+			<div class="box-container">
+				<van-cell-group inset>
+					<van-cell title="音乐服务">
+						<template #title>
+							<span class="box_title">音乐服务</span>
+						</template>
+					</van-cell>
+					<van-cell title="云村有票" is-link>
+						<template #icon>
+							<i class="iconfont icon-youhuobaopiaoju"></i>
+						</template>
+					</van-cell>
+					<van-cell title="商城" is-link>
+						<template #icon>
+							<i class="iconfont icon-shangcheng"></i>
+						</template>
+					</van-cell>
+					<van-cell title="Beat交易平台" is-link>
+						<template #icon>
+							<i class="iconfont icon-zhongchengdujiaoyi"></i>
+						</template>
+					</van-cell>
+					<van-cell title="游戏专区" is-link>
+						<template #icon>
+							<i class="iconfont icon-youxi"></i>
+						</template>
+					</van-cell>
+					<van-cell title="口袋彩铃" is-link>
+						<template #icon>
+							<i class="iconfont icon-icon--"></i>
+						</template>
+					</van-cell>
+				</van-cell-group>
 			</div>
+			<div class="box-container">
+				<van-cell-group inset>
+					<van-cell title="其他设置">
+						<template #title>
+							<span class="box_title">其他设置</span>
+						</template>
+					</van-cell>
+					<van-cell title="设置" is-link>
+						<template #icon>
+							<i class="iconfont icon-shezhi"></i>
+						</template>
+					</van-cell>
+					<van-cell title="夜间模式">
+						<template #icon>
+							<i class="iconfont icon-yejianmoshi"></i>
+						</template>
+						<template #value>
+							<div class="flex_box_center_column" style="align-items: flex-end;height: 100%;">
+								<van-switch v-model="checked" active-color="#404341" size="small" />
+							</div>
+						</template>
+					</van-cell>
+				</van-cell-group>
+			</div>
+			
+			<van-button block round class="out-btn" :loading="btnLoading" @click="logout">退出登录</van-button>
 		</div>
-		<div class="box-container">
-			<van-cell-group inset>
-				<van-cell title="音乐服务">
-					<template #title>
-						<span class="box_title">音乐服务</span>
-					</template>
-				</van-cell>
-				<van-cell title="云村有票" is-link>
-					<template #icon>
-						<i class="iconfont icon-youhuobaopiaoju"></i>
-					</template>
-				</van-cell>
-				<van-cell title="商城" is-link>
-					<template #icon>
-						<i class="iconfont icon-shangcheng"></i>
-					</template>
-				</van-cell>
-				<van-cell title="Beat交易平台" is-link>
-					<template #icon>
-						<i class="iconfont icon-zhongchengdujiaoyi"></i>
-					</template>
-				</van-cell>
-				<van-cell title="游戏专区" is-link>
-					<template #icon>
-						<i class="iconfont icon-youxi"></i>
-					</template>
-				</van-cell>
-				<van-cell title="口袋彩铃" is-link>
-					<template #icon>
-						<i class="iconfont icon-icon--"></i>
-					</template>
-				</van-cell>
-			</van-cell-group>
-		</div>
-		<div class="box-container">
-			<van-cell-group inset>
-				<van-cell title="其他设置">
-					<template #title>
-						<span class="box_title">其他设置</span>
-					</template>
-				</van-cell>
-				<van-cell title="设置" is-link>
-					<template #icon>
-						<i class="iconfont icon-shezhi"></i>
-					</template>
-				</van-cell>
-				<van-cell title="夜间模式">
-					<template #icon>
-						<i class="iconfont icon-yejianmoshi"></i>
-					</template>
-					<template #value>
-						<div class="flex_box_center_column" style="align-items: flex-end;height: 100%;">
-							<van-switch v-model="checked" active-color="#404341" size="small" @change="changeMode" />
-						</div>
-					</template>
-				</van-cell>
-			</van-cell-group>
-		</div>
+		
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { Mode } from '@/store/system'
 	import {
-		ref
+		computed, ref
 	} from 'vue'
 	import {
 		useUserStore, useSystemStore
@@ -122,19 +121,41 @@
 		storeToRefs
 	} from 'pinia'
 	const useStore = useUserStore()
+	const systemStore = useSystemStore()
 	const {
 		isLogin,
 		userInfo
 	} = storeToRefs(useStore)
-	const checked = ref < boolean > (false)
-	const systemStore = useSystemStore()
+	
+	const checked = computed({
+		get() {
+			systemStore.setMode(systemStore.mode)
+			return systemStore.mode == 'dark' ? true : false
+		},
+		set(val) {
+			changeMode(val)
+		}
+	})
+	
 	function changeMode(value) {
 		if (!value) {
-			systemStore.setMode('light')
+			systemStore.setMode(Mode.light)
 		} else {
-			systemStore.setMode('dark')
+			systemStore.setMode(Mode.dark)
 		}
 	}
+	
+	const btnLoading = ref<boolean>(false)
+	function logout() {
+		useStore.logout()
+		.then(() => {
+			btnLoading.value = true
+		})
+		.catch(() => {
+			btnLoading.value = false
+		})
+	}
+	
 </script>
 
 <style scoped lang="less">
@@ -165,13 +186,17 @@
 
 				.nickname {
 					font-size: 28px;
-					color: #000;
+					color: var(--my-text-color-black);
+				}
+				/deep/ .van-icon{
+					color: var(--my-text-color-black);
 				}
 			}
 
 			.right {
 				.iconfont {
 					font-size: 30px;
+					color: var(--my-text-color-black);
 				}
 			}
 		}
@@ -196,7 +221,7 @@
 
 		.out-btn {
 			margin-top: 30px;
-			color: red;
+			color: var(--my-primary-color);
 		}
 		.unlogin{
 			display: flex;

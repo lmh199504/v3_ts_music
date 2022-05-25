@@ -35,6 +35,7 @@
 
 <style scoped lang="less">
 	.dateList{
+		background-color: var(--my-back-color-white);
 		padding: 30px;
 	}
 </style>

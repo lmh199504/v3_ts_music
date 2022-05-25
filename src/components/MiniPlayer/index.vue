@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="mini_player">
+		<div class="mini_player" @click.prevent="tapMiniPlayer">
 			<!-- 歌曲图片 -->
 			<div class="m_cover">
 				<div class="m_cover_bg flex_box_center_column">
@@ -28,13 +28,18 @@
 		<PlayListPopup v-model:showPopup="showList" />
 	</div>
 </template>
-
 <script lang="ts" setup>
+	import { usePlayerStore } from '@/store'
 	import { ref } from 'vue'
 	import PlayListPopup from '@/components/PlayList/listPopup'
+	const playerStore = usePlayerStore()
 	const showList = ref<boolean>(false)
 	function tapPlayList(): void {
 		showList.value = true
+	}
+	
+	function tapMiniPlayer() {
+		playerStore.setPlayerVisible(true)
 	}
 </script>
 
@@ -42,7 +47,7 @@
 	.mini_player{
 		display: flex;
 		padding: 5px 20px;
-		background: #fff;
+		background: var(--my-back-color-white);
 		.m_cover_bg{
 			height: 80px;
 			width: 80px;
@@ -62,7 +67,7 @@
 			align-items: center;
 			flex: 1;
 			.m_name{
-				color: #000;
+				color: var(--my-text-color-black);
 				font-size: 28px;
 				font-weight: bold;
 			}
@@ -76,6 +81,7 @@
 			align-items: center;
 			.iconfont{
 				font-size: 40px;
+				color: var(--my-text-color-black);
 			}
 			.m_menu_icon{
 				margin-left: 20px;

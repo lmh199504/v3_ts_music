@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8423784",
+      "name": "心跳心动",
+      "font_class": "huaban",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1917589",
+      "name": "已唱",
+      "font_class": "yichang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "201574",
+      "name": "3.1-消息",
+      "font_class": "31xiaoxi",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "1727445",
+      "name": "213喜欢",
+      "font_class": "xihuan",
+      "unicode": "e8c3",
+      "unicode_decimal": 59587
+    },
+    {
+      "icon_id": "2076194",
+      "name": "喜欢",
+      "font_class": "xihuan1",
+      "unicode": "e86f",
+      "unicode_decimal": 59503
+    },
+    {
+      "icon_id": "4633129",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
       "icon_id": "1727461",
       "name": "225默认头像",
       "font_class": "morentouxiang",

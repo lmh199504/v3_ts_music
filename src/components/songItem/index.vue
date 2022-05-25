@@ -8,14 +8,16 @@
 			<div class="singer">{{ singer }}</div>
 		</div>
 		<div class="right">
-			<i class="iconfont icon-24gf-play"></i>
+			<i class="iconfont icon-24gf-play" @click="playThis"></i>
 			<i class="iconfont icon-Androidgengduo"></i>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, toRaw } from 'vue'
+	import { usePlayerStore } from '@/store'
+	const playerStore = usePlayerStore()
 	const props = defineProps(['songData'])
 	const singer = computed(() => {
 		if (props.songData?.ar) {
@@ -23,6 +25,10 @@
 		}
 		return ''
 	})
+	
+	function playThis() {
+		playerStore.setCurSong(toRaw(props.songData))
+	}
 </script>
 
 <style scoped lang="less">
@@ -44,14 +50,14 @@
 			flex: 1;
 			.song-name{
 				font-size: 26px;
-				color: #000;
+				color: var(--my-text-color-black);
 				text-overflow: ellipsis;
 				overflow: hidden;
 				max-width: 450px;
 				white-space: nowrap;
 			}
 			.singer{
-				color: #999;
+				color: var(--my-text-color-gray);
 				font-size: 24px;
 				text-overflow: ellipsis;
 				overflow: hidden;
@@ -61,7 +67,7 @@
 		}
 		.right{
 			.iconfont{
-				color: #b0b0b0;
+				color: var(--my-text-color-gray);
 				padding-left: 20px;
 				font-size: 28px;
 			}

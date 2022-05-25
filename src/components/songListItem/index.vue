@@ -37,7 +37,7 @@
 				position: absolute;
 				top: 15px;
 				right: 15px;
-				color: #fff;
+				color: var(--my-text-color-white);
 				font-size: 28px;
 				background: rgba(0, 0, 0, 0.2);
 				padding: 2px 5px;

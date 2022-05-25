@@ -27,7 +27,7 @@
 
 <style scoped lang="less">
 	.swiper{
-		background-image: linear-gradient(#e8e9eb, #fff);
+		background-image: var(--my-linear-back);
 		padding: 20px;
 	}
 	.my-swipe{

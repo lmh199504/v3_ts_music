@@ -52,7 +52,7 @@
 <style scoped lang="less">
 	.newSong{
 		margin-top: 20px;
-		background: #fff;
+		background: var(--van-white);
 		padding: 15px;
 		.top{
 			display: flex;
@@ -62,6 +62,7 @@
 			.recomend_title{
 				font-size: 30px;
 				font-weight: bold;
+				color: var(--my-text-color-black);
 			}
 		}
 	}

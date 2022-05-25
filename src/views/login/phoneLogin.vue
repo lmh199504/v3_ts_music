@@ -45,15 +45,16 @@
 		height: 100vh;
 		padding: 30px;
 		box-sizing: border-box;
+		background-color: var(--my-back-color-white);
 		.more_marvellous{
-			color: #333;
+			color: var(--my-text-color-black);
 			font-size: 26px;
 			font-weight: bold;
 			padding-top: 30px;
 			margin-bottom: 20px;
 		}
 		.phone_form{
-			border-bottom: 1px solid #e0e0e0;
+			border-bottom: 1px solid var(--van-button-default-border-color);
 			margin-bottom: 100px;
 		}
 	}

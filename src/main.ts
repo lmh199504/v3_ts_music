@@ -6,6 +6,7 @@ import vant from '@/vant'
 import '@/assets/styles/global.less'
 import '@/assets/styles/mode.less'
 import '@/assets/iconfont/iconfont.css'
+import '@/assets/styles/animate.css'
 import '@/permission'
 const app = createApp(App)
 app.use(createPinia())

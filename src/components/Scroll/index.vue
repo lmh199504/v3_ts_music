@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 	import BScroll from 'better-scroll'
-	import { onMounted, ref } from 'vue'
+	import { onMounted, ref, defineExpose } from 'vue'
 	interface Props{
 		probeType: number // 决定是否派发 scroll 事件，对页面的性能有影响，尤其是在 useTransition 为 true 的模式下 0 1 2 3 
 	}
@@ -24,14 +24,23 @@
 				probeType: props.probeType,
 				click: true
 			})
-			console.log(bs)
 			bs.on('scroll', (position) => {
 				emit('scroll', position)
 			})
-		}, 100)
+		}, 1000)
 	})
 	
+	function scrollToElemet() {
+		bs && bs.scrollToElement.apply(bs, arguments)
+	}
+	function refresh() {
+		bs && bs.refresh.apply(bs, arguments)
+	}
 	
+	defineExpose({
+		scrollToElemet,
+		refresh
+	})
 </script>
 
 <style scoped lang="less">
@@ -39,7 +48,6 @@
 		height: 100%;
 		overflow: hidden;
 		.scroll_content{
-			height: 100%;
 		}
 	}
 </style>

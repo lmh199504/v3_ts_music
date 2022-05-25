@@ -19,7 +19,8 @@ import {
 	Tabs,
 	PullRefresh,
 	Icon,
-	Switch
+	Switch,
+	Slider 
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -44,5 +45,6 @@ export default {
 		app.use(PullRefresh)
 		app.use(Icon)
 		app.use(Switch)
+		app.use(Slider)
 	}
 }

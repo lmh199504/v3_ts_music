@@ -1,30 +1,29 @@
 <template>
 	<div class="home">
 		<van-pull-refresh v-model="loading" @refresh="onRefresh">
-		
-		<van-sticky>
-			<div class="nav">
-				<div class="flex_box_center_column" @click="openMenu">
-					<i class="iconfont icon-caidan"></i>
-				</div>
-				<div class="search_wrapper">
-					<div class="flex_box_center_column">
-						<i class="iconfont icon-sousuo"></i>
+			<van-sticky>
+				<div class="nav">
+					<div class="flex_box_center_column" @click="openMenu">
+						<i class="iconfont icon-caidan"></i>
 					</div>
-					<div class="search_text flex_box_center_column">古风</div>
+					<div class="search_wrapper">
+						<div class="flex_box_center_column">
+							<i class="iconfont icon-sousuo"></i>
+						</div>
+						<div class="search_text flex_box_center_column">古风</div>
+					</div>
+					<div class="flex_box_center_column">
+						<i class="iconfont icon-yuyin"></i>
+					</div>
 				</div>
-				<div class="flex_box_center_column">
-					<i class="iconfont icon-yuyin"></i>
-				</div>
+			</van-sticky>
+			<div class="main_content">
+				<Swiper ref="swiper" />
+				<Menu />
+				<div class="line"></div>
+				<RecommendSongList ref="recommendSongList" />
+				<NewSong ref="newSong" />
 			</div>
-		</van-sticky>
-		<div class="main_content">
-			<Swiper ref="swiper" />
-			<Menu />
-			<div class="line"></div>
-			<RecommendSongList ref="recommendSongList" />
-			<NewSong ref="newSong" />
-		</div>
 		</van-pull-refresh>	
 	</div>
 </template>
@@ -44,9 +43,9 @@
 	const recommendSongList = ref<Component>()
 	const newSong = ref<Component>()
 	function onRefresh() {
-		swiper.value.getBanner()
-		recommendSongList.value.getList()
-		newSong.value.getList()
+		swiper.value && swiper.value.getBanner()
+		recommendSongList.value && recommendSongList.value.getList()
+		newSong.value && newSong.value.getList()
 		setTimeout(() => {
 			loading.value = false
 		}, 2000)
@@ -58,7 +57,7 @@
 		overflow-y: scroll;
 		height: 100vh;
 		padding-bottom: 200px;
-		background: #f5f5f5;
+		background: var(--my-back-color-gray);
 		box-sizing: border-box;
 	}
 	.nav {
@@ -67,22 +66,25 @@
 		justify-content: space-between;
 		padding: 10px 20px;
 		height: 88px;
-		background: #e8e8e8;
-
+		background: var(--my-gray-1);
+		.iconfont{
+			color: var(--my-text-color-black);
+		}
 		.search_wrapper {
 			height: 60px;
-			background: #fff;
+			background: var(--my-search-back);
 			flex: 1;
 			margin: 0 40px;
 			display: flex;
 			border-radius: 30px;
 			display: flex;
 			justify-content: center;
-
+			color: var(--my-text-color-black);
 			.icon-sousuo {
 				padding-top: 4px;
+				
 			}
-
+			
 			.search_text {
 				margin-left: 10px;
 				font-size: 24px;
@@ -92,7 +94,7 @@
 	.main_content{
 		padding: 0 20px 20px 20px;
 		.line{
-			background: #f5f6f8;
+			background: var(--van-gray-3);
 			height: 2px;
 		}
 	}
