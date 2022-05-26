@@ -17,6 +17,7 @@
 	})
 	const songList = ref([])
 	
+	const emit = defineEmits(['refresh'])
 	function getList() {
 		const loading = Toast.loading({
 			duration: 0,
@@ -25,6 +26,7 @@
 		reqHistoryRecommend({ date: props.date })
 		.then(res => {
 			songList.value = res.data.data.songs
+			emit('refresh')
 		})
 		.finally(() => {
 			loading.clear()

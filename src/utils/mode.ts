@@ -29,7 +29,8 @@ export const mode: modeOptions = {
 		'--van-active-color': 'var(--van-gray-2)',
 		'--my-lyric-color': '#929292',
 		'--my-icon-color': '#c4c4c4',
-		'--van-slider-button-background-color': 'var(--van-white)'
+		'--van-slider-button-background-color': 'var(--van-white)',
+		'--my-player-text-white': 'white'
 	},
 	dark: {
 		'--my-primary-color': '#c8c9cc',
@@ -53,7 +54,8 @@ export const mode: modeOptions = {
 		'--van-active-color': '#2d3134',
 		'--my-lyric-color': '#929292',
 		'--my-icon-color': '#c4c4c4',
-		'--van-slider-button-background-color': '#c4c4c4'
+		'--van-slider-button-background-color': '#c4c4c4',
+		'--my-player-text-white': '#c4c4c4'
 	}
 }
 const modeKey = 'mode'

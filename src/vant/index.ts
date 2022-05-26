@@ -20,8 +20,9 @@ import {
 	PullRefresh,
 	Icon,
 	Switch,
-	Slider, 
-	Lazyload
+	Slider,
+	Lazyload,
+	NoticeBar
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -48,5 +49,6 @@ export default {
 		app.use(Switch)
 		app.use(Slider)
 		app.use(Lazyload)
+		app.use(NoticeBar)
 	}
 }

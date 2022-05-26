@@ -8,16 +8,21 @@
 				</div>
 			</div>
 			<!-- 歌曲名字 -->
-			<div class="m_info">
-				<div class="m_name">{{ currentSong.name }}</div>
-				<div class="m_singer">- {{ singerName }}</div>
+			<div class="m_center">
+				<div class="m_info">
+					<div class="m_name">{{ currentSong.name }}</div>
+					<div class="m_singer">- {{ singerName }}</div>
+				</div>
+				<div class="current_text" v-if="currentText">
+					<van-notice-bar scrollable :text="currentText" />
+				</div>
 			</div>
 			<!-- 操作按钮 -->
 			<div class="m_play_menu">
-				<div class="m_menu_icon m_menu_play flex_box_center_column">
+				<div class="m_menu_icon m_menu_play flex_box_center_column" v-if="!playing">
 					<i class="iconfont icon-bofang"></i>
 				</div>
-				<div class="m_menu_icon m_menu_stop flex_box_center_column">
+				<div class="m_menu_icon m_menu_stop flex_box_center_column" v-else>
 					<i class="iconfont icon-zanting"></i>
 				</div>
 				<div class="m_menu_icon m_menu_list flex_box_center_column" @click="tapPlayList">
@@ -42,7 +47,7 @@
 	function tapMiniPlayer() {
 		playerStore.setPlayerVisible(true)
 	}
-	const { currentSong, singerName, coverImg } = storeToRefs(playerStore)
+	const { currentSong, singerName, coverImg, playing, currentText } = storeToRefs(playerStore)
 	
 </script>
 
@@ -65,10 +70,27 @@
 				border-radius: 50%;
 			}
 		}
+		.m_center{
+			flex: 1;
+			overflow: hidden;
+			.current_text{
+				width: 100%;
+				color: var(--my-text-color-black);
+				/deep/ .van-notice-bar{
+					background-color: var(--my-back-color-white);
+					padding-left: 0;
+					height: 30px;
+					line-height: 30px;
+					font-size: 24px;
+					color: var(--my-text-color-black);
+				}
+			}
+		}
 		.m_info{
 			display: flex;
 			align-items: center;
-			flex: 1;
+			width: 100%;
+			overflow: hidden;
 			.m_name{
 				color: var(--my-text-color-black);
 				font-size: 28px;

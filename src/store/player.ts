@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia'
-import { SongData, arData } from '@/types/store/player'
+import { SongData, arData, PlayModeData } from '@/types/store/player'
 import { reqGetSongUrl } from '@/api/song'
 export interface playerState{
 	showBigPlayer: boolean;
 	currentSong: SongData;
-	playList: Array<SongData>;
+	playList: Array<SongData>; // 播放列表
 	playing: boolean;
 	currentTime: number;
+	currentText: string;
+	playMode: PlayModeData;
+	// truePlayList: Array<SongData>; // 真实的播放列表
 }
 export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 	state: (): playerState => ({
@@ -28,7 +31,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 			}
 		},
 		playing: false,
-		currentTime: 0
+		currentTime: 0,
+		currentText: '',
+		playMode: PlayModeData.list
 	}),
 	getters: {
 		singerName() :string {
@@ -47,10 +52,19 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		},
 		percent(): number {
 			if (this.currentSong.dt) {
-				return (this.currentTime * 1000 / this.currentSong.dt) * 100
+				return (this.currentTime / this.currentSong.dt) * 100
 			} else {
 				return 0
 			}
+		},
+		playIndex(): number {
+			if (this.currentSong.id && this.playList.length != 0 ) {
+				return this.playList.findIndex((item :SongData) => item.id === this.currentSong.id)
+			}
+			return -1
+		},
+		truePlayList() :Array<SongData> {
+			return this.playList
 		}
 	},
 	actions: {
@@ -81,11 +95,19 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 					song.url = resList[0].url
 					this.currentSong = song
 					this.playing = true
+					const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
+					if (!index) {
+						this.playList.push(song)
+					}
 					this.setPlayerVisible(true)
 				})
 			} else {
 				this.currentSong = song
 				this.playing = true
+				const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
+				if (!index) {
+					this.playList.push(song)
+				}
 				this.setPlayerVisible(true)
 			}
 		},
@@ -94,6 +116,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		},
 		setCurrentTime(time: number): void{
 			this.currentTime = time
+		},
+		setCurrentText(txt: string) :void {
+			this.currentText = txt
 		}
 	}
 })

@@ -34,10 +34,26 @@
 				</div>
 			</div>
 			<div class="menu_wrapper">
+				<!-- 操作按钮 -->
 				<div class="action_menu">
-					<div class="action_menu_item">
-						<i class="iconfont icon-xihuan1"></i>
-					</div>
+					<template>
+						<div class="action_menu_item" v-if="playMode === PlayModeData.beckoning">
+							<i class="iconfont icon-xihuan1"></i>
+						</div>
+						<div class="action_menu_item" v-if="playMode === PlayModeData.list">
+							<i class="iconfont icon-xihuan1"></i>
+						</div>
+						<div class="action_menu_item" v-if="playMode === PlayModeData.random">
+							<i class="iconfont icon-xihuan1"></i>
+						</div>
+						<div class="action_menu_item" v-if="playMode === PlayModeData.loop">
+							<i class="iconfont icon-xihuan1"></i>
+						</div>
+						<div class="action_menu_item" v-if="playMode === PlayModeData.single">
+							<i class="iconfont icon-xihuan1"></i>
+						</div>
+					</template>
+					
 					<div class="action_menu_item">
 						<i class="iconfont icon-xiazai"></i>
 					</div>
@@ -51,13 +67,15 @@
 						<i class="iconfont icon-Androidgengduo"></i>
 					</div>
 				</div>
+				<!-- 进度条 -->
 				<div class="process">
-					<div class="left_time">{{ currentTime }}</div>
+					<div class="left_time">{{ formatMusicTime(currentTime) }}</div>
 					<div class="center_process">
-						<van-slider v-model="percent" @change="onChange" />
+						<van-slider v-model="processNum" @change="onChange" @drag-start="dragStart" @drag-end="dragEnd" />
 					</div>
-					<div class="right_time">{{ currentSong.dt }}</div>
+					<div class="right_time">{{ formatMusicTime(currentSong.dt) }}</div>
 				</div>
+				<!-- 播放菜单 -->
 				<div class="play_menu">
 					<div class="play_menu_item">
 						<i class="iconfont icon-huaban"></i>
@@ -77,15 +95,17 @@
 				</div>
 			</div>
 		</div>
-		<div class="player_bg" :style="{ 'background-image': coverImg }"></div>
+		<div class="player_bg" :style="bgStyle"></div>
 		<div class="player_mask"></div>
-		<audio :src="currentSong.url" autoplay ref="audio"></audio>
+		<audio :src="currentSong.url" autoplay ref="audio" @ended="onPlayEnd" @timeupdate="onTimeupdate" @error="onPlayError"></audio>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { PlayModeData } from '@/types/store/player'
+	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
-	import { ref, Component, watch, nextTick, onMounted } from 'vue'
+	import { ref, Component, watch, nextTick, computed } from 'vue'
 	import {
 		storeToRefs
 	} from 'pinia'
@@ -96,7 +116,7 @@
 	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
 	const {
-		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent
+		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode
 	} = storeToRefs(playerStore)
 	const srcoll = ref<Component>()
 	const showLyric = ref<boolean>(false)
@@ -107,8 +127,10 @@
 	}
 	// 当前第几行歌词
 	const activeIndex = ref<number>(0)
-	// 播放进度
-	// const percent = ref<number>(15)
+	// 是否拖拽进度条
+	const isDraging = ref<boolean>(false) 
+	// 进度条
+	const processNum = ref<number>(0)
 	// 歌词对象
 	let lyric = null
 	// 歌词列表
@@ -135,9 +157,7 @@
 		})
 	})
 	
-	function onChange(val) {
-		console.log(val)
-	}
+	
 	function setPlaying() {
 		if (playing.value) {
 			playerStore.setPlaying(false)
@@ -166,6 +186,7 @@
 		} else {
 			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ 0 }`)[0], 1000)
 		}
+		playerStore.setCurrentText(txt)
 	}
 	function initPlayer(lyricText: string) :void {
 		if (lyric) {
@@ -174,19 +195,41 @@
 			lyric = null
 		}
 		lyric = new Lyric(lyricText, handler)
-		console.log(lyric)
+		// console.log(lyric)
 		lyricLines.value = lyric.lines
 		lyric.play()
 		lyric.seek(audio.value.currentTime*1000)
 	}
-	
-	onMounted(() => {
-		audio.value.addEventListener('timeupdate', () => {
-			// console.log(audio.value.currentTime)
-			console.log(audio.value.duration)
-			playerStore.setCurrentTime(audio.value.currentTime)
-		})
+	const bgStyle = computed(() => {
+		return { 'background-image': `url(${coverImg.value})` }
 	})
+	
+	// 不在拖拽时
+	watch(percent, (val) => {
+		if (!isDraging.value) processNum.value = val
+	})
+	function dragStart(){
+		isDraging.value = true
+	}
+	function dragEnd() {
+		isDraging.value = false
+	}
+	// 进度条改变
+	function onChange(val) {
+		const time = (val / 100) * (currentSong.value.dt / 1000)
+		audio.value.currentTime = (val / 100) * (currentSong.value.dt / 1000)
+		lyric.seek(time * 1000)
+	}
+	// 播放事件监听
+	function onPlayEnd() {
+		console.log('播放结束')
+	}
+	function onTimeupdate() {
+		playerStore.setCurrentTime(audio.value?.currentTime * 1000)
+	}
+	function onPlayError() {
+		console.log('播放错误')
+	}
 </script>
 
 <style scoped lang="less">
@@ -212,23 +255,22 @@
 			position: absolute;
 			top: 0;
 			left: 0;
-			z-index: 3;
+			z-index: 2;
 			opacity: 0.6;
 			transform: translateZ(0);
 			filter: blur(65px);
 			display: block;
 			overflow: hidden;
-			background-image: url(../../assets/images/public/heijiao.png);
 		}
 
 		.player_mask {
-			background-color: rgba(0, 0, 0, 0.9);
+			background-color: rgba(0, 0, 0, 0.5);
 			position: absolute;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
-			z-index: 2;
+			z-index: 3;
 		}
 
 		.main_content {
@@ -250,7 +292,7 @@
 
 				.left {
 					font-size: 36px;
-					color: var(--my-text-color-white);
+					color: var(--my-player-text-white);
 				}
 
 				.center {
@@ -259,18 +301,18 @@
 
 					.song_name {
 						font-size: 30px;
-						color: var(--my-text-color-white);
+						color: var(--my-player-text-white);
 					}
 
 					.singer_name {
 						font-size: 28px;
-						color: var(--my-text-color-white);
+						color: var(--my-player-text-white);
 					}
 				}
 
 				.right {
 					font-size: 36px;
-					color: var(--my-text-color-white);
+					color: var(--my-player-text-white);
 				}
 			}
 
@@ -407,6 +449,7 @@
 						}
 					}
 					.right_time{
+						width: 100px;
 						flex-shrink: 0;
 					}
 				}

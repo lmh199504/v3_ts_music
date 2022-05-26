@@ -1,23 +1,25 @@
 <template>
-	<div class="daysRecommend">
-		<van-nav-bar title="每日推荐" left-arrow fixed placeholder @click-left="onClickLeft" right-text="历史日推"
-			@click-right="onClickRight"></van-nav-bar>
-		<div class="scroll">
-			<ScrollBanner ref="scroll">
-				<template #btn>
-					<div class="btn_wrapper">
-						<van-button round color="rgba(0,0,0,0.5)" @click="playAll">
-							<i class="iconfont icon-bofang"></i>
-							播放全部
-						</van-button>
+	<MiniPlayOut>
+		<div class="daysRecommend">
+			<van-nav-bar title="每日推荐" left-arrow fixed placeholder @click-left="onClickLeft" right-text="历史日推"
+				@click-right="onClickRight"></van-nav-bar>
+			<div class="scroll">
+				<ScrollBanner ref="scroll">
+					<template #btn>
+						<div class="btn_wrapper">
+							<van-button round color="rgba(0,0,0,0.5)" @click="playAll">
+								<i class="iconfont icon-bofang"></i>
+								播放全部
+							</van-button>
+						</div>
+					</template>	
+					<div class="list">
+						<SongItem v-for="item in list" :key="item.id" :song-data="item" />
 					</div>
-				</template>	
-				<div class="list">
-					<SongItem v-for="item in list" :key="item.id" :song-data="item" />
-				</div>
-			</ScrollBanner>
+				</ScrollBanner>
+			</div>
 		</div>
-	</div>
+	</MiniPlayOut>
 </template>
 
 <script lang="ts" setup>
@@ -27,6 +29,7 @@
 	import {
 		reqDaysRecommend
 	} from '@/api/home'
+	import MiniPlayOut from '@/layout/miniplayout'
 	import {
 		useRouter
 	} from 'vue-router'
@@ -69,12 +72,13 @@
 
 <style scoped lang="less">
 	.daysRecommend {
+		height: 100%;
 		.list {
 			padding: 30px;
 			background-color: var(--my-back-color-white);
 		}
 		.scroll{
-			height: 100vh;
+			height: 100%;
 		}
 		.btn_wrapper{
 			position: absolute;

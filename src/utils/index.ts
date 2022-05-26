@@ -1,5 +1,5 @@
+/* eslint-disable */
 // JS判断手机是安卓还是IOS
-
 interface deviceType {
 	ios: boolean
 	android: boolean
@@ -56,4 +56,19 @@ export function validEmail(email: string): boolean {
 	// eslint-disable-next-line  
 	const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	return reg.test(email)
+}
+
+export function formatMusicTime(time: number): string {
+	const secondsTime = Math.floor(time / 1000)
+	const minute = Math.floor(secondsTime / 60)
+	const second = Math.floor(secondsTime % 60)
+	return String(addZero(minute)) + ':' + String(addZero(second))
+}
+
+function addZero(num: number): string {
+	if (num >= 10) {
+		return num + ''
+	} else {
+		return '0' + num
+	}
 }

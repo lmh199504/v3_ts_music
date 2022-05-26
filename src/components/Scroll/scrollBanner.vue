@@ -59,7 +59,6 @@
 		bs && bs.refesh()
 	})
 	function refresh() {
-		// console.log('刷新')
 		bs && bs.refresh.apply(bs, arguments)
 	}
 	watch(scrollY, (val) => {
