@@ -19,13 +19,13 @@
 			</div>
 			<!-- 操作按钮 -->
 			<div class="m_play_menu">
-				<div class="m_menu_icon m_menu_play flex_box_center_column" v-if="!playing">
+				<div class="m_menu_icon m_menu_play flex_box_center_column" v-if="!playing" @click.stop="handlePlay">
 					<i class="iconfont icon-bofang"></i>
 				</div>
-				<div class="m_menu_icon m_menu_stop flex_box_center_column" v-else>
+				<div class="m_menu_icon m_menu_stop flex_box_center_column" v-else @click.stop="handlePause">
 					<i class="iconfont icon-zanting"></i>
 				</div>
-				<div class="m_menu_icon m_menu_list flex_box_center_column" @click="tapPlayList">
+				<div class="m_menu_icon m_menu_list flex_box_center_column" @click.stop="tapPlayList">
 					<i class="iconfont icon-24gf-playlistMusic2"></i>
 				</div>
 			</div>
@@ -49,6 +49,12 @@
 	}
 	const { currentSong, singerName, coverImg, playing, currentText } = storeToRefs(playerStore)
 	
+	function handlePlay() {
+		console.log('播放')
+	}
+	function handlePause() {
+		console.log('暂停')
+	}
 </script>
 
 <style scoped lang="less">
@@ -76,7 +82,7 @@
 			.current_text{
 				width: 100%;
 				color: var(--my-text-color-black);
-				/deep/ .van-notice-bar{
+				:deep(.van-notice-bar){
 					background-color: var(--my-back-color-white);
 					padding-left: 0;
 					height: 30px;

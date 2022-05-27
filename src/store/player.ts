@@ -65,6 +65,13 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		},
 		truePlayList() :Array<SongData> {
 			return this.playList
+		},
+		isLast(): boolean{
+			if (this.playIndex == this.playList.length - 1) {
+				return true
+			} else {
+				return false
+			}
 		}
 	},
 	actions: {
@@ -96,7 +103,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 					this.currentSong = song
 					this.playing = true
 					const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
-					if (!index) {
+					if (index == -1) {
 						this.playList.push(song)
 					}
 					this.setPlayerVisible(true)
@@ -105,7 +112,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				this.currentSong = song
 				this.playing = true
 				const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
-				if (!index) {
+				if (index == -1) {
 					this.playList.push(song)
 				}
 				this.setPlayerVisible(true)

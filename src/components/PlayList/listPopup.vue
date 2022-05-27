@@ -1,6 +1,6 @@
 <template>
 	<van-popup v-model:show="show" round>
-		<List />
+		<List v-if="show"/>
 	</van-popup>
 </template>
 

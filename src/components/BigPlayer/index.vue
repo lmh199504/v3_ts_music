@@ -83,8 +83,11 @@
 					<div class="play_menu_item">
 						<i class="iconfont icon-shangyishou"></i>
 					</div>
-					<div class="play_menu_item center_icon" @click="setPlaying">
+					<div v-if="playing" class="play_menu_item center_icon" @click="setPlaying">
 						<i class="iconfont icon-zanting"></i>
+					</div>
+					<div v-else class="play_menu_item center_icon" @click="setPlaying">
+						<i class="iconfont icon-bofang"></i>
 					</div>
 					<div class="play_menu_item">
 						<i class="iconfont icon-xiayishou"></i>
@@ -105,7 +108,7 @@
 	import { PlayModeData } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
-	import { ref, Component, watch, nextTick, computed } from 'vue'
+	import { ref, Component, watch, nextTick, computed, toRaw } from 'vue'
 	import {
 		storeToRefs
 	} from 'pinia'
@@ -116,7 +119,7 @@
 	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
 	const {
-		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode
+		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList
 	} = storeToRefs(playerStore)
 	const srcoll = ref<Component>()
 	const showLyric = ref<boolean>(false)
@@ -161,9 +164,12 @@
 	function setPlaying() {
 		if (playing.value) {
 			playerStore.setPlaying(false)
+			audio.value.pause()
 		} else {
 			playerStore.setPlaying(true)
+			audio.value.play()
 		}
+		lyric && lyric.togglePlay()
 	}
 	watch(currentSong, val => {
 		getLyric(val.id)
@@ -218,17 +224,31 @@
 	function onChange(val) {
 		const time = (val / 100) * (currentSong.value.dt / 1000)
 		audio.value.currentTime = (val / 100) * (currentSong.value.dt / 1000)
+		audio.value.play()
+		lyric.play()
 		lyric.seek(time * 1000)
 	}
 	// 播放事件监听
 	function onPlayEnd() {
 		console.log('播放结束')
+		if (playList.value.length) {
+			playNext()
+		}
 	}
 	function onTimeupdate() {
 		playerStore.setCurrentTime(audio.value?.currentTime * 1000)
 	}
 	function onPlayError() {
 		console.log('播放错误')
+		playNext()
+	}
+	// 下一首
+	function playNext() {
+		if (isLast.value) { // 最后一首
+			playerStore.setCurSong(toRaw( playList.value[0] ))
+		} else {
+			playerStore.setCurSong(toRaw( playList.value[playIndex.value + 1] ))
+		}
 	}
 </script>
 
