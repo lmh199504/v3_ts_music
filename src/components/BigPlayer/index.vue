@@ -89,7 +89,7 @@
 					<div v-else class="play_menu_item center_icon" @click="setPlaying">
 						<i class="iconfont icon-bofang"></i>
 					</div>
-					<div class="play_menu_item">
+					<div class="play_menu_item" @click="playNext">
 						<i class="iconfont icon-xiayishou"></i>
 					</div>
 					<div class="play_menu_item">
