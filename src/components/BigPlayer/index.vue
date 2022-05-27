@@ -160,19 +160,29 @@
 		})
 	})
 	
+	watch(playing, (val) => {
+		if (currentSong.value.id) {
+			if (val.value) { // 播放
+				audio.value.play()
+			} else {
+				audio.value.pause()
+			}
+			lyric && lyric.togglePlay()
+		}
+	})
 	
 	function setPlaying() {
+		if (!currentSong.value.id) {
+			return
+		}
 		if (playing.value) {
 			playerStore.setPlaying(false)
-			audio.value.pause()
 		} else {
 			playerStore.setPlaying(true)
-			audio.value.play()
 		}
-		lyric && lyric.togglePlay()
 	}
 	watch(currentSong, val => {
-		getLyric(val.id)
+		if (val.id) getLyric(val.id)
 	}, { immediate: true })
 	
 	function getLyric(id: number): void {
@@ -240,7 +250,9 @@
 	}
 	function onPlayError() {
 		console.log('播放错误')
-		playNext()
+		if (playList.value.length) {
+			playNext()
+		}
 	}
 	// 下一首
 	function playNext() {

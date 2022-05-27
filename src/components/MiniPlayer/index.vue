@@ -51,9 +51,11 @@
 	
 	function handlePlay() {
 		console.log('播放')
+		playerStore.setPlaying(true)
 	}
 	function handlePause() {
 		console.log('暂停')
+		playerStore.setPlaying(false)
 	}
 </script>
 

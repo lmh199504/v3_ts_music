@@ -1,6 +1,6 @@
 <template>
 	<div class="song_list_item">
-		<div class="cover">
+		<div class="cover" @click="goDetail">
 			<img class="cover_img" :src="songListData.picUrl" alt="">
 			<div class="play_count">
 				<i class="iconfont icon-bofang"></i>
@@ -14,6 +14,8 @@
 <script setup lang="ts">
 	import { songListFace } from '@/types/public'
 	import { formatCountNumber } from '@/utils'
+	import { useRouter } from 'vue-router'
+	const router = useRouter()
 	interface Props {
 		songListData: songListFace
 	}
@@ -22,6 +24,12 @@
 		songListData: {}
 	})
 	// console.log(props)
+	function goDetail() {
+		router.push({
+			path: '/songSheetDetail',
+			query: { id: props.songListData.id }
+		})
+	}
 </script>
 
 <style scoped lang="less">

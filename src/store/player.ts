@@ -97,12 +97,13 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		setCurSong(song: SongData) {
 			if (!song.url) {
 				reqGetSongUrl({ id: song.id })
-				.then(res => {
-					const resList = res.data.data
-					song.url = resList[0].url
+				.then(() => {
+					// const resList = res.data.data
+					// song.url = resList[0].url
+					song.url = ` https://music.163.com/song/media/outer/url?id=${ song.id }.mp3 `
 					this.currentSong = song
 					this.playing = true
-					const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
+					const index = this.playList.findIndex((item: SongData): boolean => item.id == song.id)
 					if (index == -1) {
 						this.playList.push(song)
 					}
@@ -111,7 +112,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 			} else {
 				this.currentSong = song
 				this.playing = true
-				const index = this.playList.findIndex((item: SongData): number | boolean => item.id == song.id)
+				const index = this.playList.findIndex((item: SongData): boolean => item.id == song.id)
 				if (index == -1) {
 					this.playList.push(song)
 				}

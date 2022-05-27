@@ -96,6 +96,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '历史日推'
 		},
+	},
+	{
+		path: '/songSheetDetail',
+		name: 'SongSheetDetail',
+		component: () => import('@/views/songSheetDetail/index.vue'),
+		meta: {
+			title: '歌单详情'
+		}
 	}
 ]
 

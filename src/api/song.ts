@@ -19,3 +19,9 @@ export const reqGetLyric = (params: SongUrlParams) :Promise<AxiosResponse> => re
 	method: 'GET',
 	params
 })
+// 获取歌单详情 /playlist/detail
+export const reqSheetDetail = (params: SongUrlParams) :Promise<AxiosResponse> => request({
+	url: '/playlist/detail',
+	method: 'GET',
+	params
+})
