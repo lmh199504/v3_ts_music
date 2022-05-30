@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "145472",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "595349",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "2506195",
+      "name": "收藏夹",
+      "font_class": "shoucangjia",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "2767710",
+      "name": "列表循环",
+      "font_class": "icon-",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "4553739",
+      "name": "数字顺序",
+      "font_class": "shuzishunxu",
+      "unicode": "e7de",
+      "unicode_decimal": 59358
+    },
+    {
+      "icon_id": "7594081",
+      "name": "24gl-shuffle",
+      "font_class": "24gl-shuffle",
+      "unicode": "ea75",
+      "unicode_decimal": 60021
+    },
+    {
+      "icon_id": "18661855",
+      "name": "单曲循环",
+      "font_class": "hanhan-01-01",
+      "unicode": "e6ae",
+      "unicode_decimal": 59054
+    },
+    {
       "icon_id": "8423784",
       "name": "心跳心动",
       "font_class": "huaban",

@@ -241,6 +241,11 @@
 	// 播放事件监听
 	function onPlayEnd() {
 		console.log('播放结束')
+		if (lyric) {
+			lyric.stop()
+			activeIndex.value = 0
+			lyric = null
+		}
 		if (playList.value.length) {
 			playNext()
 		}
@@ -250,6 +255,7 @@
 	}
 	function onPlayError() {
 		console.log('播放错误')
+		
 		if (playList.value.length) {
 			playNext()
 		}

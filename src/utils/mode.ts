@@ -14,7 +14,7 @@ export const mode: modeOptions = {
 		'--my-back-color-gray': '#f5f5f5',
 		'--my-text-color-black': '#333',
 		'--my-text-color-white': '#fff',
-		'--my-text-color-gray': '#999',
+		'--my-text-color-gray': '#949494',
 		'--van-white': '#fff',
 		'--van-gray-8': '#323233',
 		'--van-blue': '#1989fa',
@@ -30,7 +30,8 @@ export const mode: modeOptions = {
 		'--my-lyric-color': 'rgba(255,255,255,0.5)',
 		'--my-icon-color': '#c4c4c4',
 		'--van-slider-button-background-color': 'var(--van-white)',
-		'--my-player-text-white': 'white'
+		'--my-player-text-white': 'white',
+		'--my-mask-color': 'rgba(0, 0, 0, 0.6)'
 	},
 	dark: {
 		'--my-primary-color': '#c8c9cc',
@@ -55,7 +56,8 @@ export const mode: modeOptions = {
 		'--my-lyric-color': 'rgba(255,255,255,0.5)',
 		'--my-icon-color': '#c4c4c4',
 		'--van-slider-button-background-color': '#c4c4c4',
-		'--my-player-text-white': '#c4c4c4'
+		'--my-player-text-white': '#c4c4c4',
+		'--my-mask-color': 'rgba(24, 25, 27, 0.5)'
 	}
 }
 const modeKey = 'mode'

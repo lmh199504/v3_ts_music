@@ -2,7 +2,9 @@
 	<div class="scrollView">
 		<div class="img_wrapper" :style="wrapperStyle">
 			<img class="cover_img" :src="imgUrl" :style="imgStyle" ref="banner">
-			<slot name="btn"></slot>
+			<div class="btn">
+				<slot name="btn"></slot>
+			</div>
 		</div>
 		<div class="layer" ref="layer" :style="layerStyle"></div>
 		<div class="scroll_wrapper" ref="wrapper">
@@ -23,7 +25,7 @@
 		nextTick,
 		defineExpose
 	} from 'vue'
-
+	const emit = defineEmits(['scroll', 'scrollEnd'])
 	interface Props {
 		imgUrl ? : string;
 	}
@@ -52,6 +54,10 @@
 			originalHeight = banner.value.clientHeight
 			bs.on('scroll', (position) => {
 				scrollY.value = position.y
+				emit('scroll', position)
+			})
+			bs.on('scrollEnd', () => {
+				emit('scrollEnd')
 			})
 		}, 0)
 	})
@@ -138,6 +144,13 @@
 			height: 400px;
 			min-height: 100px;
 			object-fit: cover;
+		}
+		.btn{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 		}
 	}
 

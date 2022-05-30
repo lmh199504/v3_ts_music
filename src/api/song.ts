@@ -25,3 +25,9 @@ export const reqSheetDetail = (params: SongUrlParams) :Promise<AxiosResponse> =>
 	method: 'GET',
 	params
 })
+// 获取歌单歌曲
+export const reqSheetSongs = (params: SongUrlParams) :Promise<AxiosResponse> => request({
+	url: '/playlist/track/all',
+	method: 'GET',
+	params
+})

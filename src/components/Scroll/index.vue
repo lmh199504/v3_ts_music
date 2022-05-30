@@ -27,6 +27,9 @@
 			bs.on('scroll', (position) => {
 				emit('scroll', position)
 			})
+			bs.on('scrollEnd', () => {
+				emit('scrollEnd')
+			})
 		}, 1000)
 	})
 	

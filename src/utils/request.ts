@@ -68,6 +68,9 @@ service.interceptors.response.use(
 	error => {
 		const status = error?.response?.status
 		switch (status) {
+			case 301:
+				Toast.fail(error.response.data?.msg || '登录状态失效')
+				return Promise.reject(error)
 			case 401:
 				Toast.fail('登录状态失效')
 				return Promise.reject(error)
