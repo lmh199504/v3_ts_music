@@ -29,3 +29,8 @@ export const reqLoginByEmail = (params: EmaiLoginParams) :Promise<AxiosResponse>
 	method: 'GET',
 	params
 })
+// 私人FM
+export const reqPersonalFm = () :Promise<AxiosResponse> => request({
+	url: '/personal_fm',
+	method: 'GET'
+})

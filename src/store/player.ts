@@ -72,6 +72,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 			} else {
 				return false
 			}
+		},
+		isFirst(): boolean{
+			return this.playIndex == 0
 		}
 	},
 	actions: {
@@ -86,7 +89,8 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				const result = list.map(item => {
 					const find: SongData = resList.find((res_item: SongData) => item.id === res_item.id)
 					if (find) {
-						item.url = find.url
+						// item.url = find.url
+						item.url = `https://music.163.com/song/media/outer/url?id=${ find.id }.mp3`
 					}
 					return item
 				})
@@ -100,14 +104,15 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				.then(() => {
 					// const resList = res.data.data
 					// song.url = resList[0].url
-					song.url = ` https://music.163.com/song/media/outer/url?id=${ song.id }.mp3 `
+					song.url = `https://music.163.com/song/media/outer/url?id=${ song.id }.mp3`
+					console.log(song.url)
 					this.currentSong = song
 					this.playing = true
 					const index = this.playList.findIndex((item: SongData): boolean => item.id == song.id)
 					if (index == -1) {
 						this.playList.push(song)
 					}
-					this.setPlayerVisible(true)
+					// this.setPlayerVisible(true)
 				})
 			} else {
 				this.currentSong = song
@@ -116,7 +121,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 				if (index == -1) {
 					this.playList.push(song)
 				}
-				this.setPlayerVisible(true)
+				// this.setPlayerVisible(true)
 			}
 		},
 		setPlaying(val: boolean): void {

@@ -62,7 +62,9 @@ service.interceptors.response.use(
 				Toast.fail('请先登录')
 				return Promise.reject(res)
 			default:
-				return Promise.resolve(response)
+				msg = res && res.msg
+				Toast.fail(msg ? msg : '网络异常稍后再试~')
+				return Promise.reject(response)
 		}
 	},
 	error => {

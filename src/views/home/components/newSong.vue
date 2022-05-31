@@ -3,7 +3,7 @@
 	<div class="newSong" @touchmove="(e) => e.stopPropagation()">
 		<div class="top">
 			<div class="recomend_title">新歌推荐</div>
-			<van-button icon="play" round size="mini" >播放</van-button>
+			<van-button icon="play" round size="mini" @click="playAll">播放</van-button>
 		</div>
 		<swiper :modules="modules" :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
 			:scrollbar="{ draggable: true }">
@@ -15,17 +15,20 @@
 </template>
 
 <script setup lang="ts">
+	import { usePlayerStore } from '@/store'
 	import {
 		reqRecommendNewSongs
 	} from '@/api/home'
 	import {
-		ref, defineExpose
+		ref, defineExpose, toRaw
 	} from 'vue'
 	import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
 	import "swiper/swiper.min.css";	
 	import NewSongItem from './newSongItem'
 	import { songData } from '@/types/public'
 	const list = ref<Array<Array<songData>>>([])
+	const songList = ref<Array<songData>>([])
+	const playerStore = usePlayerStore()
 	
 	function getList() {
 		reqRecommendNewSongs({ limit: 12 })
@@ -33,6 +36,7 @@
 				const { data } = res
 				const tempList = []
 				const len = data.result.length
+				songList.value = data.result
 				for(let i = 0;i < len; i++) {
 					const l = Math.floor(i / 2)
 					if (!tempList[l]) {
@@ -42,8 +46,27 @@
 				}
 				list.value = tempList
 			})
+	}
+		
+	function playAll() {
+		const list = toRaw(songList.value)
+		const newlist = list.map((item: songData) => {
+			return {
+				dt: item.song.duration,
+				url: '',
+				name: item.song.name,
+				id: item.song.id,
+				ar: item.song.artists,
+				al: item.song.album
+			}
+		})
+		console.log(newlist)
+		playerStore.resetList(newlist)
 	}	
+		
 	getList()
+
+	
 	defineExpose({
 		getList
 	})

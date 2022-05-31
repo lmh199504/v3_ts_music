@@ -2,7 +2,7 @@
 	<div class="recomend">
 		<div class="recomend_top">
 			<div class="recomend_title">推荐跟单</div>
-			<van-button icon="arrow" round size="mini" icon-position="right">更多</van-button>
+			<van-button icon="arrow" round size="mini" icon-position="right" @click="goSheets">更多</van-button>
 		</div>
 		<div class="sroll_wrapper" ref="scrollRef" @touchmove="scroll">
 			<div class="list">
@@ -16,6 +16,8 @@
 	import { reqRecommendList } from '@/api/home'
 	import SongListItem from '@/components/songListItem'
 	import { ref, defineExpose } from 'vue'
+	import { useRouter } from 'vue-router'
+	const router = useRouter()
 	const songsList = ref([])
 	function getList() {
 		reqRecommendList({ limit: 10 })
@@ -26,6 +28,11 @@
 	function scroll(e: Event): void {
 		e.stopPropagation()
 	}
+	
+	function goSheets() {
+		router.push('/sheetSquare')
+	}
+	
 	getList()
 	defineExpose({
 		getList

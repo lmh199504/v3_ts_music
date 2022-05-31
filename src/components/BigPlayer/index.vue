@@ -80,7 +80,7 @@
 					<div class="play_menu_item">
 						<i class="iconfont icon-huaban"></i>
 					</div>
-					<div class="play_menu_item">
+					<div class="play_menu_item" @click="playPre">
 						<i class="iconfont icon-shangyishou"></i>
 					</div>
 					<div v-if="playing" class="play_menu_item center_icon" @click="setPlaying">
@@ -92,7 +92,7 @@
 					<div class="play_menu_item" @click="playNext">
 						<i class="iconfont icon-xiayishou"></i>
 					</div>
-					<div class="play_menu_item">
+					<div class="play_menu_item" @click="showList = true"> 
 						<i class="iconfont icon-24gf-playlistMusic2"></i>
 					</div>
 				</div>
@@ -101,10 +101,12 @@
 		<div class="player_bg" :style="bgStyle"></div>
 		<div class="player_mask"></div>
 		<audio :src="currentSong.url" autoplay ref="audio" @ended="onPlayEnd" @timeupdate="onTimeupdate" @error="onPlayError"></audio>
+		<PlayListPopup v-model:showPopup="showList" />
 	</div>
 </template>
 
 <script setup lang="ts">
+	import PlayListPopup from '@/components/PlayList/listPopup'
 	import { PlayModeData } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
@@ -118,8 +120,9 @@
 	import Scroll from '@/components/Scroll'
 	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
+	const showList = ref<boolean>(false)
 	const {
-		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList
+		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList, isFirst
 	} = storeToRefs(playerStore)
 	const srcoll = ref<Component>()
 	const showLyric = ref<boolean>(false)
@@ -182,6 +185,11 @@
 		}
 	}
 	watch(currentSong, val => {
+		console.log(audio.value)
+		if (audio.value) {
+			audio.value.volume = 0.1
+		}
+		
 		if (val.id) getLyric(val.id)
 	}, { immediate: true })
 	
@@ -266,6 +274,14 @@
 			playerStore.setCurSong(toRaw( playList.value[0] ))
 		} else {
 			playerStore.setCurSong(toRaw( playList.value[playIndex.value + 1] ))
+		}
+	}
+	// 上一首
+	function playPre() {
+		if (isFirst.value) { // 第一首
+			playerStore.setCurSong(toRaw( playList.value[playList.value.length - 1] ))
+		} else {
+			playerStore.setCurSong(toRaw( playList.value[playIndex.value - 1] ))
 		}
 	}
 </script>

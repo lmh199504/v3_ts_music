@@ -10,9 +10,13 @@
 </template>
 
 <script lang="ts" setup>
+	import { formatSheet } from '@/utils/song'
+	import { reqPersonalFm } from '@/api/user'
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
+	import { usePlayerStore } from '@/store'
 	const router = useRouter()
+	const playerStore = usePlayerStore()
 	const menuList = ref([{
 		name: '每日推荐',
 		icon: 'icon-rili',
@@ -20,11 +24,13 @@
 	},
 	{
 		name: '私人FM',
-		icon: 'icon-shouyinji'
+		icon: 'icon-shouyinji',
+		path: 'personalFm'
 	},
 	{
 		name: '歌单',
-		icon: 'icon-24gf-playlistMusic2'
+		icon: 'icon-24gf-playlistMusic2',
+		path: '/sheetSquare'
 	},
 	{
 		name: '排行榜',
@@ -43,6 +49,17 @@
 		e.stopPropagation()
 	}
 	function goPath(path: string): void {
+		if (path === 'personalFm') {
+			reqPersonalFm()
+			.then(res => {
+				const data = res.data.data.map(item => {
+					return formatSheet(item)
+				})
+				playerStore.resetList(data)
+			})
+			playerStore.setPlayerVisible(true)
+			return
+		}
 		router.push({
 			path
 		})

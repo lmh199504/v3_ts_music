@@ -22,7 +22,10 @@ import {
 	Switch,
 	Slider,
 	Lazyload,
-	NoticeBar
+	NoticeBar,
+	Col,
+	Row,
+	List
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -50,5 +53,8 @@ export default {
 		app.use(Slider)
 		app.use(Lazyload)
 		app.use(NoticeBar)
+		app.use(Col)
+		app.use(Row)
+		app.use(List)
 	}
 }

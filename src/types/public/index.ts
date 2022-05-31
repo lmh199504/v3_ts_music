@@ -1,3 +1,5 @@
+import { arData, alData } from '@/types/store/player'
+
 // 歌单数据
 export interface songListFace{
 	alg: string;
@@ -24,4 +26,21 @@ export interface songData{
 	song: any
 	trackNumberUpdateTime: number | null
 	type: number
+}
+// 歌单广场歌单
+export interface SheetDataFace{
+	coverImgUrl: string;
+	tags: Array<string>;
+	updateTime: number;
+	name: string;
+	playCount: number;
+}
+
+// 歌单广场列表歌曲
+export interface songInterface{
+	id: number;
+	name: string;
+	artists: Array<arData>;
+	album: alData;
+	duration: number;
 }

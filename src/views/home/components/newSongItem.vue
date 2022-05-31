@@ -15,15 +15,17 @@
 				</div>
 			</div>
 			<div class="right flex_box_center_column">
-				<i class="iconfont icon-24gf-play"></i>
+				<i class="iconfont icon-24gf-play" @click="playThis"></i>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { usePlayerStore } from '@/store'
 	import { computed } from 'vue'
 	import { songData as songDataInterface } from '@/types/public'
+	const playerStore = usePlayerStore()
 	interface Props{
 		songData: songDataInterface
 	}
@@ -37,6 +39,18 @@
 		} 
 		return '-'
 	})
+	function playThis() {
+		const data = {
+			dt: props.songData.song.duration,
+			url: '',
+			name: props.songData.song.name,
+			id: props.songData.song.id,
+			ar: props.songData.song.artists,
+			al: props.songData.song.album
+		}
+		playerStore.setCurSong(data)
+	}
+	
 </script>
 
 <style scoped lang="less">

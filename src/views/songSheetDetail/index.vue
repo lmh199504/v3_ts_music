@@ -153,6 +153,7 @@
 			position: relative;
 			width: 100%;
 			height: 100%;
+			
 			.bg{
 				position: absolute;
 				top: 0;
@@ -174,12 +175,13 @@
 			.main{
 				position: absolute;
 				z-index: 3;
-				left: 0;
-				top: 0;
+				left: 50%;
+				top: 50%;
 				width: 100%;
-				height: 100%;
+				height: fit-content;
 				padding: 30px;
 				box-sizing: border-box;
+				transform: translate(-50%, -50%);
 				.data{
 					display: flex;
 					.left{

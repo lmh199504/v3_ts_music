@@ -104,6 +104,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '歌单详情'
 		}
+	},
+	{
+		path: '/sheetSquare',
+		name: 'SheetSquare',
+		component: () => import('@/views/sheetSquare/index.vue'),
+		meta: {
+			title: '歌单广场'
+		}
 	}
 ]
 
