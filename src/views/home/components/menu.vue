@@ -34,7 +34,8 @@
 	},
 	{
 		name: '排行榜',
-		icon: 'icon-paihangbang'
+		icon: 'icon-paihangbang',
+		path: '/topList'
 	},
 	{
 		name: '直播',
@@ -42,7 +43,8 @@
 	},
 	{
 		name: '数字专辑',
-		icon: 'icon-zhuanji'
+		icon: 'icon-zhuanji',
+		path: '/album'
 	}
 	])
 	function scroll(e: Event): void {

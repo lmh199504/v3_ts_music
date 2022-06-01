@@ -1,5 +1,5 @@
 <template>
-	<van-popup v-model:show="show" round>
+	<van-popup v-model:show="show" round append-to-body>
 		<List v-if="show"/>
 	</van-popup>
 </template>

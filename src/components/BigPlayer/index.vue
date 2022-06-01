@@ -13,9 +13,9 @@
 					<van-icon name="share" />
 				</div>
 			</div>
-			<div class="center_music">
+			<div class="center_music" @click="showLyric = !showLyric">
 				<!-- 歌曲图片 -->
-				<div class="disc" :class="{ 'disc_pause': !playing }" v-show="!showLyric" @click="showLyric = true">
+				<div class="disc" :class="{ 'disc_pause': !playing }" v-show="!showLyric">
 					<div class="m-song-turn animate__rotate" :class="{ 'rotate_pause': !playing }">
 						<div class="m-song-rollwrap">
 							<div class="m-song-img">
@@ -25,12 +25,13 @@
 					</div>
 				</div>
 				<!-- 歌词 -->
-				<div class="lyric" v-show="showLyric" @click="showLyric = false">
+				<div class="lyric" v-show="showLyric">
 					<Scroll :probeType="3" ref="srcoll">
 						<div class="lyric_div">
 							<div v-for="(item, index) in lyricLines" :key="index" class="lyrclines" :class="[ `lyrcline${ index  }`, activeIndex == index ? 'lyrclactive': '' ]">{{ item.txt }}</div>
 						</div>
-					</Scroll>	
+					</Scroll>
+					<div class="mask_lyric"></div>
 				</div>
 			</div>
 			<div class="menu_wrapper">
@@ -160,6 +161,7 @@
 	watch(showLyric, ()=> {
 		nextTick(() => {
 			srcoll.value && srcoll.value.refresh()
+			lyric && lyric.seek(audio.value.currentTime*1000)
 		})
 	})
 	
@@ -445,6 +447,17 @@
 				.lyric{
 					height: 100%;
 					overflow: hidden;
+					position: relative;
+					.mask_lyric{
+						position: absolute;
+						z-index: 1;
+						bottom: 0;
+						height: 60px;
+						// background: linear-gradient(rgba(255,255,255, 0.1), rgba(255,255,255, 0));
+						// background: linear-gradient(blue, red);
+						left: 0;
+						width: 100%;
+					}
 					.lyric_div{
 						text-align: center;
 						font-size: 30px;
@@ -452,13 +465,13 @@
 						box-sizing: border-box;
 						padding: 0 40px;
 						.lyrclines{
-							font-size: 36px;
+							font-size: 30px;
 							line-height: 60px;
 							transition: all 0.4s ease; 
 						}
 						.lyrclactive{
 							color: #fff;
-							font-size: 40px;
+							font-size: 32px;
 						}
 					}
 				}

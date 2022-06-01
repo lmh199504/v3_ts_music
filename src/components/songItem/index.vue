@@ -1,7 +1,7 @@
 <template>
 	<div class="song-item">
 		<div class="left">
-			<img class="left_al_img" :src="songData.al.picUrl" alt="" v-lazy="songData.al.picUrl">
+			<img class="left_al_img" :src="songData.al.picUrl + '?param=140y140'" alt="" v-lazy="songData.al.picUrl + '?param=140y140'">
 		</div>
 		<div class="center">
 			<div class="song-name">{{ songData.name }}</div>
@@ -48,6 +48,7 @@
 			flex-direction: column;
 			justify-content: center;
 			flex: 1;
+			overflow: hidden;
 			.song-name{
 				font-size: 26px;
 				color: var(--my-text-color-black);

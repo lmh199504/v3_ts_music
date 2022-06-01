@@ -28,6 +28,7 @@
 		left: 0;
 		width: 100%;
 		transition: all 0.4s ease;
+		z-index: 10;
 	}
 	.hide_player{
 		bottom: -120px;

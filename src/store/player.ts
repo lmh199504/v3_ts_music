@@ -132,6 +132,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		},
 		setCurrentText(txt: string) :void {
 			this.currentText = txt
+			document.title = txt
 		}
 	}
 })

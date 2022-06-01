@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<div class="btn_wrapper">
-								<div class="btn_item">
+								<div class="btn_item" @click="subscribeSheet">
 									<div class="flex_box_center_column"><i class="iconfont icon-shoucangjia"></i></div>
 									<div class="text">{{ details.subscribedCount }}</div>
 								</div>
@@ -87,6 +87,7 @@
 		toRaw
 	} from 'vue'
 	import { formatCountNumber } from '@/utils'
+	import { reqSubscribeSheet } from '@/api/sheet'
 	const route = useRoute()
 	const router = useRouter()
 	const details = reactive({})
@@ -131,7 +132,16 @@
 	function PlayAll() {
 		playerStore.resetList(toRaw(list.value))
 	}
-	
+	// 收藏歌单
+	function subscribeSheet() {
+		reqSubscribeSheet({
+			t: 1,
+			id: route.query.id
+		})
+		.then(() => {
+			Toast.success('收藏成功')
+		})
+	}
 	
 	getDetail()
 	getSheetSongs()

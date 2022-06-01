@@ -3,7 +3,7 @@
 		<div class="newSongItem">
 			<div class="left">
 				<div class="cover">
-					<img class="cover_img" :src="songData.picUrl" alt="">
+					<img class="cover_img" :src="songData.picUrl+'?param=140y140'" alt="">
 					<i class="iconfont icon-24gf-play"></i>
 				</div>
 				<div class="song_info">
@@ -96,6 +96,7 @@
 				flex: 1;
 				padding-right: 10px;
 				overflow: hidden;
+				max-width: 300px;
 			}
 			.song_name{
 				font-size: 28px;

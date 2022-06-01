@@ -112,6 +112,22 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '歌单广场'
 		}
+	},
+	{
+		path: '/topList',
+		name: 'TopList',
+		component: () => import('@/views/topList/index.vue'),
+		meta: {
+			title: '排行榜'
+		}
+	},
+	{
+		path: '/album',
+		name: 'Album',
+		component: () => import('@/views/album/index.vue'),
+		meta: {
+			title: '数字专辑'
+		}
 	}
 ]
 

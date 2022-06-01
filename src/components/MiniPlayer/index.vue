@@ -103,10 +103,16 @@
 				color: var(--my-text-color-black);
 				font-size: 28px;
 				font-weight: bold;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
 			.m_singer{
 				font-size: 24px;
 				color: #999;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
 		}
 		.m_play_menu{

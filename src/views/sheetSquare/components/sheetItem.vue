@@ -1,7 +1,7 @@
 <template>
 	<div class="song_list_item">
 		<div class="cover" @click="goDetail">
-			<img class="cover_img" :src="sheetData.coverImgUrl" alt="" v-lazy="sheetData.coverImgUrl">
+			<img class="cover_img" :src="sheetData.coverImgUrl + '?param=140y140'" alt="" v-lazy="sheetData.coverImgUrl + '?param=140y140'">
 			<div class="play_count">
 				<i class="iconfont icon-bofang"></i>
 				<div>{{ formatCountNumber(sheetData.playCount) }}</div>
