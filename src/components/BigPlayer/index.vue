@@ -500,7 +500,7 @@
 						overflow: hidden;
 						flex-shrink: 0;
 					}
-					/deep/ .center_process{
+					:deep(.center_process){
 						flex: 1;
 						padding: 0 20px;
 						.van-slider{

@@ -40,7 +40,7 @@
 			}
 		}
 		.btn_wrapper{
-			/deep/ .van-button{
+			:deep(.van-button){
 				margin-bottom: 30px;
 			}
 		}

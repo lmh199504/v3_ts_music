@@ -63,7 +63,7 @@
 			.iconfont{
 				font-size: 30px;
 			}
-			/deep/ .van-button{
+			:deep(.van-button){
 				border: 1px solid #fff;
 			}
 		}

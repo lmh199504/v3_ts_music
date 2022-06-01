@@ -5,6 +5,7 @@
 			<Banner />
 			<NewAlbum />
 			<DigitAlbum />
+			<SingleDigit />
 		</div>
 	</MiniPlayOut>
 </template>
@@ -12,6 +13,7 @@
 <script setup lang="ts">
 	import NewAlbum from './components/newAlbum.vue'
 	import DigitAlbum from './components/digitAlbum.vue'
+	import SingleDigit from './components/singleDigit.vue'
 	import Banner from '@/views/home/components/swiper'
 	import { useRouter } from 'vue-router'
 	const router = useRouter()

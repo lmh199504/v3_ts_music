@@ -31,6 +31,7 @@
 
 <style scoped lang="less">
 	.newAlbum{
+		margin-bottom: 20px;
 		.title{
 			padding-left: 15px;
 			margin-bottom: 10px;

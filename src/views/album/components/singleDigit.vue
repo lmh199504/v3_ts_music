@@ -2,7 +2,7 @@
 	<div class="digitAlbum">
 		<div class="top">
 			<div class="title">
-				<div>数字专辑</div>
+				<div>数字单曲榜</div>
 				<div class="flex_box_center_column">
 					<van-icon name="arrow" />
 				</div>
@@ -16,14 +16,6 @@
 				<AlbumItem :album-data="item" />
 			</van-col>
 		</van-row>
-		
-		<swiper :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
-			:scrollbar="{ draggable: true }">
-			<swiper-slide v-for="(item, index) in list" :key="index">
-				<!-- <new-song-item :song-data="data" v-for="data in item" :key="data.id" /> -->
-				oinadsfdasf
-			</swiper-slide>
-		</swiper>
 	</div>
 </template>
 
@@ -31,8 +23,6 @@
 	import { ref } from 'vue'
 	import { reqDigitAlbum } from '@/api/album'
 	import { albumDataInterface } from '@/types/public/album'
-	import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
-	import "swiper/swiper.min.css";
 	import AlbumItem from './albumItem'
 	const menuList = ref([
 		{ name: '日榜', type: 'daily' },
@@ -49,7 +39,8 @@
 	function getDigitAlbum() {
 		const data = {
 			limit: 6,
-			type: type.value
+			type: type.value,
+			albumType: 1
 		}
 		reqDigitAlbum(data)
 		.then(res => {

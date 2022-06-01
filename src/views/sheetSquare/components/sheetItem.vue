@@ -34,11 +34,12 @@
 	.song_list_item {
 		width: 100%;
 		flex-shrink: 0;
-		padding: 10px;
+		padding: 20px;
 		box-sizing: border-box;
 		.cover{
-			width: 200px;
-			height: 200px;
+			width: 100%;
+			height: 0;
+			padding-bottom: 100%;
 			border-radius: 20px;
 			position: relative;
 			margin: auto;
@@ -62,12 +63,13 @@
 			width: 100%;
 			height: 100%;
 			border-radius: 20px;
+			position: absolute;
 		}
 		.song_list_title {
 			font-size: 24px;
 			margin: auto;
 			margin-top: 5px;
-			width: 200px;
+			width: 100%;
 		}
 	}
 </style>

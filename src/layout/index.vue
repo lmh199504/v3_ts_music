@@ -45,7 +45,7 @@
 		height: 100vh;
 		overflow: hidden;
 
-		/deep/ .van-swipe-cell {
+		:deep(.van-swipe-cell) {
 			height: 100%;
 
 			.van-swipe-cell__wrapper {

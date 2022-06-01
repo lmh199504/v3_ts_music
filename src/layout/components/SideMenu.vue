@@ -194,7 +194,7 @@
 					font-size: 28px;
 					color: var(--my-text-color-black);
 				}
-				/deep/ .van-icon{
+				:deep(.van-icon){
 					color: var(--my-text-color-black);
 				}
 			}
@@ -210,7 +210,7 @@
 		.box-container {
 			margin-top: 40px;
 
-			/deep/ .van-cell-group--inset {
+			:deep(.van-cell-group--inset) {
 				margin: auto;
 			}
 

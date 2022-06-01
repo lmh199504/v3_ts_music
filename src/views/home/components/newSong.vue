@@ -5,7 +5,7 @@
 			<div class="recomend_title">新歌推荐</div>
 			<van-button icon="play" round size="mini" @click="playAll">播放</van-button>
 		</div>
-		<swiper :modules="modules" :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
+		<swiper :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
 			:scrollbar="{ draggable: true }">
 			<swiper-slide v-for="(item, index) in list" :key="index">
 				<new-song-item :song-data="data" v-for="data in item" :key="data.id" />

@@ -9,3 +9,7 @@ export interface DigitAlbumParams{
 	albumType?: number;
 	type: string;
 }
+// 数字专辑详情
+export interface AlbumDetailParams{
+	id: number
+}

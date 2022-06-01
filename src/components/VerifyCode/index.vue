@@ -46,7 +46,7 @@
 			z-index: 1;
 			width: 100%;
 			height: 100%;
-			/deep/ .van-field__body{
+			:deep(.van-field__body){
 				height: 100%;
 				.van-field__control{
 					height: 100%;

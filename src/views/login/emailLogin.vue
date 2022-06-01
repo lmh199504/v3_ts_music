@@ -7,7 +7,7 @@
 				<van-field v-model="password" type="password" name="密码" label="密码" placeholder="密码" />
 			</van-cell-group>
 			<div style="margin: 16px;">
-				<van-button round block type="primary" native-type="submit" :loading="loading">
+				<van-button round block type="primary" native-type="submit" :loading="loading" color="#e20001">
 					提交
 				</van-button>
 			</div>

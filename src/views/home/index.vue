@@ -1,6 +1,5 @@
 <template>
 	<div class="home">
-		<!-- <button @click="back">back</button> -->
 		<van-pull-refresh v-model="loading" @refresh="onRefresh">
 			<van-sticky>
 				<div class="nav">
@@ -31,13 +30,11 @@
 
 <script lang="ts" setup>
 	import { ref, Component } from 'vue'
-	import { useRouter } from 'vue-router'
 	import $bus from '@/utils/eventBus'
 	import Swiper from './components/swiper.vue'
 	import Menu from './components/menu'
 	import RecommendSongList from './components/recommendSongList'
 	import NewSong from './components/newSong'
-	const router = useRouter()
 	function openMenu(): void {
 		$bus.emit('opne_menu')
 	}
@@ -54,10 +51,6 @@
 		}, 2000)
 	}
 	
-	function back() {
-		router.go(-1)
-		// window.close()
-	}
 	
 </script>
 
