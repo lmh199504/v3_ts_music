@@ -35,7 +35,7 @@
 	.top_item{
 		padding: 30px;
 		.topname{
-			color: var(--my-text-color-white);
+			color: var(--my-text-color-black);
 			font-size: 40px;
 			margin-bottom: 20px;
 			font-weight: bold;
