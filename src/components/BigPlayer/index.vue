@@ -149,7 +149,6 @@
 	const lyricLines = ref<Array<LinesData>>([])
 
 	watch(showBigPlayer, (val) => {
-		console.log(val)
 		if (val) {
 			showLyric.value = false
 		}
@@ -167,7 +166,7 @@
 	
 	watch(playing, (val) => {
 		if (currentSong.value.id) {
-			if (val.value) { // 播放
+			if (val) { // 播放
 				audio.value.play()
 			} else {
 				audio.value.pause()
