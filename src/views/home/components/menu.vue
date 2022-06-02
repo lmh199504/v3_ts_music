@@ -38,8 +38,9 @@
 		path: '/topList'
 	},
 	{
-		name: '直播',
-		icon: 'icon-zhiboshenqing'
+		name: '歌手',
+		icon: 'icon-zhiboshenqing',
+		path: '/singer'
 	},
 	{
 		name: '数字专辑',

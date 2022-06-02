@@ -1,5 +1,5 @@
 <template>
-	<div class="min-play-out">
+	<div class="min-play-out" :class="{ 'padding_out': currentSong.id }">
 		<slot></slot>
 		<div class="mini_player" :class="{ 'hide_player': !currentSong.id }">
 			<MiniPlayer />
@@ -17,10 +17,12 @@
 
 <style scoped>
 	.min-play-out{
-		padding-bottom: 110px;
 		height: 100vh;
 		box-sizing: border-box;
 		background-color: var(--my-back-color-white);
+	}
+	.padding_out{
+		padding-bottom: 110px;
 	}
 	.mini_player{
 		position: fixed;
@@ -29,8 +31,11 @@
 		width: 100%;
 		transition: all 0.4s ease;
 		z-index: 10;
+		padding-bottom: constant(safe-area-inset-bottom);
+		padding-bottom: env(safe-area-inset-bottom);
+		background: var(--my-back-color-white);
 	}
 	.hide_player{
-		bottom: -120px;
+		bottom: -200px;
 	}
 </style>

@@ -66,6 +66,7 @@
 			font-size: 24px;
 			margin-top: 5px;
 			width: 200px;
+			color: var(--my-text-color-black);
 		}
 	}
 </style>

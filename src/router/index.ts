@@ -128,6 +128,22 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '数字专辑'
 		}
+	},
+	{
+		path: '/singer',
+		name: 'Singer',
+		component: () => import('@/views/singer/index.vue'),
+		meta: {
+			title: '歌手'
+		}
+	},
+	{
+		path: '/singerDetail',
+		name: 'SingerDetail',
+		component: () => import('@/views/singer/detail.vue'),
+		meta: {
+			title: '歌手详情'
+		}
 	}
 ]
 

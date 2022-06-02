@@ -62,7 +62,7 @@
 		}, 0)
 	})
 	nextTick(() => {
-		bs && bs.refesh()
+		bs && bs.refresh()
 	})
 	function refresh() {
 		bs && bs.refresh.apply(bs, arguments)
@@ -126,10 +126,10 @@
 		overflow: hidden;
 		flex: 1;
 		background-color: var(--my-back-color-white);
-
 		.scroll_content {
 			padding-bottom: 100px;
 			background-color: var(--my-back-color-white);
+			min-height: 100%;
 		}
 	}
 

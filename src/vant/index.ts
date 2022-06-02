@@ -25,7 +25,9 @@ import {
 	NoticeBar,
 	Col,
 	Row,
-	List
+	List,
+	DropdownMenu,
+	DropdownItem
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -56,5 +58,7 @@ export default {
 		app.use(Col)
 		app.use(Row)
 		app.use(List)
+		app.use(DropdownMenu)
+		app.use(DropdownItem)
 	}
 }
