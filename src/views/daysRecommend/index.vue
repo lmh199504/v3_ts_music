@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts" setup>
+	import { onClickLeft } from '@/utils/back' 
 	import {
 		ref, toRaw, Component, nextTick
 	} from 'vue'
@@ -56,10 +57,6 @@
 			loading.clear()
 		})
 	
-	function onClickLeft(): void {
-		router.back()
-	}
-
 	function onClickRight(): void {
 		router.push({
 			path: '/daysRecommendHistory'

@@ -17,11 +17,7 @@
 </template>
 
 <script setup lang="ts">
-	import { useRouter } from 'vue-router'
-	const router = useRouter()
-	function onClickLeft() {
-		router.back()
-	}
+	import { onClickLeft } from '@/utils/back'
 </script>
 
 <style scoped lang="less">

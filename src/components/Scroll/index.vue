@@ -11,10 +11,12 @@
 	import { onMounted, ref, defineExpose } from 'vue'
 	interface Props{
 		probeType: number // 决定是否派发 scroll 事件，对页面的性能有影响，尤其是在 useTransition 为 true 的模式下 0 1 2 3 
+		stopPropagation: boolean
 	}
 	const emit = defineEmits(['scroll', 'scrollEnd'])
 	const props = withDefaults(defineProps<Props>(), {
-		probeType: 3
+		probeType: 3,
+		stopPropagation: false
 	})
 	const scrollwrapper = ref<HTMLDivElement>()
 	let bs = null;
@@ -22,6 +24,7 @@
 		setTimeout(() => {
 			bs = new BScroll(scrollwrapper.value, {
 				probeType: props.probeType,
+				stopPropagation: props.stopPropagation,
 				click: true
 			})
 			bs.on('scroll', (position) => {

@@ -66,14 +66,14 @@
 </template>
 
 <script setup lang="ts">
+	import { onClickLeft } from '@/utils/back' 
 	import SongItem from '@/components/songItem'
 	import MiniPlayOut from '@/layout/miniplayout'
 	import Scroll from '@/components/Scroll/scrollBanner'
 	import { usePlayerStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
 	import {
-		useRoute,
-		useRouter
+		useRoute
 	} from 'vue-router'
 	import {
 		ref,
@@ -85,7 +85,6 @@
 	import { formatCountNumber } from '@/utils'
 	import { reqAlbum } from '@/api/album'
 	const route = useRoute()
-	const router = useRouter()
 	const details = reactive({})
 	const list = ref([])
 	const scrollRef = ref < Component > ()
@@ -93,10 +92,6 @@
 	const show = ref<boolean>(false)
 	const info = reactive({})
 
-	function onClickLeft() {
-		router.back()
-	}
-	
 	function PlayAll() {
 		playerStore.resetList(toRaw(list.value))
 	}

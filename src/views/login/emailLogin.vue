@@ -23,12 +23,10 @@
 	import { Toast } from 'vant'
 	import { validEmail }  from '@/utils'
 	import { useUserStore } from '@/store'
+	import { onClickLeft } from '@/utils/back' 
+	
 	const router = useRouter()
 	const userStore = useUserStore()
-	function onClickLeft() {
-		router.back()
-	}
-
 	const email = ref<string>('');
 	const password = ref<string>('');
 	const loading = ref<boolean>(false)

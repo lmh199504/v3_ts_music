@@ -14,15 +14,12 @@
 
 <script setup lang="ts">
 	import {
-		useRouter
-	} from 'vue-router'
-	import {
 		ref
 	} from 'vue'
 	import { reqTopList } from '@/api/toplist'
 	import TopItem from './components/topItem.vue'
+	import { onClickLeft } from '@/utils/back' 
 	const active: number = ref(0)
-	const router = useRouter()
 	const tags = ref([])
 	function getTopList() {
 		reqTopList()
@@ -30,11 +27,7 @@
 			tags.value = res.data.list
 		})
 	}
-	
-	function onClickLeft() {
-		router.back()
-	}
-	
+
 	getTopList()
 </script>
 

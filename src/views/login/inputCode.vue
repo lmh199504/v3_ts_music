@@ -12,12 +12,10 @@
 	import VerifyCode from '@/components/VerifyCode'
 	import { useRouter } from 'vue-router'
 	import { useUserStore } from '@/store'
+	import { onClickLeft } from '@/utils/back' 
 	const userStore = useUserStore()
 	const router = useRouter()
-	const onClickLeft = () => {
-		router.back()
-	}
-	
+
 	const loginPhone = sessionStorage.getItem('loginPhone')
 	if (!loginPhone) {
 		onClickLeft()

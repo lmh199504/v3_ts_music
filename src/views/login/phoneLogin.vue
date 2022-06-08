@@ -17,12 +17,10 @@
 	import { useRouter } from 'vue-router'
 	import { reqSendCode } from '@/api/user'
 	import { Toast } from 'vant'
-	const router = useRouter()
-	const onClickLeft = () => {
-		router.back()
-	}
-	const phone = ref<number>()
+	import { onClickLeft } from '@/utils/back' 
 	
+	const router = useRouter()
+	const phone = ref<number>()
 	function sendCode() {
 		const reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
 		if (reg.test(phone.value)) {

@@ -75,9 +75,9 @@
 	import {
 		reqSheetDetail, reqSheetSongs
 	} from '@/api/song'
+	import { onClickLeft } from '@/utils/back' 
 	import {
-		useRoute,
-		useRouter
+		useRoute
 	} from 'vue-router'
 	import {
 		ref,
@@ -89,7 +89,6 @@
 	import { formatCountNumber } from '@/utils'
 	import { reqSubscribeSheet } from '@/api/sheet'
 	const route = useRoute()
-	const router = useRouter()
 	const details = reactive({})
 	const list = ref([])
 	const scrollRef = ref < Component > ()
@@ -125,10 +124,6 @@
 		})
 	}
 
-	function onClickLeft() {
-		router.back()
-	}
-	
 	function PlayAll() {
 		playerStore.resetList(toRaw(list.value))
 	}

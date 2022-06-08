@@ -17,17 +17,14 @@
 
 <script setup lang="ts">
 	import { singerType, araeList } from '@/utils/enum'
+	import { onClickLeft } from '@/utils/back' 
 	import {
 		reqSingerList
 	} from '@/api/singer'
 	import {
-		useRouter
-	} from 'vue-router'
-	import {
 		ref
 	} from 'vue'
 	import SingerItem from './components/singerItem.vue'
-	const router = useRouter()
 	const pushLoading = ref < boolean > (false)
 	const loading = ref < boolean > (false)
 	const type = ref<number>(-1) // 歌手类型
@@ -68,10 +65,6 @@
 		page = 0
 		list.value = []
 		getList()
-	}
-
-	function onClickLeft() {
-		router.back()
 	}
 </script>
 

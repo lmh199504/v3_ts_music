@@ -11,7 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-	import { useRouter, useRoute } from 'vue-router'
+	import { onClickLeft } from '@/utils/back' 
+	import { useRoute } from 'vue-router'
 	import { reqSingerSongs } from '@/api/singer'
 	import { usePlayerStore } from '@/store'
 	import { ref, toRaw } from 'vue'
@@ -23,13 +24,8 @@
 	let offset = -1
 	const loading = ref<boolean>(false)
 	const finished = ref<boolean>(false)
-	const router = useRouter()
 	const { id } = route.query
 	
-	// 返回上一页
-	function onClickLeft() {
-		router.back()
-	}
 	// 播放全部
 	function playAll() {
 		playerStore.resetList(toRaw(list.value))

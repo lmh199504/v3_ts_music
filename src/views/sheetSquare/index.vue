@@ -13,15 +13,12 @@
 
 <script setup lang="ts">
 	import {
-		useRouter
-	} from 'vue-router'
-	import {
 		ref
 	} from 'vue'
 	import { reqSheetTags } from '@/api/song'
+	import { onClickLeft } from '@/utils/back' 
 	import SheetList from './components/sheetList.vue'
 	const active: number = ref(0)
-	const router = useRouter()
 	const tags = ref([])
 	function getSheetTags() {
 		reqSheetTags()
@@ -29,11 +26,6 @@
 			tags.value = res.data.tags
 		})
 	}
-	
-	function onClickLeft() {
-		router.back()
-	}
-	
 	getSheetTags()
 </script>
 

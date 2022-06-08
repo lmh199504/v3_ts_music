@@ -13,3 +13,13 @@ export interface EmaiLoginParams{
 	email: string;
 	password: string;
 }
+// 用户跟单
+export interface UserPlayList{
+	uid: number;
+}
+// 用户关注/粉丝列表
+export interface UserFollow{
+	uid: number;
+	limit?: number;
+	offset?: number;
+}

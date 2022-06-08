@@ -29,8 +29,7 @@
 		reqGetRecommendDate
 	} from '@/api/home'
 	import DateList from './components/dateList.vue'
-	import { useRouter } from 'vue-router'
-	const router = useRouter()
+	import { onClickLeft } from '@/utils/back' 
 	const scroll = ref<Component>()
 	const active: number = ref(0)
 	const dataList = ref<Array<string>>([])
@@ -39,10 +38,7 @@
 		const resDate = await reqGetRecommendDate()
 		dataList.value = resDate.data.data.dates
 	}
-	function onClickLeft() {
-		router.back()
-	}
-	
+
 	function refresh() {
 		nextTick(() => {
 			scroll.value.refresh()

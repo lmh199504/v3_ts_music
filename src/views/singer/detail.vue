@@ -74,6 +74,7 @@
 	import SongItem from '@/components/songItem'
 	import { usePlayerStore } from '@/store'
 	import SingerAlbumItem from '@/components/SingerAlbumItem'
+	import { onClickLeft } from '@/utils/back' 
 	
 	const playerStore = usePlayerStore()
 	const hotList = ref([])
@@ -98,9 +99,6 @@
 	})
 	const albumList = ref([])
 	
-	function onClickLeft() :number {
-		router.back()
-	}
 	// 歌手详情
 	function getSingerDetail() :void {
 		const { id } = route.query
