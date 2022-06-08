@@ -42,13 +42,21 @@
 							<div>热门歌曲</div>
 							<div>
 								<van-button round size="small" @click="playAll" style="margin-right: 15px;">播放全部</van-button>
-								<van-button round size="small" @click="goAllSongs">更多</van-button>
 							</div>
 						</div>
-						
 						<div class="">
 							<SongItem v-for="item in hotList" :key="item.id" :song-data="item" />
+							<van-button round size="small" @click="goAllSongs" block>查看更多</van-button>
 						</div>
+					</div>
+					
+					<div class="box_container ">
+						<div class="big_title">热门专辑</div>
+						<van-row>
+							<van-col :span="8" v-for="item in albumList" :key="item.id">
+								<SingerAlbumItem :album-data="item" />
+							</van-col>
+						</van-row>
 					</div>
 				</div>
 			</ScrollBanner>	
@@ -60,11 +68,12 @@
 	import { reactive, ref, Component, nextTick, toRaw } from 'vue'
 	import { useRouter, useRoute } from 'vue-router'
 	import ScrollBanner from '@/components/Scroll/scrollBanner'
-	import { reqSingerDetail, reqSingerDesc, reqSingerFans, reqSubSinger, reqSingHotSongs } from '@/api/singer'
+	import { reqSingerDetail, reqSingerDesc, reqSingerFans, reqSubSinger, reqSingHotSongs, reqSingerAlbum } from '@/api/singer'
 	import { Toast } from 'vant'
 	import { formatCountNumber } from '@/utils'
 	import SongItem from '@/components/songItem'
 	import { usePlayerStore } from '@/store'
+	import SingerAlbumItem from '@/components/SingerAlbumItem'
 	
 	const playerStore = usePlayerStore()
 	const hotList = ref([])
@@ -87,6 +96,8 @@
 		briefDesc: '',
 		albumSize: ''
 	})
+	const albumList = ref([])
+	
 	function onClickLeft() :number {
 		router.back()
 	}
@@ -166,8 +177,19 @@
 	}
 	// 播放全部
 	function playAll() {
-		console.log(toRaw(hotList.value))
 		playerStore.resetList(toRaw(hotList.value))
+	}
+	// 获取歌手专辑
+	function getAlbum() {
+		reqSingerAlbum({
+			id: route.query.id
+		})
+		.then(res => {
+			albumList.value = res.data.hotAlbums
+			nextTick(() => {
+				scrollRef.value.refresh()
+			})
+		})
 	}
 	
 	function goAllSongs() {
@@ -182,6 +204,7 @@
 	getSingerDesc()
 	genFans()
 	getSingHotSongs()
+	getAlbum()
 </script>
 
 <style scoped lang="less">

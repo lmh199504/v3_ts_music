@@ -20,3 +20,15 @@ export const reqAlbumDetail = (params: AlbumDetailParams) :Promise<AxiosResponse
 	method: 'GET',
 	params
 })
+// 专辑详情 /digitalAlbum/detail
+export const reqDigitalAlbum = (params: AlbumDetailParams) :Promise<AxiosResponse> => request({
+	url: '/digitalAlbum/detail',
+	method: 'GET',
+	params
+})
+// 获取专辑内容
+export const reqAlbum = (params :AlbumDetailParams) :Promise<AxiosResponse> => request({
+	url: '/album',
+	method: 'GET',
+	params
+})

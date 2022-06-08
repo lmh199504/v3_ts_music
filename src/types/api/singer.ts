@@ -18,7 +18,13 @@ export interface singerDetailParams{
 // 分页获取歌曲
 export interface singerSongParams{
 	id: number;
-	order: string;
+	order?: string;
+	limit: number;
+	offset: number;
+}
+// 获取歌手专辑
+export interface singerAlbum{
+	id: number;
 	limit: number;
 	offset: number;
 }

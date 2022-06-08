@@ -21,7 +21,7 @@
 			:scrollbar="{ draggable: true }">
 			<swiper-slide v-for="(item, index) in list" :key="index">
 				<!-- <new-song-item :song-data="data" v-for="data in item" :key="data.id" /> -->
-				oinadsfdasf
+				<!-- oinadsfdasf -->
 			</swiper-slide>
 		</swiper>
 	</div>

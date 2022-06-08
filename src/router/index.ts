@@ -152,6 +152,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '歌手全部歌曲'
 		}
+	},
+	{
+		path: '/albumDetail',
+		name: 'AlbumDetail',
+		component: () => import('@/views/album/detail.vue'),
+		meta: {
+			title: '专辑详情'
+		}
 	}
 ]
 

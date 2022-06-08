@@ -1,19 +1,19 @@
 <template>
 	<div class="album_item">
 		<div class="cover" @click="tapAlbum">
-			<img :src="albumData.coverUrl + '?param=140y140'" alt="">
+			<img :src="albumData.picUrl + '?param=140y140'" alt="">
 		</div>
-		<div class="albumName">{{ albumData.albumName }}</div>
-		<div class="artistName">{{ albumData.artistName }}</div>
+		<div class="albumName">{{ albumData.name }}</div>
+		<div class="artistName">{{ albumData.artist.name }}</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { useRouter } from 'vue-router'
-	import { albumDataInterface } from '@/types/public/album'
+	import { singerAlbumInterface } from '@/types/public/singer'
 	const router = useRouter()
 	interface Props{
-		albumData: albumDataInterface
+		albumData: singerAlbumInterface
 	}
 	const props = withDefaults(defineProps<Props>(), {
 		albumData: () => { return {} }
@@ -22,7 +22,7 @@
 		router.push({
 			path: '/albumDetail',
 			query: {
-				id: props.albumData.albumId
+				id: props.albumData.id
 			}
 		})
 	}
