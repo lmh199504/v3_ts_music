@@ -29,6 +29,16 @@
 	function playThis() {
 		playerStore.setCurSong(toRaw(props.songData))
 	}
+	
+	// const cover = computed(() => {
+	// 	if (props.songData?.al?.picUrl) {
+	// 		return props.songData.al.picUrl 
+	// 	} else {
+	// 		return ''
+	// 		// `https://p1.music.126.net/rYXihk9-kGWijs5vJpm0iw==/${ props.songData?.al?.id }.jpg?param=140y140`
+	// 	}
+	// })
+	
 </script>
 
 <style scoped lang="less">

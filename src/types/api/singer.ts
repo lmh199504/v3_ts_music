@@ -15,3 +15,10 @@ export interface subSingerParams{
 export interface singerDetailParams{
 	id: number;
 }
+// 分页获取歌曲
+export interface singerSongParams{
+	id: number;
+	order: string;
+	limit: number;
+	offset: number;
+}

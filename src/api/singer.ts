@@ -1,7 +1,7 @@
 //歌手
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { singerListParams, subSingerParams, singerDetailParams } from '@/types/api/singer'
+import { singerListParams, subSingerParams, singerDetailParams, singerSongParams } from '@/types/api/singer'
 // 获取歌手列表
 export const reqSingerList = (params: singerListParams) :Promise<AxiosResponse> => request({
 	url: '/artist/list',
@@ -35,6 +35,12 @@ export const reqSingerFans = (params: singerDetailParams) :Promise<AxiosResponse
 // 歌手热门歌曲
 export const reqSingHotSongs = (params: singerDetailParams) :Promise<AxiosResponse> => request({
 	url: '/artist/top/song',
+	method: 'GET',
+	params
+})
+// 分页获取歌手歌曲
+export const reqSingerSongs = (params: singerSongParams) :Promise<AxiosResponse> => request({
+	url: '/artist/songs',
 	method: 'GET',
 	params
 })

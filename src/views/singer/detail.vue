@@ -42,7 +42,7 @@
 							<div>热门歌曲</div>
 							<div>
 								<van-button round size="small" @click="playAll" style="margin-right: 15px;">播放全部</van-button>
-								<van-button round size="small">更多</van-button>
+								<van-button round size="small" @click="goAllSongs">更多</van-button>
 							</div>
 						</div>
 						
@@ -168,6 +168,14 @@
 	function playAll() {
 		console.log(toRaw(hotList.value))
 		playerStore.resetList(toRaw(hotList.value))
+	}
+	
+	function goAllSongs() {
+		const { id } = route.query
+		router.push({
+			path: '/singerSongs',
+			query: { id }
+		})
 	}
 	
 	getSingerDetail()
