@@ -160,6 +160,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '专辑详情'
 		}
+	},
+	{
+		path: '/likeList',
+		name: 'LikeList',
+		component: () => import('@/views/likeList/index.vue'),
+		meta: {
+			title: '喜欢的歌曲'
+		}
 	}
 ]
 

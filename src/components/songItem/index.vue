@@ -9,14 +9,14 @@
 		</div>
 		<div class="right">
 			<i class="iconfont icon-24gf-play" @click="playThis"></i>
-			<i class="iconfont icon-Androidgengduo"></i>
+			<i class="iconfont icon-Androidgengduo" @click="showShareMenu"></i>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { computed, toRaw } from 'vue'
-	import { usePlayerStore } from '@/store'
+	import { usePlayerStore, useSystemStore } from '@/store'
 	const playerStore = usePlayerStore()
 	const props = defineProps(['songData'])
 	const singer = computed(() => {
@@ -25,20 +25,15 @@
 		}
 		return ''
 	})
+	const systemStore = useSystemStore()
 	
+	function showShareMenu() {
+		systemStore.setShareSong(toRaw(props.songData))
+		systemStore.setVisibleMenu(true)
+	}
 	function playThis() {
 		playerStore.setCurSong(toRaw(props.songData))
 	}
-	
-	// const cover = computed(() => {
-	// 	if (props.songData?.al?.picUrl) {
-	// 		return props.songData.al.picUrl 
-	// 	} else {
-	// 		return ''
-	// 		// `https://p1.music.126.net/rYXihk9-kGWijs5vJpm0iw==/${ props.songData?.al?.id }.jpg?param=140y140`
-	// 	}
-	// })
-	
 </script>
 
 <style scoped lang="less">

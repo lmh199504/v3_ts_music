@@ -6,7 +6,7 @@
 					<van-notice-bar scrollable :text="details.name" />
 				</template>
 			</van-nav-bar>
-			<Scroll :probeType="3" ref="scrollRef" :imgUrl="details.picUrl">
+			<Scroll :probeType="3" ref="scrollRef" :stopPropagation="true" :imgUrl="details.picUrl">
 				<template #btn>
 					<div class="top_content">
 						<div class="bg">

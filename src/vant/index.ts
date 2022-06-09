@@ -27,7 +27,8 @@ import {
 	Row,
 	List,
 	DropdownMenu,
-	DropdownItem
+	DropdownItem,
+	ShareSheet 
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -60,5 +61,6 @@ export default {
 		app.use(List)
 		app.use(DropdownMenu)
 		app.use(DropdownItem)
+		app.use(ShareSheet)
 	}
 }

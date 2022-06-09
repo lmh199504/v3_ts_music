@@ -1,7 +1,7 @@
 <template>
 	<div class="song_list_item">
 		<div class="cover" @click="goDetail">
-			<img class="cover_img" :src="songListData.picUrl + '?param=140y140'" alt="">
+			<img class="cover_img" :src="songListData.picUrl ? songListData.picUrl : songListData.coverImgUrl + '?param=140y140'" alt="">
 			<div class="play_count">
 				<i class="iconfont icon-bofang"></i>
 				<div>{{ formatCountNumber(songListData.playCount) }}</div>

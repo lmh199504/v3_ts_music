@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import { AxiosResponse } from 'axios'
-import { SendCodeParams, PhoneLoginParams, EmaiLoginParams, UserPlayList, UserFollow } from '@/types/api/user'
+import { SendCodeParams, PhoneLoginParams, EmaiLoginParams, UserPlayList, UserFollow, UidParams, LikeParams } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams) :Promise<AxiosResponse> => request({
 	url: '/captcha/sent',
@@ -51,4 +51,27 @@ export const reqUserFolloweds = (params: UserFollow) :Promise<AxiosResponse> => 
 	url: '/user/followeds',
 	method: 'GET',
 	params
+})
+// 获取用户详情
+export const reqUserDetail = (params: UidParams) :Promise<AxiosResponse> => request({
+	url: '/user/detail',
+	method: 'GET',
+	params
+})
+// 获取我喜欢的音乐
+export const reqLikeList = (params: UidParams) :Promise<AxiosResponse> => request({
+	url: '/likelist',
+	method: 'GET',
+	params
+})
+// 喜欢音乐
+export const reqLike = (params: LikeParams) :Promise<AxiosResponse> => request({
+	url: '/like',
+	method: 'GET',
+	params
+})
+// 获取用户信息 , 歌单，收藏，mv, dj 数量 /user/subcount
+export const reqUserSubCount = () :Promise<AxiosResponse> => request({
+	url: '/user/subcount',
+	method: 'GET'
 })

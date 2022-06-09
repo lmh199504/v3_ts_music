@@ -186,18 +186,15 @@
 		}
 	}
 	watch(currentSong, val => {
-		console.log(audio.value)
-		if (audio.value) {
-			audio.value.volume = 0.1
-		}
-		
 		if (val.id) getLyric(val.id)
 	}, { immediate: true })
 	
 	function getLyric(id: number): void {
 		reqGetLyric({ id: id })
 		.then(res => {
-			if (res.data?.lrc?.lyric) {
+			if (res.data?.klyric?.lyric) {
+				initPlayer(res.data.klyric.lyric)
+			} else if (res.data?.lrc?.lyric) {
 				initPlayer(res.data.lrc.lyric)
 			}
 		})
@@ -207,7 +204,7 @@
 		console.log(txt)
 		activeIndex.value = lineNum
 		if (activeIndex.value > 5) {
-			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value  - 5 }`)[0], 1000)
+			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value - 5 }`)[0], 1000)
 		} else {
 			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ 0 }`)[0], 1000)
 		}
@@ -220,8 +217,11 @@
 			lyric = null
 		}
 		lyric = new Lyric(lyricText, handler)
-		// console.log(lyric)
+		console.log(lyric)
 		lyricLines.value = lyric.lines
+		if (audio.value) {
+			audio.value.volume = 0.1
+		}
 		lyric.play()
 		lyric.seek(audio.value.currentTime*1000)
 	}
