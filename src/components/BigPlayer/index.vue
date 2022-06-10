@@ -160,7 +160,9 @@
 	watch(showLyric, ()=> {
 		nextTick(() => {
 			srcoll.value && srcoll.value.refresh()
-			lyric && lyric.seek(audio.value.currentTime*1000)
+			if (playing.value) {
+				lyric && lyric.seek(audio.value.currentTime*1000)
+			}
 		})
 	})
 	
