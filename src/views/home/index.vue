@@ -10,7 +10,7 @@
 						<div class="flex_box_center_column">
 							<i class="iconfont icon-sousuo"></i>
 						</div>
-						<div class="search_text flex_box_center_column">古风</div>
+						<div class="search_text flex_box_center_column">{{ showKeyword }}</div>
 					</div>
 					<div class="flex_box_center_column">
 						<i class="iconfont icon-yuyin"></i>
@@ -35,6 +35,7 @@
 	import Menu from './components/menu'
 	import RecommendSongList from './components/recommendSongList'
 	import NewSong from './components/newSong'
+	import { reqSearchDefault } from '@/api/search'
 	function openMenu(): void {
 		$bus.emit('opne_menu')
 	}
@@ -42,6 +43,8 @@
 	const swiper = ref<Component>()
 	const recommendSongList = ref<Component>()
 	const newSong = ref<Component>()
+	const showKeyword = ref<string>('')
+	
 	function onRefresh() {
 		swiper.value && swiper.value.getBanner()
 		recommendSongList.value && recommendSongList.value.getList()
@@ -51,6 +54,13 @@
 		}, 2000)
 	}
 	
+	function getDefaultWord() {
+		reqSearchDefault()
+		.then(res => {
+			showKeyword.value = res.data.data.showKeyword
+		})
+	}
+	getDefaultWord()
 	
 </script>
 

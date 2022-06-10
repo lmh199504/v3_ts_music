@@ -41,7 +41,11 @@
 				<Sheet />
 			</template>
 			<template v-else>
-				
+				<div class="unlogin">
+					<router-link to="/login">
+						<van-button block round>登录</van-button>
+					</router-link>
+				</div>
 			</template>
 		</div>
 	</div>
@@ -126,7 +130,7 @@
 		box-sizing: border-box;
 		.main_content{
 			padding: 30px;
-			min-height: 100vh;
+			min-height: 80vh;
 		}
 		.user_info{
 			.user_img{
@@ -210,5 +214,11 @@
 				text-align: center;
 			}
 		}
+	}
+	.unlogin{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 60vh;
 	}
 </style>

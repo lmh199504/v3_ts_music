@@ -28,7 +28,12 @@ import {
 	List,
 	DropdownMenu,
 	DropdownItem,
-	ShareSheet 
+	ShareSheet,
+	Checkbox,
+	CheckboxGroup,
+	RadioGroup,
+	Radio,
+	Uploader
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -62,5 +67,10 @@ export default {
 		app.use(DropdownMenu)
 		app.use(DropdownItem)
 		app.use(ShareSheet)
+		app.use(Checkbox)
+		app.use(CheckboxGroup)
+		app.use(RadioGroup)
+		app.use(Radio)
+		app.use(Uploader)
 	}
 }

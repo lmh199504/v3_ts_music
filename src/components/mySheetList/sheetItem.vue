@@ -1,6 +1,5 @@
 <template>
-	
-	<div class="flex_box" @click="goSheetDetail">
+	<div class="flex_box" @click="selectThis">
 		<div class="left">
 			<div class="cover">
 				<img :src="sheetData.coverImgUrl" alt="">
@@ -11,62 +10,26 @@
 			</div>
 		</div>
 		<div class="flex_box_center_column play_btn">
-			<i class="iconfont icon-Androidgengduo" @click.stop="handleMenu"></i>
+			
 		</div>
 	</div>
-	<PopupMenu v-model:showPopup="show" :hide-edit="hideEdit" @del="del" @edit="edit" />
 </template>
 
 <script setup lang="ts">
-	import { Toast } from 'vant'
-	import { reqDelSheet } from '@/api/sheet'
-	import { ref } from 'vue'
-	import PopupMenu from './popupMenu.vue'
-	import { useRouter } from 'vue-router'
-	const router = useRouter()
-	const show = ref<boolean>(false)
 	interface Props{
 		// eslint-disable-next-line
 		sheetData: any;
-		hideEdit: boolean;
 	}
-	const props = withDefaults(defineProps < Props > (), {
-		sheetData: () => { return {} },
-		hideEdit: false
+	withDefaults(defineProps < Props > (), {
+		sheetData: () => { return {} }
 	}) 
 	
 	const emit = defineEmits<{
-		(e: 'delsuccess'):void,
-		(e: 'edit'): void
+		(e: 'select'): void
 	}>()
 	
-	function goSheetDetail() {
-		router.push({
-			path: '/songSheetDetail',
-			query: { id: props.sheetData.id }
-		})
-	}
-	function handleMenu() {
-		show.value = true
-	}
-	
-	function del() {
-		const loading = Toast.loading({
-			duration: 0,
-			message: '加载中...',
-			overlay: true
-		})
-		reqDelSheet({ id: props.sheetData.id })
-		.then(() => {
-			emit('delsuccess')
-		})
-		.finally(() => {
-			loading.clear()
-		})
-	}
-	
-	function edit() {
-		emit('edit')
+	function selectThis() {
+		emit('select')
 	}
 </script>
 
@@ -118,11 +81,10 @@
 			.iconfont{
 				font-size: 28px;
 				margin-right: 10px;
-				color: var(--my-icon-color);
 			}
 		}
 		&:active{
-			opacity: 0.8;
+			background-color: #e6e6e6;
 		}
 	}
 </style>

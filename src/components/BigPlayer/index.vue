@@ -192,9 +192,7 @@
 	function getLyric(id: number): void {
 		reqGetLyric({ id: id })
 		.then(res => {
-			if (res.data?.klyric?.lyric) {
-				initPlayer(res.data.klyric.lyric)
-			} else if (res.data?.lrc?.lyric) {
+			if (res.data?.lrc?.lyric) {
 				initPlayer(res.data.lrc.lyric)
 			}
 		})

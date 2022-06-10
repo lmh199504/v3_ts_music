@@ -149,6 +149,7 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 			return new Promise((resolve, reject) => {
 				reqLogout()
 				.then(res => {
+					this.token = ''
 					removeToken()
 					this.userInfo = {
 						accountStatus: 0,

@@ -3,11 +3,11 @@
 		<div class="menu">
 			<div class="text">收藏歌单（{{ total }}）个</div>
 			<div class="flex_box_center_column">
-				<van-icon name="plus" />
+				<i class="iconfont icon-Androidgengduo"></i>
 			</div>
 		</div>
 		<van-list v-model:loading="loading" :finished="finished"  @load="onLoad">
-			<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" />
+			<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" @delsuccess="delSuccess(item.id)" :hide-edit="true" />
 		</van-list>
 	</div>
 </template>
@@ -30,17 +30,14 @@
 		const params = {
 			uid: userInfo.value.userId,
 			limit: limit,
-			offset: limit * offset
+			offset: limit * offset,
+			time: Date.now()
 		}
 		loading.value = true
 		reqUserPlayList(params)
 		.then(res => {
 			list.value = list.value.concat(res.data.playlist.filter(item => item.creator.userId != userInfo.value.userId))
-			if (list.value.length >= total.value) {
-				finished.value = true
-			} else {
-				finished.value = false
-			}
+			finished.value = !res.data.more
 		})
 		.finally(() => {
 			loading.value = false
@@ -57,6 +54,12 @@
 		offset++
 		getList()
 	}
+	function delSuccess(id) {
+		const index = list.value.findIndex(item => item.id === id)
+		list.value.splice(index, 1)
+		total.value -= 1
+	}
+	
 	getCount()
 	
 	
@@ -72,8 +75,9 @@
 				font-size: 26px;
 				color: var(--my-text-color-gray);
 			}
-			:deep(.van-icon){
-				font-size: 30px;
+			.iconfont{
+				font-size: 28px;
+				margin-right: 10px;
 				color: var(--my-text-color-gray);
 			}
 		}

@@ -11,9 +11,9 @@
 					<CollectSheet />
 				</div>
 			</van-tab>
-			<van-tab title="歌单助手">
+			<!-- <van-tab title="歌单助手">
 				<div class="box_white_container"></div>
-			</van-tab>
+			</van-tab> -->
 		</van-tabs>
 	</div>
 </template>

@@ -168,6 +168,30 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '喜欢的歌曲'
 		}
+	},
+	{
+		path: '/editSheet',
+		name: 'EditSheet',
+		component: () => import('@/views/editSheet/index.vue'),
+		meta: {
+			title: '编辑歌单'
+		}
+	},
+	{
+		path: '/editName',
+		name: 'EditName',
+		component: () => import('@/views/editSheet/editName.vue'),
+		meta: {
+			title: '编辑名称'
+		}
+	},
+	{
+		path: '/editTag',
+		name: 'EditTag',
+		component: () => import('@/views/editSheet/editTag.vue'),
+		meta: {
+			title: '编辑标签'
+		}
 	}
 ]
 

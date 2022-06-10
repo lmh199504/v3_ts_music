@@ -37,7 +37,7 @@
 							</div>
 							<div class="btn_wrapper">
 								<div class="btn_item" @click="subscribeSheet">
-									<div class="flex_box_center_column"><i class="iconfont icon-shoucangjia"></i></div>
+									<div class="flex_box_center_column"><i class="iconfont icon-shoucangjia" :class="{'iconfont_active': details.subscribed}"></i></div>
 									<div class="text">{{ details.subscribedCount }}</div>
 								</div>
 								<div class="btn_item">
@@ -56,7 +56,7 @@
 					</div>
 				</template>
 				<div class="list">
-					<SongItem v-for="item in list" :key="item.id" :song-data="item" />
+					<SongItem v-for="item in list" :key="item.id" :song-data="item" @del="del(item)" :showdel="showdel" />
 				</div>
 			</Scroll>
 		</MiniPlayOut>
@@ -66,10 +66,11 @@
 </template>
 
 <script setup lang="ts">
+	import { storeToRefs } from 'pinia'
 	import SongItem from '@/components/songItem'
 	import MiniPlayOut from '@/layout/miniplayout'
 	import Scroll from '@/components/Scroll/scrollBanner'
-	import { usePlayerStore } from '@/store'
+	import { usePlayerStore, useUserStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
 	import { Toast } from 'vant'
 	import {
@@ -84,16 +85,28 @@
 		reactive,
 		Component,
 		nextTick,
-		toRaw
+		toRaw,
+		computed
 	} from 'vue'
 	import { formatCountNumber } from '@/utils'
-	import { reqSubscribeSheet } from '@/api/sheet'
+	import { reqSubscribeSheet, reqSheetTracks } from '@/api/sheet'
 	const route = useRoute()
 	const details = reactive({})
 	const list = ref([])
 	const scrollRef = ref < Component > ()
 	const playerStore = usePlayerStore()
 	const show = ref<boolean>(false)
+	const userStore = useUserStore()
+	
+	const { isLogin, userInfo } = storeToRefs(userStore) 
+	const showdel: boolean = computed(() => {
+		if (!isLogin.value) {
+			return false
+		} else {
+			return details.creator?.userId === userInfo.value.userId
+		}
+	})
+	
 	function getDetail() {
 		Toast.loading({
 			duration: 0,
@@ -115,7 +128,7 @@
 	}
 	
 	function getSheetSongs() {
-		reqSheetSongs({ id: route.query.id })
+		reqSheetSongs({ id: route.query.id, time: Date.now() })
 		.then(res => {
 			list.value = res.data.songs
 			nextTick(() => {
@@ -129,12 +142,44 @@
 	}
 	// 收藏歌单
 	function subscribeSheet() {
+		if (!isLogin.value) {
+			Toast.fail('还没有登录')
+			return
+		}
+		if (showdel.value) {
+			Toast.fail('不能收藏自己的歌单')
+			return
+		}
+		
 		reqSubscribeSheet({
-			t: 1,
+			t: details.subscribed ? 2 : 1,  // t : 类型,1:收藏,2:取消收藏 id : 歌单 id
 			id: route.query.id
 		})
 		.then(() => {
-			Toast.success('收藏成功')
+			details.subscribed = !details.subscribed
+			Toast.success( details.subscribed ? '取消成功' :'收藏成功')
+		})
+	}
+	// 删除
+	function del(item) {
+		const loading = Toast.loading({
+			duration: 0,
+			message: '加载中...',
+			overlay: true
+		})
+		const params = {
+			op: 'del', // 从歌单增加单曲为 add, 删除为 del
+			pid: route.query.id,  // 歌单 id
+			tracks: item.id //  tracks: 歌曲 id,可多个,用逗号隔开 
+		}
+		reqSheetTracks(params)
+		.then(() => {
+			const index = list.value.findIndex(track => track.id === item.id)
+			list.value.splice(index, 1)
+			Toast.success('删除成功')
+		})
+		.finally(() => {
+			loading.clear()
 		})
 	}
 	
@@ -279,6 +324,9 @@
 							color: var(--my-text-color-black);
 							font-size: 28px;
 							
+						}
+						.iconfont_active{
+							color: var(--my-primary-color);
 						}
 						.text{
 							font-size: 24px;

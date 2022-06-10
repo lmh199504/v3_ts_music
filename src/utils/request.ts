@@ -41,7 +41,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
 	(response: AxiosResponse) => {
 		const res = response.data
-		const code = res.code
+		const code = res.code || res.status
 		let msg = ''
 		switch (code) {
 			case 200:
