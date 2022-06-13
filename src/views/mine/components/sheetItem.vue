@@ -5,7 +5,7 @@
 			<div class="cover">
 				<img :src="sheetData.coverImgUrl" alt="">
 			</div>
-			<div class="">
+			<div class="info">
 				<div class="title">{{ sheetData.name }}</div>
 				<div class="total">{{ sheetData.trackCount }}首</div>
 			</div>
@@ -76,6 +76,7 @@
 		justify-content: space-between;
 		padding: 30px 10px;
 		border-bottom: 1px solid var(--van-cell-border-color);
+		overflow: hidden;
 		.left{
 			display: flex;
 			align-items: center;
@@ -86,6 +87,7 @@
 				border-radius: 10px;
 				overflow: hidden;
 				margin-right: 20px;
+				flex-shrink: 0;
 				img{
 					width: 100%;
 					height: 100%;
@@ -104,9 +106,14 @@
 					}
 				}
 			}
+			.info{
+				flex: 1;
+				overflow: hidden;
+			}
 			.title{
 				font-size: 28px;
 				color: var(--my-text-color-black);
+				width: 100%;
 			}
 			.total{
 				font-size: 24px;

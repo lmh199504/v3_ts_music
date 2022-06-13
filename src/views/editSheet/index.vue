@@ -18,7 +18,7 @@
 					</van-field>
 					<van-field label="名称" v-model="details.name" readonly @click="toEditName" />
 					<van-field label="标签" v-model="details.tags" placeholder="请选择标签" readonly @click="toEditTag" />
-					<van-field label="描述" v-model="details.description" placeholder="请输入描述" />
+					<van-field label="描述" v-model="details.description" placeholder="请输入描述" readonly @click="toEditDesc" />
 				</van-cell-group>
 			</van-form>
 		</div>
@@ -37,7 +37,7 @@
 	const router = useRouter()
 	const { id } = route.query
 	const details = reactive({
-		tags: [],
+		tags: '',
 		coverImgUrl: ''
 	})
 	function afterRead(file) {
@@ -66,8 +66,7 @@
 			for(const key in res.data.playlist) {
 				details[key] = res.data.playlist[key]
 			}
-			details.tags = res.data.playlist['tags'].join(',')
-			console.log(details)
+			details.tags = res.data.playlist['tags'].join(';')
 		})
 	}
 	function toEditName() {
@@ -81,6 +80,15 @@
 	function toEditTag() {
 		router.push({
 			path: '/editTag',
+			query: {
+				id
+			}
+		})
+	}
+	// 编辑描述
+	function toEditDesc() {
+		router.push({
+			path: '/editDesc',
 			query: {
 				id
 			}

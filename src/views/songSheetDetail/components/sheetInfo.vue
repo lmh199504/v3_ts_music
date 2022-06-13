@@ -1,5 +1,5 @@
 <template>
-	<van-popup v-model:show="show" style="width: 100%;height: 100%;" closeable @close="close" class="mypop">
+	<van-popup v-model:show="show" style="width: 100%;height: 100%;" closeable class="mypop">
 		<div class="content">
 			<div class="bg">
 				<img :src="info.coverImgUrl" alt="">
@@ -29,6 +29,9 @@
 	} from 'vue'
 	interface Info{
 		tags: Array<string>
+		description: string
+		coverImgUrl: string
+		name: string
 	}
 	interface Props {
 		showPopup: boolean;
@@ -36,7 +39,7 @@
 	}
 	const props = withDefaults(defineProps < Props > (), {
 		showPopup: false,
-		info: () => { return {} }
+		info: () => { return { tags: [], description: '', coverImgUrl: '', name: '' } }
 	})
 	const emit = defineEmits < {
 		(e: 'update:show-popup', value: boolean): void
@@ -49,10 +52,6 @@
 			emit('update:show-popup', val)
 		}
 	})
-	
-	function close() {
-		console.log('关闭')
-	}
 </script>
 
 <style scoped lang="less">

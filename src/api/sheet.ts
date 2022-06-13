@@ -1,7 +1,7 @@
 // 歌单
 import { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { subscribeParams, createParams, delParams, SheetTracksParams, UpdateCoverParams, UpdateNameParams } from '@/types/api/sheet'
+import { subscribeParams, createParams, delParams, SheetTracksParams, UpdateCoverParams, UpdateNameParams, UpdateTagsParams, UpdateDescParams } from '@/types/api/sheet'
 
 export const reqSubscribeSheet = (params: subscribeParams) :Promise<AxiosResponse> => request({
 	url: '/playlist/subscribe',
@@ -43,6 +43,18 @@ export const reqUpdateCover = (params: UpdateCoverParams, data: FormData) :Promi
 // 更新歌单名
 export const reqUpdateSheetName = (params: UpdateNameParams) :Promise<AxiosResponse> => request({
 	url: '/playlist/name/update',
+	method: 'GET',
+	params
+})
+// 更新歌单标签
+export const reqUpdateSheetTags = (params: UpdateTagsParams) :Promise<AxiosResponse> => request({
+	url: '/playlist/tags/update',
+	method: 'GET',
+	params
+})
+// 更新歌单描述
+export const reqUpdateSheetDesc = (params: UpdateDescParams) :Promise<AxiosResponse> => request({
+	url: '/playlist/desc/update',
 	method: 'GET',
 	params
 })

@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 	import ScrollBanner from '@/components/Scroll/scrollBanner'
-	import MiniPlayOut from '@/layout/miniplayout'
 	import { ref, Component, nextTick } from 'vue'
 	import {
 		reqGetRecommendDate

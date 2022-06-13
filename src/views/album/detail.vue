@@ -68,7 +68,6 @@
 <script setup lang="ts">
 	import { onClickLeft } from '@/utils/back' 
 	import SongItem from '@/components/songItem'
-	import MiniPlayOut from '@/layout/miniplayout'
 	import Scroll from '@/components/Scroll/scrollBanner'
 	import { usePlayerStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'

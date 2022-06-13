@@ -1,5 +1,6 @@
 export interface SongUrlParams{
 	id: string | number;
+	time?: number | string;
 }
 // 获取歌单列表
 export interface SheetListParams{

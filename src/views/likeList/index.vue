@@ -27,7 +27,6 @@
 	import {
 		ref, toRaw, Component, nextTick
 	} from 'vue'
-	import MiniPlayOut from '@/layout/miniplayout'
 	import SongItem from '@/components/songItem'
 	import ScrollBanner from '@/components/Scroll/scrollBanner'
 	import { Toast } from 'vant'

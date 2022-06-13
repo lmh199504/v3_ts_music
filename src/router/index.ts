@@ -192,6 +192,22 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '编辑标签'
 		}
+	},
+	{
+		path: '/editDesc',
+		name: 'EditDesc',
+		component: () => import('@/views/editSheet/editDesc.vue'),
+		meta: {
+			title: '编辑描述'
+		}
+	},
+	{
+		path: '/search',
+		name: 'Search',
+		component: () => import('@/views/search/index.vue'),
+		meta: {
+			title: '搜索'
+		}
 	}
 ]
 

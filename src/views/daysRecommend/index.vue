@@ -30,7 +30,6 @@
 	import {
 		reqDaysRecommend
 	} from '@/api/home'
-	import MiniPlayOut from '@/layout/miniplayout'
 	import {
 		useRouter
 	} from 'vue-router'

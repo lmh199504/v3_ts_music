@@ -31,3 +31,13 @@ export interface UpdateNameParams{
 	id: number;
 	name: number;
 }
+// 更新标签
+export interface UpdateTagsParams{
+	id: number;
+	tags: string;
+}
+// 更新描述
+export interface UpdateDescParams{
+	id: number;
+	desc: string
+}

@@ -26,7 +26,7 @@
 				</div>
 				<!-- 歌词 -->
 				<div class="lyric" v-show="showLyric">
-					<Scroll :probeType="3" ref="srcoll">
+					<Scroll :probeType="3" ref="srcoll" :stopPropagation="true">
 						<div class="lyric_div">
 							<div v-for="(item, index) in lyricLines" :key="index" class="lyrclines" :class="[ `lyrcline${ index  }`, activeIndex == index ? 'lyrclactive': '' ]">{{ item.txt }}</div>
 						</div>

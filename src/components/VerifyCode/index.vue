@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-	import { computed } from 'vue'
+	import { computed, WritableComputedRef, ComputedRef } from 'vue'
 	interface Props {
-		code: string;
+		code: number | string | undefined;
 		len: number;
 	}
 	const emit = defineEmits(['update:code'])
@@ -22,7 +22,7 @@
 		len: 4
 	})
 	
-	const codeVal: string = computed({
+	const codeVal: WritableComputedRef<string|number> = computed({
 		get() {
 			return props.code
 		},
@@ -30,7 +30,7 @@
 			emit('update:code', val)
 		}
 	})
-	const splitNum: Array<string> = computed(() => {
+	const splitNum: ComputedRef<Array<string>> = computed(() => {
 		return (codeVal.value + '').split('')
 	})
 </script>

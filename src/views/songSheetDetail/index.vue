@@ -67,12 +67,12 @@
 
 <script setup lang="ts">
 	import { storeToRefs } from 'pinia'
-	import SongItem from '@/components/songItem'
-	import MiniPlayOut from '@/layout/miniplayout'
-	import Scroll from '@/components/Scroll/scrollBanner'
+	import SongItem from '@/components/songItem/index.vue'
+	import Scroll from '@/components/Scroll/scrollBanner.vue'
 	import { usePlayerStore, useUserStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
 	import { Toast } from 'vant'
+	import { SongData } from '@/types/store/player'
 	import {
 		reqSheetDetail, reqSheetSongs
 	} from '@/api/song'
@@ -83,23 +83,40 @@
 	import {
 		ref,
 		reactive,
-		Component,
 		nextTick,
 		toRaw,
-		computed
+		computed,
+		ComputedRef
 	} from 'vue'
 	import { formatCountNumber } from '@/utils'
 	import { reqSubscribeSheet, reqSheetTracks } from '@/api/sheet'
 	const route = useRoute()
-	const details = reactive({})
-	const list = ref([])
-	const scrollRef = ref < Component > ()
+	const details = reactive({
+		creator: {
+			userId: 0,
+			avatarUrl: '',
+			nickname: ''
+		},
+		tags: [],
+		shareCount: 0,
+		commentCount: 0,
+		subscribedCount: 0,
+		description: 0,
+		nickname: '',
+		avatarUrl: '',
+		coverImgUrl: '',
+		name: '',
+		playCount: 0,
+		subscribed: false
+	})
+	const list = ref<Array<SongData>>([])
+	const scrollRef = ref < InstanceType<typeof Scroll> > ()
 	const playerStore = usePlayerStore()
 	const show = ref<boolean>(false)
 	const userStore = useUserStore()
-	
+	const { id } = route.query
 	const { isLogin, userInfo } = storeToRefs(userStore) 
-	const showdel: boolean = computed(() => {
+	const showdel: ComputedRef<boolean> = computed(() => {
 		if (!isLogin.value) {
 			return false
 		} else {
@@ -114,10 +131,10 @@
 			overlay: true
 		})
 		reqSheetDetail({
-				id: route.query.id
+				id: Number(id)
 			})
 			.then(res => {
-				for (const key in res.data.playlist) {
+				for (const key in details) {
 					details[key] = res.data.playlist[key]
 				}
 				Toast.clear()
@@ -128,11 +145,11 @@
 	}
 	
 	function getSheetSongs() {
-		reqSheetSongs({ id: route.query.id, time: Date.now() })
+		reqSheetSongs({ id: Number(id), time: Date.now() })
 		.then(res => {
 			list.value = res.data.songs
 			nextTick(() => {
-				scrollRef.value.refresh()
+				scrollRef.value && scrollRef.value.refresh()
 			})
 		})
 	}
@@ -153,7 +170,7 @@
 		
 		reqSubscribeSheet({
 			t: details.subscribed ? 2 : 1,  // t : 类型,1:收藏,2:取消收藏 id : 歌单 id
-			id: route.query.id
+			id: Number(id)
 		})
 		.then(() => {
 			details.subscribed = !details.subscribed
@@ -161,7 +178,7 @@
 		})
 	}
 	// 删除
-	function del(item) {
+	function del(item: SongData) {
 		const loading = Toast.loading({
 			duration: 0,
 			message: '加载中...',
@@ -169,7 +186,7 @@
 		})
 		const params = {
 			op: 'del', // 从歌单增加单曲为 add, 删除为 del
-			pid: route.query.id,  // 歌单 id
+			pid: Number(id),  // 歌单 id
 			tracks: item.id //  tracks: 歌曲 id,可多个,用逗号隔开 
 		}
 		reqSheetTracks(params)

@@ -33,7 +33,8 @@ import {
 	CheckboxGroup,
 	RadioGroup,
 	Radio,
-	Uploader
+	Uploader,
+	Empty
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -44,7 +45,6 @@ export default {
 		app.use(Cell)
 		app.use(Overlay)
 		app.use(Popup)
-		app.use(Cell)
 		app.use(CellGroup)
 		app.use(Swipe)
 		app.use(SwipeItem)
@@ -72,5 +72,6 @@ export default {
 		app.use(RadioGroup)
 		app.use(Radio)
 		app.use(Uploader)
+		app.use(Empty)
 	}
 }

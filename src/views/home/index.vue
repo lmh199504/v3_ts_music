@@ -6,7 +6,7 @@
 					<div class="flex_box_center_column" @click="openMenu">
 						<i class="iconfont icon-caidan"></i>
 					</div>
-					<div class="search_wrapper">
+					<div class="search_wrapper" @click.stop="goSearch">
 						<div class="flex_box_center_column">
 							<i class="iconfont icon-sousuo"></i>
 						</div>
@@ -29,20 +29,20 @@
 </template>
 
 <script lang="ts" setup>
-	import { ref, Component } from 'vue'
+	import { ref } from 'vue'
 	import $bus from '@/utils/eventBus'
 	import Swiper from './components/swiper.vue'
-	import Menu from './components/menu'
-	import RecommendSongList from './components/recommendSongList'
-	import NewSong from './components/newSong'
+	import Menu from './components/menu.vue'
+	import RecommendSongList from './components/recommendSongList.vue'
+	import NewSong from './components/newSong.vue'
 	import { reqSearchDefault } from '@/api/search'
-	function openMenu(): void {
-		$bus.emit('opne_menu')
-	}
+	import { useRouter } from 'vue-router'
+	
+	const router = useRouter()
 	const loading = ref<boolean>(false)
-	const swiper = ref<Component>()
-	const recommendSongList = ref<Component>()
-	const newSong = ref<Component>()
+	const swiper = ref<InstanceType<typeof Swiper>>()
+	const recommendSongList = ref<InstanceType<typeof RecommendSongList>>()
+	const newSong = ref<InstanceType<typeof NewSong>>()
 	const showKeyword = ref<string>('')
 	
 	function onRefresh() {
@@ -54,12 +54,22 @@
 		}, 2000)
 	}
 	
-	function getDefaultWord() {
+	function getDefaultWord(): void {
 		reqSearchDefault()
 		.then(res => {
 			showKeyword.value = res.data.data.showKeyword
 		})
 	}
+	function goSearch(): void {
+		router.push({
+			path: '/search'
+		})
+	}
+	// 侧边菜单
+	function openMenu(): void {
+		$bus.emit('opne_menu')
+	}
+	
 	getDefaultWord()
 	
 </script>
