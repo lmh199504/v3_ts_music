@@ -34,7 +34,8 @@ import {
 	RadioGroup,
 	Radio,
 	Uploader,
-	Empty
+	Empty,
+	Loading
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -73,5 +74,6 @@ export default {
 		app.use(Radio)
 		app.use(Uploader)
 		app.use(Empty)
+		app.use(Loading)
 	}
 }

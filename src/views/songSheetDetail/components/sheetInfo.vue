@@ -64,7 +64,7 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
-		
+		overflow-y: hidden;
 		.bg{
 			position: absolute;
 			z-index: -2;
@@ -82,12 +82,15 @@
 			width: 100%;
 			height: 100%;
 			background-color: var(--my-mask-color);
+			overflow: auto;
 		}
 		.main{
 			position: relative;
 			padding: 60px;
 			box-sizing: border-box;
 			z-index: 0;
+			height: 100%;
+			overflow-y: auto;
 			.cover_img{
 				padding-top: 100px;
 				text-align: center;

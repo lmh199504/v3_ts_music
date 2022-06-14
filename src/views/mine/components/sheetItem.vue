@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="flex_box_center_column play_btn">
-			<i class="iconfont icon-Androidgengduo" @click.stop="handleMenu"></i>
+			<i class="iconfont icon-Androidgengduo" @click.stop="handleMenu" v-if="showEdit"></i>
 		</div>
 	</div>
 	<PopupMenu v-model:showPopup="show" :hide-edit="hideEdit" @del="del" @edit="edit" />
@@ -29,10 +29,12 @@
 		// eslint-disable-next-line
 		sheetData: any;
 		hideEdit: boolean;
+		showEdit: boolean
 	}
 	const props = withDefaults(defineProps < Props > (), {
 		sheetData: () => { return {} },
-		hideEdit: false
+		hideEdit: false,
+		showEdit: true
 	}) 
 	
 	const emit = defineEmits<{

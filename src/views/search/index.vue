@@ -14,25 +14,35 @@
 							</div>
 						</div>
 					</div>
-					<div class="right flex_box_center_column">搜索</div>
+					<div class="right flex_box_center_column" @click="handleSearch">搜索</div>
 				</div>
 			</van-sticky>
 			<div class="showSuggest" v-if="showSuggest">
-				<van-cell-group>
+				<div v-if="suggestLoading" class="flex_box_center_column" style="height: 60vh;">
+					<van-loading color="#e20001" />
+				</div>
+				<van-cell-group v-if="!suggestLoading">
 					<van-cell :title="item.keyword" is-link v-for="(item, index) in suggestList" :key="index"
-						@click="tapSuggest(item)">
+						@click="tapSuggest(item.keyword)">
 						<template #right-icon>
 							<van-icon name="search" class="search-icon" />
 						</template>
 					</van-cell>
 				</van-cell-group>
-				<van-empty description="没有结果" v-if="suggestList.length == 0" />
+				<van-empty description="没有结果" v-if="suggestList.length == 0 && !suggestLoading" />
 			</div>
 			<SuggestResult v-if="showResult" :keyword="keyWord" />
 			<div v-if="showDefault">
 				<div class="history_container">
-					<div class="history_title">历史搜索</div>
-					<div class="history_item"></div>
+					<div class="history_title">
+						<div>历史搜索</div>
+						<div>
+							<van-icon name="delete-o" @click="clearHistory" />
+						</div>
+					</div>
+					<div class="history_list">
+						<div class="history_item" v-for="(item, index) in historyList" :key="index" @click="tapHot(item)">{{ item }}</div>
+					</div>
 				</div>
 				<div class="hot_search">
 					<div class="hot_title">热门搜索</div>
@@ -55,18 +65,23 @@
 		reqSearchSuggest, reqHotSearch
 	} from '@/api/search'
 	import SuggestResult from './components/suggestResult.vue'
+	import Cookies from 'js-cookie'
 	
+	const LOCAL_KEY = 'historySearch'
 	const defaultPlaceholder = ref < string > ('')
 	const showClose = ref < boolean > (false)
 	const keyWord = ref < string > ('')
 	const suggestList = ref([])
 	const showSuggest = ref < boolean > (false)
+	const suggestLoading = ref<boolean>(false)
 	const showResult = ref<boolean>(false)
 	const showDefault = ref<boolean>(true)
 	interface HotItem{
 		first: string;
 	}
 	const hotList = ref<Array<HotItem>>([])
+	const localHistory = (Cookies.get(LOCAL_KEY) && JSON.parse(Cookies.get(LOCAL_KEY))) || []
+	const historyList = ref<Array<string>>(localHistory)
 	
 	let timer = null
 	// 获取默认搜索关键词
@@ -103,6 +118,7 @@
 		clearTimeout(timer)
 		timer = setTimeout(() => {
 			if (keyWord.value) {
+				suggestLoading.value = true
 				reqSearchSuggest({
 						keywords: keyWord.value,
 						type: 'mobile'
@@ -110,13 +126,18 @@
 					.then(res => {
 						suggestList.value = res.data.result.allMatch || []
 					})
+					.finally(() => {
+						suggestLoading.value = false
+					})
 			}
 		}, 500)
 	}
 	// 点击搜索提示
-	function tapSuggest() {
+	function tapSuggest(val: string): void {
 		showSuggest.value = false
 		showResult.value = true
+		keyWord.value = val
+		pushHistoryList(keyWord.value)
 	}
 	function getHot() {
 		reqHotSearch()
@@ -125,13 +146,50 @@
 		})
 	}
 	// 点击热门
-	function tapHot(word: string) {
+	function tapHot(word: string) :void {
 		keyWord.value = word
 		showClose.value = true
 		showResult.value = true
 		showDefault.value = false
 		showSuggest.value = false
+		pushHistoryList(keyWord.value)
 	}
+	// 点击搜索
+	function handleSearch() {
+		if (keyWord.value) {
+			tapHot(keyWord.value)
+		} else {
+			tapHot(defaultPlaceholder.value)
+		}
+	}
+	// 清空历史
+	function clearHistory() {
+		historyList.value = []
+		Cookies.remove(LOCAL_KEY)
+	}
+	function pushHistoryList(val) {
+		const MAX_LENGTH = 5
+		const index: number = historyList.value.findIndex((item: string): boolean => val === item )
+		const isMax: boolean = historyList.value.length >= MAX_LENGTH
+		if (isMax) { // 是否已达最大长度
+			if (index === -1) { // 历史中没有
+				historyList.value.splice(0, 1)
+				historyList.value.push(val)
+			} else {
+				historyList.value.splice(index, 1)
+				historyList.value.push(val)
+			}
+		} else {
+			if (index === -1) { // 历史中没有
+				historyList.value.push(val)
+			} else {
+				historyList.value.splice(index, 1)
+				historyList.value.push(val)
+			}
+		}
+		Cookies.set(LOCAL_KEY, JSON.stringify(historyList.value))
+	}
+	
 	getSearchDefault()
 	getHot()
 </script>
@@ -228,5 +286,24 @@
 	}
 	.history_container{
 		padding: 30px;
+		.history_title{
+			display: flex;
+			justify-content: space-between;
+			font-size: 30px;
+			padding: 10px;
+			margin: 10px;
+		}
+		.history_list{
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.history_item{
+			font-size: 30px;
+			margin: 10px;
+			background: var(--my-back-color-gray);
+			padding: 10px;
+			border-radius: 30px;
+			color: var(--my-text-color-black);
+		}
 	}
 </style>

@@ -93,6 +93,7 @@
 <style scoped lang="less">
 	.song-item{
 		display: flex;
+		border-bottom: 1px solid var(--van-cell-border-color);
 		.left{
 			margin-right: 10px;
 			.left_al_img{

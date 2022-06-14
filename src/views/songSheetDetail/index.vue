@@ -207,6 +207,7 @@
 
 <style scoped lang="less">
 	.songSheetDetail {
+		overflow: hidden;
 		:deep(.van-notice-bar) {
 			background: transparent;
 			width: 60vw;

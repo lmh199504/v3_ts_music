@@ -1,15 +1,14 @@
 <template>
 	<div class="single_list box_white_container">
-		<SongItem v-for="item in list" :key="item.id" :song-data="item" :showdel="false" />
+		<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" :hide-edit="true" :show-edit="false" />
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
-	import SongItem from '@/components/songItem/index.vue'
-	import { reqSongDetail } from '@/api/song'
-	import { SongData } from '@/types/store/player'
+	import SheetItem from '@/views/mine/components/sheetItem.vue'
+	import { singerInterface } from '@/types/public/singer'
 	interface Props{
 		keyword: string;
 		type: number
@@ -17,15 +16,11 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<SongData>>([])
+	const list = ref<Array<singerInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })
-		const params = {
-			ids: songList.data.result.songs.map((item: SongData): number => { return item.id}).join(',')
-		}
-		const result = await reqSongDetail(params)
-		list.value = result.data.songs
+		list.value = songList.data.result.playlists
 	}
 
 	getData()

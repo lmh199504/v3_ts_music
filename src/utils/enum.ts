@@ -29,16 +29,22 @@ export const araeList = [
 	{ text: '其他', value: 0 },
 ]
 import comprehensive from '@/views/search/components/comprehensive.vue'
-import single from '@/views/search/components/single.vue'
+import Single from '@/views/search/components/single.vue'
+import Singer from '@/views/search/components/singer.vue'
+import Album from '@/views/search/components/album.vue'
+import Sheet from '@/views/search/components/sheet.vue'
+import User from '@/views/search/components/user.vue'
+import Mv from '@/views/search/components/mv.vue'
+import Lyric from '@/views/search/components/lyric.vue'
 export const searchType = [
 	{ type: 1018, name: '综合', component: comprehensive },
-	{ type: 1, name: '单曲', component:  single },
-	{ type: 100, name: '歌手', component:  comprehensive },
-	{ type: 10, name: '专辑', component:  comprehensive },
-	{ type: 1000, name: '歌单', component:  comprehensive },
-	{ type: 1002, name: '用户', component: comprehensive },
-	{ type: 1004, name: 'MV', component: comprehensive },
-	{ type: 1006, name: '歌词', component: comprehensive },
+	{ type: 1, name: '单曲', component: Single },
+	{ type: 100, name: '歌手', component: Singer },
+	{ type: 10, name: '专辑', component: Album },
+	{ type: 1000, name: '歌单', component: Sheet },
+	{ type: 1002, name: '用户', component: User },
+	{ type: 1004, name: 'MV', component: Mv },
+	{ type: 1006, name: '歌词', component: Lyric },
 	{ type: 1009, name: '电台', component: comprehensive },
 	{ type: 1014, name: '视频', component: comprehensive },
 	{ type: 2000, name: '声音', component: comprehensive }

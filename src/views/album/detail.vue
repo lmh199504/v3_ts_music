@@ -1,7 +1,7 @@
 <template>
 	<div class="songSheetDetail">
 		<MiniPlayOut>
-			<van-nav-bar left-arrow @click-left="onClickLeft">
+			<van-nav-bar fixed placeholder left-arrow @click-left="onClickLeft">
 				<template #title>
 					<van-notice-bar scrollable :text="details.name" />
 				</template>
@@ -120,6 +120,7 @@
 
 <style scoped lang="less">
 	.songSheetDetail {
+		overflow: hidden;
 		:deep(.van-notice-bar) {
 			background: transparent;
 			width: 60vw;

@@ -1,15 +1,14 @@
 <template>
 	<div class="single_list box_white_container">
-		<SongItem v-for="item in list" :key="item.id" :song-data="item" :showdel="false" />
+		<AlbumItem v-for="item in list" :key="item.id" :album-data="item"  />
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
-	import SongItem from '@/components/songItem/index.vue'
-	import { reqSongDetail } from '@/api/song'
-	import { SongData } from '@/types/store/player'
+	import AlbumItem from './albumItem.vue'
+	import { AlbumInterface } from '@/types/public/comprehensive'
 	interface Props{
 		keyword: string;
 		type: number
@@ -17,15 +16,11 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<SongData>>([])
+	const list = ref<Array<AlbumInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })
-		const params = {
-			ids: songList.data.result.songs.map((item: SongData): number => { return item.id}).join(',')
-		}
-		const result = await reqSongDetail(params)
-		list.value = result.data.songs
+		list.value = songList.data.result.albums
 	}
 
 	getData()

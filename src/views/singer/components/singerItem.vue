@@ -66,6 +66,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		border-bottom: 1px solid var(--van-cell-border-color);
 		.left{
 			display: flex;
 			align-items: center;
