@@ -1,7 +1,7 @@
 <template>
 	<div class="lyric_item">
 		<div :class="{'inner': hide}">
-			<div class="songname">{{ lyricData.name }}</div>
+			<div class="songname" v-html="songname"></div>
 			<div class="singer" v-html="singer"></div>
 			<div class="" v-for="(item, index) in lines" :key="index" v-html="item"></div>
 		</div>
@@ -20,7 +20,7 @@
 			</template>
 		</div>
 		<div class="play">
-			<van-icon name="play-circle-o" />
+			<van-icon name="play-circle-o" @click="play" />
 		</div>
 	</div>
 </template>
@@ -28,6 +28,10 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { LyricInterface } from '@/types/public/comprehensive'
+	import { reqSongDetail } from '@/api/song'
+	import { usePlayerStore } from '@/store'
+	
+	const playerStore = usePlayerStore()
 	interface Props{
 		lyricData: LyricInterface
 		keyword: string
@@ -51,9 +55,22 @@
 	const lines = computed(() => {
 		return props.lyricData.lyrics.txt.split('\n').map(item => item.replace(props.keyword, `<span class="key_span">${props.keyword}</span>`))
 	})
+	const songname = computed(() => {
+		return props.lyricData.name.split('\n').map(item => item.replace(props.keyword, `<span class="key_span">${props.keyword}</span>`))
+	})
 	
 	function toggle() {
 		hide.value = !hide.value
+	}
+	function play() {
+		reqSongDetail({
+			ids: props.lyricData.id
+		})
+		.then(res => {
+			if (res.data.songs.length) {
+				playerStore.setCurSong(res.data.songs[0])
+			}
+		})
 	}
 	
 </script>

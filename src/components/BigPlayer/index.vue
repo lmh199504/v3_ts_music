@@ -27,8 +27,11 @@
 				<!-- 歌词 -->
 				<div class="lyric" v-show="showLyric">
 					<Scroll :probeType="3" ref="srcoll" :stopPropagation="true">
-						<div class="lyric_div">
+						<div class="lyric_div" v-if="lyricLines.length">
 							<div v-for="(item, index) in lyricLines" :key="index" class="lyrclines" :class="[ `lyrcline${ index  }`, activeIndex == index ? 'lyrclactive': '' ]">{{ item.txt }}</div>
+						</div>
+						<div class="lyric_div">
+							歌词跑丢了~
 						</div>
 					</Scroll>
 					<div class="mask_lyric"></div>
@@ -264,7 +267,7 @@
 	}
 	function onPlayError() {
 		console.log('播放错误')
-		
+		playerStore.delSong(toRaw(currentSong.value))
 		if (playList.value.length) {
 			playNext()
 		}

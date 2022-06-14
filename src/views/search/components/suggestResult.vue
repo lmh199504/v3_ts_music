@@ -32,5 +32,6 @@
 	box-sizing: border-box;
 	background: var(--my-back-color-gray);
 	min-height: calc(100vh - 180px);
+	padding-bottom: 100px;
 }
 </style>

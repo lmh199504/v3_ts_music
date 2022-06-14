@@ -36,6 +36,8 @@ import Sheet from '@/views/search/components/sheet.vue'
 import User from '@/views/search/components/user.vue'
 import Mv from '@/views/search/components/mv.vue'
 import Lyric from '@/views/search/components/lyric.vue'
+import RadioStation from '@/views/search/components/radioStation.vue'
+import VideoCom from '@/views/search/components/videoCom.vue'
 export const searchType = [
 	{ type: 1018, name: '综合', component: comprehensive },
 	{ type: 1, name: '单曲', component: Single },
@@ -45,7 +47,7 @@ export const searchType = [
 	{ type: 1002, name: '用户', component: User },
 	{ type: 1004, name: 'MV', component: Mv },
 	{ type: 1006, name: '歌词', component: Lyric },
-	{ type: 1009, name: '电台', component: comprehensive },
-	{ type: 1014, name: '视频', component: comprehensive },
+	{ type: 1009, name: '电台', component: RadioStation },
+	{ type: 1014, name: '视频', component: VideoCom },
 	{ type: 2000, name: '声音', component: comprehensive }
 ]

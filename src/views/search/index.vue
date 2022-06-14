@@ -196,7 +196,6 @@
 <style scoped lang="less">
 	.search {
 		height: 100%;
-
 		.top_search {
 			display: flex;
 			background-color: var(--my-back-color-white);

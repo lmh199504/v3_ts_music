@@ -1,0 +1,74 @@
+<template>
+	<div class="album_item">
+		<div class="cover">
+			<img :src="videoData.coverUrl + '?param=140y140'" alt="">
+			<!-- <video src=""></video> -->
+		</div>
+		<div class="info">
+			<div class="album_name">{{ videoData.title }}</div>
+			<div class="singer">{{ videoData.creator.userName }}</div>
+			<div class="singer">{{ videoData.playTime }}播放</div>
+		</div>
+	</div>
+</template>
+
+<script setup lang="ts">
+	import { reqVideoUrl } from '@/api/video'
+	import { VideoInterface } from '@/types/public/video'
+	interface Props{
+		videoData: VideoInterface
+	}
+	
+	const props = withDefaults(defineProps<Props>(), {
+		videoData: {
+			title: '',
+			coverUrl: '',
+			vid: 0,
+			durationms: 0,
+			playTime: 0,
+			creator: {
+				userId: 0,
+				userName: ''
+			}
+		}
+	})
+	function getVideoUrl() {
+		reqVideoUrl({ id: props.videoData.vid })
+		.then(res => {
+			console.log(res)
+		})
+	}
+	
+	getVideoUrl()
+</script>
+
+<style scoped lang="less">
+	.album_item{
+		display: flex;
+		padding: 15px;
+		align-items: center;
+		overflow: hidden;
+		.cover{
+			width: 250px;
+			height: 150px;
+			margin-right: 20px;
+			img{
+				width: 100%;
+				height: 100%;
+				border-radius: 10px;
+				object-fit: cover;
+			}
+		}
+		.info{
+			flex: 1;
+			.album_name{
+				color: var(--my-text-color-black);
+				font-size: 30px;
+			}
+			.singer{
+				font-size: 24px;
+				color: var(--my-text-color-gray);
+			}
+		}
+	}
+</style>
