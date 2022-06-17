@@ -127,7 +127,6 @@
 	.icon-yuyin,
 	.icon-caidan {
 		font-size: 40px;
-		color: #2e2e2e;
 		font-weight: 600;
 	}
 	

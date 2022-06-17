@@ -4,11 +4,13 @@
 			<div class="recomend_title">推荐跟单</div>
 			<van-button icon="arrow" round size="mini" icon-position="right" @click="goSheets">更多</van-button>
 		</div>
-		<div class="sroll_wrapper" ref="scrollRef" @touchmove="scroll">
-			<div class="list">
-				<SongListItem v-for="item in songsList" :key="item.id" :songListData="item" />
+		<van-skeleton title :row="3" :loading="loading">
+			<div class="sroll_wrapper" ref="scrollRef" @touchmove="scroll">
+				<div class="list">
+					<SongListItem v-for="item in songsList" :key="item.id" :songListData="item" />
+				</div>
 			</div>
-		</div>
+		</van-skeleton>
 	</div>
 </template>
 <!-- 推荐歌单列表 -->
@@ -19,10 +21,15 @@
 	import { useRouter } from 'vue-router'
 	const router = useRouter()
 	const songsList = ref([])
+	const loading = ref<boolean>(false)
 	function getList() {
+		loading.value = true
 		reqRecommendList({ limit: 10 })
 		.then(res => {
 			songsList.value = res.data.result
+		})
+		.finally(() => {
+			loading.value = false
 		})
 	}
 	function scroll(e: Event): void {

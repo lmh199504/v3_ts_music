@@ -267,10 +267,12 @@
 	}
 	function onPlayError() {
 		console.log('播放错误')
-		playerStore.delSong(toRaw(currentSong.value))
+		
 		if (playList.value.length) {
 			playNext()
+			// playerStore.delSong(toRaw(currentSong.value))
 		}
+		
 	}
 	// 下一首
 	function playNext() {

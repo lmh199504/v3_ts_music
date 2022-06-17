@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { SongUrlParams, SheetListParams, idsParams, ModeParams } from '@/types/api/song'
+import type { SongUrlParams, SheetListParams, idsParams, ModeParams } from '@/types/api/song'
 // 获取歌曲播放地址
 export const reqGetSongUrl = (params: SongUrlParams) :Promise<AxiosResponse> => request({
 	url: '/song/url',

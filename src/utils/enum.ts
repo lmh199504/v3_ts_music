@@ -48,6 +48,6 @@ export const searchType = [
 	{ type: 1004, name: 'MV', component: Mv },
 	{ type: 1006, name: '歌词', component: Lyric },
 	{ type: 1009, name: '电台', component: RadioStation },
-	{ type: 1014, name: '视频', component: VideoCom },
-	{ type: 2000, name: '声音', component: comprehensive }
+	{ type: 1014, name: '视频', component: VideoCom }
+	// { type: 2000, name: '声音', component: comprehensive }
 ]

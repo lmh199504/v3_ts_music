@@ -5,12 +5,14 @@
 			<div class="recomend_title">新歌推荐</div>
 			<van-button icon="play" round size="mini" @click="playAll">播放</van-button>
 		</div>
-		<swiper :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
-			:scrollbar="{ draggable: true }">
-			<swiper-slide v-for="(item, index) in list" :key="index">
-				<new-song-item :song-data="data" v-for="data in item" :key="data.id" />
-			</swiper-slide>
-		</swiper>
+		<van-skeleton title :row="1" :loading="loading">
+			<swiper :slides-per-view="1.2" :space-between="20" navigation :pagination="{ clickable: true }"
+				:scrollbar="{ draggable: true }">
+				<swiper-slide v-for="(item, index) in list" :key="index">
+					<new-song-item :song-data="data" v-for="data in item" :key="data.id" />
+				</swiper-slide>
+			</swiper>
+		</van-skeleton>
 	</div>
 </template>
 
@@ -29,8 +31,10 @@
 	const list = ref<Array<Array<songData>>>([])
 	const songList = ref<Array<songData>>([])
 	const playerStore = usePlayerStore()
+	const loading = ref<boolean>(false)
 	
 	function getList() {
+		loading.value = true
 		reqRecommendNewSongs({ limit: 12 })
 			.then(res => {
 				const { data } = res
@@ -45,6 +49,9 @@
 					tempList[l].push(data.result[i])
 				}
 				list.value = tempList
+			})
+			.finally(() => {
+				loading.value = false
 			})
 	}
 		

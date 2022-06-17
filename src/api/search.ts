@@ -1,7 +1,7 @@
 // 搜索
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { SuggestParams, MultimatchParams, TypeSearchparams } from '@/types/api/search'
+import type { SuggestParams, MultimatchParams, TypeSearchparams } from '@/types/api/search'
 
 // 获取默认搜索关键词
 export const reqSearchDefault = () :Promise<AxiosResponse> => request({

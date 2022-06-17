@@ -1,7 +1,7 @@
 //歌手
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { singerListParams, subSingerParams, singerDetailParams, singerSongParams, singerAlbum } from '@/types/api/singer'
+import type { singerListParams, subSingerParams, singerDetailParams, singerSongParams, singerAlbum } from '@/types/api/singer'
 // 获取歌手列表
 export const reqSingerList = (params: singerListParams) :Promise<AxiosResponse> => request({
 	url: '/artist/list',

@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { AlbumListParams, DigitAlbumParams, AlbumDetailParams } from '@/types/api/album'
+import type { AlbumListParams, DigitAlbumParams, AlbumDetailParams } from '@/types/api/album'
 
 // 新碟上架
 export const reqAlbumList = (params: AlbumListParams) :Promise<AxiosResponse> => request({

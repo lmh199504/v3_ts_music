@@ -1,7 +1,7 @@
 // 歌单
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { subscribeParams, createParams, delParams, SheetTracksParams, UpdateCoverParams, UpdateNameParams, UpdateTagsParams, UpdateDescParams } from '@/types/api/sheet'
+import type { subscribeParams, createParams, delParams, SheetTracksParams, UpdateCoverParams, UpdateNameParams, UpdateTagsParams, UpdateDescParams } from '@/types/api/sheet'
 
 export const reqSubscribeSheet = (params: subscribeParams) :Promise<AxiosResponse> => request({
 	url: '/playlist/subscribe',

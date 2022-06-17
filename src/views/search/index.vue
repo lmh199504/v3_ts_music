@@ -41,12 +41,14 @@
 						</div>
 					</div>
 					<div class="history_list">
-						<div class="history_item" v-for="(item, index) in historyList" :key="index" @click="tapHot(item)">{{ item }}</div>
+						<div class="history_item" v-for="(item, index) in historyList" :key="index"
+							@click="tapHot(item)">{{ item }}</div>
 					</div>
 				</div>
 				<div class="hot_search">
 					<div class="hot_title">热门搜索</div>
-					<div class="hot_item" v-for="(item, index) in hotList" :key="index" @click="tapHot(item.first)">{{ item.first }}</div>
+					<div class="hot_item" v-for="(item, index) in hotList" :key="index" @click="tapHot(item.first)">
+						{{ item.first }}</div>
 				</div>
 			</div>
 		</div>
@@ -62,27 +64,28 @@
 	} from '@/utils/back'
 	import {
 		reqSearchDefault,
-		reqSearchSuggest, reqHotSearch
+		reqSearchSuggest,
+		reqHotSearch
 	} from '@/api/search'
 	import SuggestResult from './components/suggestResult.vue'
 	import Cookies from 'js-cookie'
-	
+
 	const LOCAL_KEY = 'historySearch'
 	const defaultPlaceholder = ref < string > ('')
 	const showClose = ref < boolean > (false)
 	const keyWord = ref < string > ('')
 	const suggestList = ref([])
 	const showSuggest = ref < boolean > (false)
-	const suggestLoading = ref<boolean>(false)
-	const showResult = ref<boolean>(false)
-	const showDefault = ref<boolean>(true)
-	interface HotItem{
+	const suggestLoading = ref < boolean > (false)
+	const showResult = ref < boolean > (false)
+	const showDefault = ref < boolean > (true)
+	interface HotItem {
 		first: string;
 	}
-	const hotList = ref<Array<HotItem>>([])
+	const hotList = ref < Array < HotItem >> ([])
 	const localHistory = (Cookies.get(LOCAL_KEY) && JSON.parse(Cookies.get(LOCAL_KEY))) || []
-	const historyList = ref<Array<string>>(localHistory)
-	
+	const historyList = ref < Array < string >> (localHistory)
+
 	let timer = null
 	// 获取默认搜索关键词
 	function getSearchDefault() {
@@ -139,14 +142,15 @@
 		keyWord.value = val
 		pushHistoryList(keyWord.value)
 	}
+
 	function getHot() {
 		reqHotSearch()
-		.then(res => {
-			hotList.value = res.data.result.hots
-		})
+			.then(res => {
+				hotList.value = res.data.result.hots
+			})
 	}
 	// 点击热门
-	function tapHot(word: string) :void {
+	function tapHot(word: string): void {
 		keyWord.value = word
 		showClose.value = true
 		showResult.value = true
@@ -167,9 +171,10 @@
 		historyList.value = []
 		Cookies.remove(LOCAL_KEY)
 	}
+
 	function pushHistoryList(val) {
 		const MAX_LENGTH = 5
-		const index: number = historyList.value.findIndex((item: string): boolean => val === item )
+		const index: number = historyList.value.findIndex((item: string): boolean => val === item)
 		const isMax: boolean = historyList.value.length >= MAX_LENGTH
 		if (isMax) { // 是否已达最大长度
 			if (index === -1) { // 历史中没有
@@ -189,13 +194,14 @@
 		}
 		Cookies.set(LOCAL_KEY, JSON.stringify(historyList.value))
 	}
-	
+
 	getSearchDefault()
 	getHot()
 </script>
 <style scoped lang="less">
 	.search {
 		height: 100%;
+
 		.top_search {
 			display: flex;
 			background-color: var(--my-back-color-white);
@@ -206,6 +212,10 @@
 
 			.left {
 				font-size: 40px;
+
+				:deep(.van-icon) {
+					color: var(--my-text-color-black);
+				}
 			}
 
 			.center {
@@ -248,11 +258,11 @@
 			.right {
 				font-size: 30px;
 				padding: 0 10px;
-
+				color: var(--my-text-color-black);
 				&:active {
 					opacity: 0.7;
-			}
 				}
+			}
 		}
 	}
 
@@ -264,18 +274,21 @@
 		width: 100%;
 		background: var(--my-back-color-white);
 	}
-	.hot_search{
+
+	.hot_search {
 		padding: 30px;
 		display: flex;
 		flex-wrap: wrap;
 		font-size: 30px;
-		.hot_title{
+
+		.hot_title {
 			margin: 10px;
 			padding: 10px;
 			color: var(--my-text-color-black);
 			font-weight: bold;
 		}
-		.hot_item{
+
+		.hot_item {
 			margin: 10px;
 			background: var(--my-back-color-gray);
 			padding: 10px;
@@ -283,20 +296,25 @@
 			color: var(--my-text-color-black);
 		}
 	}
-	.history_container{
+
+	.history_container {
 		padding: 30px;
-		.history_title{
+
+		.history_title {
 			display: flex;
 			justify-content: space-between;
 			font-size: 30px;
 			padding: 10px;
 			margin: 10px;
+			color: var(--my-text-color-black);
 		}
-		.history_list{
+
+		.history_list {
 			display: flex;
 			flex-wrap: wrap;
 		}
-		.history_item{
+
+		.history_item {
 			font-size: 30px;
 			margin: 10px;
 			background: var(--my-back-color-gray);

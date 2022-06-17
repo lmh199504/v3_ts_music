@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-import { AxiosResponse } from 'axios'
-import { SendCodeParams, PhoneLoginParams, EmaiLoginParams, UserPlayList, UserFollow, UidParams, LikeParams } from '@/types/api/user'
+import type { AxiosResponse } from 'axios'
+import type { SendCodeParams, PhoneLoginParams, EmaiLoginParams, UserPlayList, UserFollow, UidParams, LikeParams } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams) :Promise<AxiosResponse> => request({
 	url: '/captcha/sent',

@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import { RecommendListParams, HistoryRecommendParams } from '@/types/api/home'
+import type { RecommendListParams, HistoryRecommendParams } from '@/types/api/home'
 // 获取banner
 export const reqBanner = (): Promise<AxiosResponse> => request({
 	url: '/banner',
