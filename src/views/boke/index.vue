@@ -25,7 +25,7 @@
 	import $bus from '@/utils/eventBus'
 	import Suggest from './components/suggest/index.vue'
 	
-	const active = ref<boolean>(1)
+	const active = ref<number>(1)
 	
 	// 侧边菜单
 	function openMenu(): void {

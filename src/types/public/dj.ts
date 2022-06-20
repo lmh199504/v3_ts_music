@@ -14,4 +14,11 @@ export interface DjData{
 	picUrl: string
 	name: string
 	playCount: number
+	feeScope?: number
+}
+// 分类数据
+export interface CategoryInterface{
+	id: number
+	name: string
+	pic56x56Url: string
 }

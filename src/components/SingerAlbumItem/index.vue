@@ -10,13 +10,18 @@
 
 <script setup lang="ts">
 	import { useRouter } from 'vue-router'
-	import { singerAlbumInterface } from '@/types/public/singer'
+	import type { singerAlbumInterface } from '@/types/public/singer'
 	const router = useRouter()
 	interface Props{
 		albumData: singerAlbumInterface
 	}
 	const props = withDefaults(defineProps<Props>(), {
-		albumData: () => { return {} }
+		albumData: () => { return {
+			name: '',
+			picUrl: '',
+			artist: [],
+			id: 0
+		} }
 	})
 	function tapAlbum() {
 		router.push({

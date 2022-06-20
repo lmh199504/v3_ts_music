@@ -19,28 +19,35 @@
 </template>
 
 <script setup lang="ts">
-	import MySheetList from '@/components/mySheetList'
+	import MySheetList from '@/components/mySheetList/index.vue'
 	import SongMenu from './songMenu.vue'
 	import { computed, toRaw, ref } from 'vue'
 	import { usePlayerStore } from '@/store'
 	import { reqSheetTracks } from '@/api/sheet'
 	import { Toast } from 'vant'
-	
-	
+	import type { arData } from '@/types/store/player'
+	import { SheetDataInterface } from '@/types/public/sheet'
+
 	const playerStore = usePlayerStore()
 	interface Props{
 		// eslint-disable-next-line
 		songData: any;
 		showdel: boolean;
 	}
-
 	const props = withDefaults(defineProps < Props > (), {
-		songData: () => { return {} },
+		songData: () => { return {
+			url: '',
+			name: '',
+			id: 0,
+			ar: [],
+			al: {},
+			dt: 0
+		} },
 		showdel: false
 	}) 
 	const singer = computed(() => {
 		if (props.songData?.ar) {
-			return props.songData.ar.map(item => item.name).join('/')
+			return props.songData.ar.map((item: arData) => item.name).join('/')
 		}
 		return ''
 	})
@@ -62,7 +69,7 @@
 		showSheet.value = true
 	}
 	// 添加歌曲到歌单
-	function selectSheet(item) {
+	function selectSheet(item: SheetDataInterface) {
 		const loading = Toast.loading({
 			duration: 0,
 			message: '加载中...',

@@ -43,22 +43,29 @@
 	const imgStyle = ref({}) // 图片样式
 	const layerStyle = ref({}) // 图片位置占位
 	const seizeStyle = ref({}) // 滚动容器内占位
-	let bs = null
+	interface Position{
+		x: number
+		y: number
+	}
+	// eslint-disable-next-line
+	let bs: any = null
 	onMounted(() => {
 		setTimeout(() => {
-			bs = new BScroll(wrapper.value, {
-				probeType: 3,
-				click: true
-			})
-			clientHeight.value = banner.value.clientHeight
-			originalHeight = banner.value.clientHeight
-			bs.on('scroll', (position) => {
-				scrollY.value = position.y
-				emit('scroll', position)
-			})
-			bs.on('scrollEnd', () => {
-				emit('scrollEnd')
-			})
+			if (wrapper.value) {
+				bs = new BScroll(wrapper.value, {
+					probeType: 3,
+					click: true
+				})
+				clientHeight.value = banner.value?.clientHeight || 0
+				originalHeight = banner.value?.clientHeight || 0
+				bs.on('scroll', (position: Position) => {
+					scrollY.value = position.y
+					emit('scroll', position)
+				})
+				bs.on('scrollEnd', () => {
+					emit('scrollEnd')
+				})
+			}
 		}, 0)
 	})
 	nextTick(() => {

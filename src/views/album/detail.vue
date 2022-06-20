@@ -67,8 +67,8 @@
 
 <script setup lang="ts">
 	import { onClickLeft } from '@/utils/back' 
-	import SongItem from '@/components/songItem'
-	import Scroll from '@/components/Scroll/scrollBanner'
+	import SongItem from '@/components/songItem/index.vue'
+	import Scroll from '@/components/Scroll/scrollBanner.vue'
 	import { usePlayerStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
 	import {
@@ -77,26 +77,32 @@
 	import {
 		ref,
 		reactive,
-		Component,
 		nextTick,
 		toRaw
 	} from 'vue'
 	import { formatCountNumber } from '@/utils'
 	import { reqAlbum } from '@/api/album'
 	const route = useRoute()
-	const details = reactive({})
+	const details = reactive({
+		id: 0,
+		shareCount: 0,
+		commentCount: 0,
+		tags: []
+	})
 	const list = ref([])
-	const scrollRef = ref < Component > ()
+	const scrollRef = ref < InstanceType<typeof Scroll> > ()
 	const playerStore = usePlayerStore()
 	const show = ref<boolean>(false)
-	const info = reactive({})
+	const info = reactive({
+		tags: []
+	})
 
 	function PlayAll() {
 		playerStore.resetList(toRaw(list.value))
 	}
 
 	function getAlbum() {
-		reqAlbum({ id: route.query.id })
+		reqAlbum({ id: Number(route.query.id) })
 		.then(res => {
 			// console.log(res)
 			list.value = res.data.songs

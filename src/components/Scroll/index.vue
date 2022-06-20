@@ -7,11 +7,16 @@
 </template>
 
 <script setup lang="ts">
-	import BScroll from 'better-scroll'
+import { BScrollConstructor } from '@better-scroll/core/dist/types/BScroll';
+import BScroll from 'better-scroll'
 	import { onMounted, ref, defineExpose } from 'vue'
 	interface Props{
 		probeType: number // 决定是否派发 scroll 事件，对页面的性能有影响，尤其是在 useTransition 为 true 的模式下 0 1 2 3 
 		stopPropagation: boolean
+	}
+	interface Position{
+		x: number
+		y: number
 	}
 	const emit = defineEmits(['scroll', 'scrollEnd'])
 	const props = withDefaults(defineProps<Props>(), {
@@ -19,28 +24,31 @@
 		stopPropagation: false
 	})
 	const scrollwrapper = ref<HTMLDivElement>()
-	let bs = null;
+	// eslint-disable-next-line 
+	let bs: BScrollConstructor<any> | null = null;
 	onMounted(() => {
 		setTimeout(() => {
-			bs = new BScroll(scrollwrapper.value, {
-				probeType: props.probeType,
-				stopPropagation: props.stopPropagation,
-				click: true
-			})
-			bs.on('scroll', (position) => {
-				emit('scroll', position)
-			})
-			bs.on('scrollEnd', () => {
-				emit('scrollEnd')
-			})
+			if (scrollwrapper.value) {
+				bs = new BScroll(scrollwrapper.value, {
+					probeType: props.probeType,
+					stopPropagation: props.stopPropagation,
+					click: true
+				})
+				bs.on('scroll', (position: Position) => {
+					emit('scroll', position)
+				})
+				bs.on('scrollEnd', () => {
+					emit('scrollEnd')
+				})
+			}
 		}, 1000)
 	})
 	
-	function scrollToElemet() {
-		bs && bs.scrollToElement.apply(bs, arguments)
+	function scrollToElemet(el: HTMLElement, time: number) {
+		bs && bs.scrollToElement(el, time, false, false)
 	}
 	function refresh() {
-		bs && bs.refresh.apply(bs, arguments)
+		bs && bs.refresh()
 	}
 	
 	defineExpose({
@@ -53,7 +61,5 @@
 	.scroll{
 		height: 100%;
 		overflow: hidden;
-		.scroll_content{
-		}
 	}
 </style>

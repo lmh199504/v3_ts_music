@@ -208,6 +208,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '搜索'
 		}
+	},
+	{
+		path: '/djCategory',
+		name: 'DjCategory',
+		component: () => import('@/views/boke/djCategory.vue'),
+		meta: {
+			title: '播客dj分类'
+		}
 	}
 ]
 

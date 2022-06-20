@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 import type { AxiosResponse } from 'axios'
-import type { RecommendParams } from '@/types/api/dj'
+import type { RecommendParams, RecommendTypeParams, DjHotByTypeParams } from '@/types/api/dj'
 // 推荐电台 /personalized/djprogram
 export const reqSuggestDjprogram = (): Promise<AxiosResponse> => request({
 	url: '/personalized/djprogram',
@@ -21,6 +21,18 @@ export const reqDjPersonalizeRecommend = (params: RecommendParams): Promise<Axio
 export const reqDjCatList = (): Promise<AxiosResponse> => request({
 	url: '/dj/catelist',
 	method: 'GET'
+})
+// 分类推荐 
+export const reqRecommendType = (params: RecommendTypeParams): Promise<AxiosResponse> => request({
+	url: '/dj/recommend/type',
+	method: 'GET',
+	params: params
+})
+// 类别热门电台 /dj/radio/hot
+export const reqDjHotByType = (params: DjHotByTypeParams): Promise<AxiosResponse> => request({
+	url: '/dj/radio/hot',
+	method: 'GET',
+	params
 })
 // 获取电台推荐类型 /dj/category/recommend
 export const reqCategoryRecommend = (): Promise<AxiosResponse> => request({

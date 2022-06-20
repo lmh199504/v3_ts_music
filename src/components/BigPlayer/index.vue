@@ -110,25 +110,25 @@
 </template>
 
 <script setup lang="ts">
-	import PlayListPopup from '@/components/PlayList/listPopup'
+	import PlayListPopup from '@/components/PlayList/listPopup.vue'
 	import { PlayModeData } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
-	import { ref, Component, watch, nextTick, computed, toRaw } from 'vue'
+	import { ref, watch, nextTick, computed, toRaw } from 'vue'
 	import {
 		storeToRefs
 	} from 'pinia'
 	import {
 		usePlayerStore
 	} from '@/store'
-	import Scroll from '@/components/Scroll'
+	import Scroll from '@/components/Scroll/index.vue'
 	import { reqGetLyric } from '@/api/song'
 	const playerStore = usePlayerStore()
 	const showList = ref<boolean>(false)
 	const {
 		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList, isFirst
 	} = storeToRefs(playerStore)
-	const srcoll = ref<Component>()
+	const srcoll = ref<InstanceType<typeof Scroll>>()
 	const showLyric = ref<boolean>(false)
 	// 播放器对象
 	const audio = ref<HTMLAudioElement>()
@@ -142,7 +142,7 @@
 	// 进度条
 	const processNum = ref<number>(0)
 	// 歌词对象
-	let lyric = null
+	let lyric: { seek: (arg0: number) => void; togglePlay: () => void; stop: () => void; lines: { time: number; txt: string }[]; play: () => void } | null = null
 	// 歌词列表
 	interface LinesData{
 		time: number;
@@ -163,7 +163,7 @@
 	watch(showLyric, ()=> {
 		nextTick(() => {
 			srcoll.value && srcoll.value.refresh()
-			if (playing.value) {
+			if (playing.value && audio.value) {
 				lyric && lyric.seek(audio.value.currentTime*1000)
 			}
 		})
@@ -172,9 +172,9 @@
 	watch(playing, (val) => {
 		if (currentSong.value.id) {
 			if (val) { // 播放
-				audio.value.play()
+				audio.value?.play()
 			} else {
-				audio.value.pause()
+				audio.value?.pause()
 			}
 			lyric && lyric.togglePlay()
 		}
@@ -202,14 +202,18 @@
 			}
 		})
 	}
-	function handler({ lineNum, txt }) {
-		console.log(lineNum)
-		console.log(txt)
+	interface LineLyric{
+		lineNum: number
+		txt: string
+	}
+	function handler(lyric: LineLyric) {
+		console.log(lyric)
+		const { lineNum, txt } =  lyric
 		activeIndex.value = lineNum
 		if (activeIndex.value > 5) {
-			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value - 5 }`)[0], 1000)
+			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ activeIndex.value - 5 }`)[0] as HTMLElement, 1000)
 		} else {
-			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ 0 }`)[0], 1000)
+			srcoll.value && srcoll.value.scrollToElemet(document.getElementsByClassName(`lyrcline${ 0 }`)[0] as HTMLElement, 1000)
 		}
 		playerStore.setCurrentText(txt)
 	}
@@ -221,12 +225,12 @@
 		}
 		lyric = new Lyric(lyricText, handler)
 		console.log(lyric)
-		lyricLines.value = lyric.lines
+		lyricLines.value = lyric?.lines || []
 		if (audio.value) {
 			audio.value.volume = 0.1
 		}
-		lyric.play()
-		lyric.seek(audio.value.currentTime*1000)
+		lyric?.play()
+		audio.value && lyric?.seek(audio.value.currentTime*1000)
 	}
 	const bgStyle = computed(() => {
 		return { 'background-image': `url(${coverImg.value})` }
@@ -243,12 +247,14 @@
 		isDraging.value = false
 	}
 	// 进度条改变
-	function onChange(val) {
+	function onChange(val: number) {
 		const time = (val / 100) * (currentSong.value.dt / 1000)
-		audio.value.currentTime = (val / 100) * (currentSong.value.dt / 1000)
-		audio.value.play()
-		lyric.play()
-		lyric.seek(time * 1000)
+		if (audio.value ) {
+			audio.value.currentTime = (val / 100) * (currentSong.value.dt / 1000)
+			audio.value.play()
+		}
+		lyric?.play()
+		lyric?.seek(time * 1000)
 	}
 	// 播放事件监听
 	function onPlayEnd() {
@@ -263,7 +269,7 @@
 		}
 	}
 	function onTimeupdate() {
-		playerStore.setCurrentTime(audio.value?.currentTime * 1000)
+		audio.value && playerStore.setCurrentTime(audio.value?.currentTime * 1000)
 	}
 	function onPlayError() {
 		console.log('播放错误')

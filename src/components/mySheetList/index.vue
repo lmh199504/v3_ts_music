@@ -12,12 +12,13 @@
 </template>
 
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
+	import { computed, ref, WritableComputedRef } from 'vue'
 	import SheetItem from './sheetItem.vue'
 	import { storeToRefs } from 'pinia'
 	import { reqUserPlayList } from '@/api/user'
 	import { useUserStore } from '@/store'
-	
+	import type { SheetDataInterface } from '@/types/public/sheet'
+
 	const userStore = useUserStore()
 	const { userInfo } = storeToRefs(userStore)
 	interface Props{
@@ -29,9 +30,9 @@
 	const emit = defineEmits<{
 		(e: 'update:show', value: boolean): void,
 		(e: 'play'): void,
-		(e: 'select'): void
+		(e: 'select', value: SheetDataInterface): void
 	}>()
-	const showPop: boolean = computed({
+	const showPop: WritableComputedRef<boolean> = computed({
 		get() {
 			return props.show
 		},
@@ -40,7 +41,7 @@
 		}
 	}) 
 
-	const list = ref([])
+	const list = ref<Array<SheetDataInterface>>([])
 	const limit = 30
 	let offset = 0
 	const loading = ref<boolean>(true)
@@ -54,7 +55,7 @@
 		loading.value = true
 		reqUserPlayList(params)
 		.then(res => {
-			list.value = list.value.concat(res.data.playlist.filter(item => item.creator.userId === userInfo.value.userId))
+			list.value = list.value.concat(res.data.playlist.filter((item: SheetDataInterface) => item.creator.userId === userInfo.value.userId))
 			finished.value = !res.data.more
 		})
 		.finally(() => {
@@ -66,7 +67,7 @@
 		getList()
 	}
 	
-	function select(item) {
+	function select(item: SheetDataInterface) {
 		emit('select', item)
 	}
 

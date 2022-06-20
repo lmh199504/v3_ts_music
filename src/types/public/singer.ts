@@ -10,4 +10,5 @@ export interface singerAlbumInterface{
 	name: string;
 	picUrl: string;
 	artist: any;
+	id: number
 }

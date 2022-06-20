@@ -5,7 +5,7 @@ export interface songListFace{
 	alg: string;
 	canDislike: boolean;
 	copywriter: string;
-	highQuality: false;
+	highQuality: boolean;
 	id: number;
 	name: string;
 	picUrl: string;
@@ -13,6 +13,7 @@ export interface songListFace{
 	trackCount: number;
 	trackNumberUpdateTime: number;
 	type: number;
+	coverImgUrl: string
 }
 // 推荐歌曲数据类型
 export interface songData{
@@ -43,4 +44,10 @@ export interface songInterface{
 	artists: Array<arData>;
 	album: alData;
 	duration: number;
+}
+
+// 排列方式
+export enum BoxType{
+	line = 'line',
+	box = 'box'
 }

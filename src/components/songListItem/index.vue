@@ -21,7 +21,22 @@
 	}
 	// eslint-disable-next-line 
 	const props = withDefaults(defineProps < Props > (), {
-		songListData: {}
+		songListData: () => {
+			return {
+				alg: '',
+				canDislike: false,
+				copywriter: '',
+				highQuality: false,
+				id: 0,
+				name: '',
+				picUrl: '',
+				playCount: 0,
+				trackCount: 0,
+				trackNumberUpdateTime: 0,
+				type: 0,
+				coverImgUrl: ''
+			}
+		}
 	})
 	// console.log(props)
 	function goDetail() {

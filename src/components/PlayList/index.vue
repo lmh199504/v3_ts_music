@@ -6,7 +6,7 @@
 <script setup lang="ts">
 	import { storeToRefs } from 'pinia'
 	import { usePlayerStore } from '@/store'
-	import SongItem from '@/components/songItem'
+	import SongItem from '@/components/songItem/index.vue'
 	const playerStore = usePlayerStore()
 	const { playList } = storeToRefs(playerStore)
 </script>

@@ -5,34 +5,46 @@
 			<van-button icon="arrow" round size="mini" icon-position="right" @click="getMore">更多</van-button>
 		</div>
 		<div>
-			<div class="sroll_wrapper" ref="scrollRef" @touchmove="scroll">
-				<div class="list">
-					<DjItem  v-for="item in list.radios" :key="item.id" :dj-data="item" />
-				</div>
+			<van-row v-if="boxType == BoxType.box" :gutter="10">
+				<van-col span="8" v-for="item in list.radios" :key="item.id">
+					<DjItem :dj-data="item" :box-type="boxType" />
+				</van-col>
+			</van-row>
+			<div v-if="boxType == BoxType.line">
+				<DjItem v-for="item in list.radios" :key="item.id" :dj-data="item" :box-type="boxType" />
 			</div>
-			<DjItem />
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { useRouter } from 'vue-router'
 	import DjItem from '@/components/DjItem/index.vue'
-	// DjData,
+	import { BoxType } from '@/types/public'
 	import type { DjCategoryRecommend } from '@/types/public/dj'
+	const router = useRouter()
 	interface Props{
 		list: DjCategoryRecommend
+		boxType: BoxType
 	}
-	withDefaults(defineProps<Props>(), {
+	const props = withDefaults(defineProps<Props>(), {
 		list: () => {
 			return {
 				categoryName: '',
-				categoryId: '',
+				categoryId: 0,
 				radios: []
 			}
-		}
+		},
+		boxType: BoxType.box
 	})
 	function getMore() {
 		console.log('更多')
+		router.push({
+			path: '/djCategory',
+			query: {
+				id: props.list.categoryId
+			}
+		})
 	}
 </script>
 
@@ -53,4 +65,5 @@
 			color: var(--my-text-color-black);
 		}
 	}
+	
 </style>

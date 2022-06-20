@@ -37,7 +37,7 @@
 	import { storeToRefs } from 'pinia'
 	import { usePlayerStore } from '@/store'
 	import { ref } from 'vue'
-	import PlayListPopup from '@/components/PlayList/listPopup'
+	import PlayListPopup from '@/components/PlayList/listPopup.vue'
 	const playerStore = usePlayerStore()
 	const showList = ref<boolean>(false)
 	function tapPlayList(): void {

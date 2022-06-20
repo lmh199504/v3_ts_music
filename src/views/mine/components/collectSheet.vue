@@ -18,9 +18,10 @@
 	import { storeToRefs } from 'pinia'
 	import { reqUserPlayList, reqUserSubCount } from '@/api/user'
 	import { useUserStore } from '@/store'
+	import type { SheetDataInterface } from '@/types/public/sheet'
 	const userStore = useUserStore()
 	const { userInfo } = storeToRefs(userStore)
-	const list = ref([])
+	const list = ref<Array<SheetDataInterface>>([])
 	const limit = 30
 	let offset = 0
 	const total = ref<number>(0)
@@ -36,7 +37,7 @@
 		loading.value = true
 		reqUserPlayList(params)
 		.then(res => {
-			list.value = list.value.concat(res.data.playlist.filter(item => item.creator.userId != userInfo.value.userId))
+			list.value = list.value.concat(res.data.playlist.filter((item: SheetDataInterface) => item.creator.userId != userInfo.value.userId))
 			finished.value = !res.data.more
 		})
 		.finally(() => {
@@ -54,8 +55,8 @@
 		offset++
 		getList()
 	}
-	function delSuccess(id) {
-		const index = list.value.findIndex(item => item.id === id)
+	function delSuccess(id: number) {
+		const index = list.value.findIndex((item: SheetDataInterface) => item.id === id)
 		list.value.splice(index, 1)
 		total.value -= 1
 	}
