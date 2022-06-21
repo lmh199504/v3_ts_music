@@ -30,7 +30,7 @@
 						<div class="lyric_div" v-if="lyricLines.length">
 							<div v-for="(item, index) in lyricLines" :key="index" class="lyrclines" :class="[ `lyrcline${ index  }`, activeIndex == index ? 'lyrclactive': '' ]">{{ item.txt }}</div>
 						</div>
-						<div class="lyric_div">
+						<div v-else class="lyric_div">
 							歌词跑丢了~
 						</div>
 					</Scroll>

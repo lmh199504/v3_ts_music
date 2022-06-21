@@ -81,7 +81,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		setPlayerVisible(val: boolean): void {
 			this.showBigPlayer = val
 		},
-		resetList(list: Array<SongData>): void {
+		resetList(list: Array<SongData>, romote = false): void {
 			const ids = list.map((item: SongData) => { return item.id }).join(',')
 			reqGetSongUrl({ id: ids })
 				.then(res => {
@@ -89,8 +89,11 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 					const result = list.map(item => {
 						const find: SongData = resList.find((res_item: SongData) => item.id === res_item.id)
 						if (find) {
-							// item.url = find.url
-							item.url = `https://music.163.com/song/media/outer/url?id=${find.id}.mp3`
+							if (romote) {
+								item.url = find.url
+							} else {
+								item.url = `https://music.163.com/song/media/outer/url?id=${find.id}.mp3`
+							}
 						}
 						return item
 					})

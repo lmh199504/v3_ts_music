@@ -16,6 +16,7 @@
 <script setup lang="ts">
     import { toRaw, ref } from 'vue'
     import { usePlayerStore } from '@/store'
+	import { reqGetSongUrl } from '@/api/song'
     import type { SongData } from '@/types/store/player'
     interface Props{
         songData: SongData
@@ -46,11 +47,11 @@
     function showShareMenu() {
 		show.value = true
 	}
-	function playThis() {
-        console.log('sdfasdfasd')
+	async function playThis() {
         const data = toRaw(props.songData)
         data.id = toRaw(props.songId)
-        console.log(data)
+		const result = await reqGetSongUrl({ id: toRaw(props.songId)})
+		data.url = result.data.data[0].url
 		playerStore.setCurSong(data)
 	}
 </script>
@@ -65,6 +66,7 @@
         .left{
             font-size: 40px;
             margin-right: 30px;
+			color: var(--my-text-color-gray);
         }
         .center{
 			display: flex;

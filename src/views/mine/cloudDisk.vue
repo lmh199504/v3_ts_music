@@ -1,23 +1,31 @@
 <template>
     <MiniPlayOut>
-        <van-nav-bar title="我的云盘" fixed placeholder left-arrow @click-left="onClickLeft"></van-nav-bar>
-        <van-list :loading="loading" :finished="finished" @load="onLoad">
-            <div class="">
-                <div>
-                    <i class="iconfont icon-bofang1"></i>
-                    <div>播放全部</div>
-                </div>
-            </div>
-            <CloudItem v-for="(item, index) in list" :key="item.songId" :song-data="item.simpleSong" :song-id="item.songId" :index="index+1">{{ item.simpleSong.name }}</CloudItem>
-        </van-list>
+        <div class="cloudDisk">
+			<van-nav-bar title="我的云盘" fixed placeholder left-arrow @click-left="onClickLeft"></van-nav-bar>
+			<van-list :loading="loading" :finished="finished" @load="onLoad">
+				<div class="list">
+					<div class="top_menu">
+						<div class="play_btn" @click="playAll">
+							<i class="iconfont icon-bofang1"></i>
+							<div>播放全部</div>
+						</div>
+					</div>
+					<CloudItem v-for="(item, index) in list" :key="item.songId" :song-data="item.simpleSong" :song-id="item.songId" :index="index+1">{{ item.simpleSong.name }}</CloudItem>
+				</div>
+			</van-list>
+		</div>
     </MiniPlayOut>
 </template>
 <script lang="ts" setup>
-    import { ref } from 'vue'
+    import { ref, toRaw } from 'vue'
     import { onClickLeft } from '@/utils/back'
     import { reqCloudMusic } from '@/api/user'
     import type { CloudDiskItem } from '@/types/public/cloudDisk'
     import CloudItem from './components/cloudDisk/cloudItem.vue'
+	import { reqGetSongUrl } from '@/api/song'
+	import { usePlayerStore } from '@/store'
+	
+	const playerStore = usePlayerStore()
     const loading = ref<boolean>(true)
     const finished = ref<boolean>(false)
     const list = ref<CloudDiskItem[]>([])
@@ -43,6 +51,29 @@
         offset++ 
         getList()
     }
-
+	function playAll() {
+		const play_list = list.value.map(item  => toRaw(item.simpleSong))
+		playerStore.resetList(play_list, true)
+	}
     getList()
 </script>
+<style scoped lang="less">
+	.cloudDisk{
+		height: 100%;
+		overflow: auto;
+	}
+	.top_menu{
+		display: flex;
+		justify-content: space-between;
+		padding: 30px;
+		.play_btn{
+			display: flex;
+			align-items: center;
+			font-size: 28px;
+			color: var(--my-text-color-black);
+			.iconfont{
+				margin-right: 10px;
+			}
+		}
+	}
+</style>
