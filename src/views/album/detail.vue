@@ -71,6 +71,7 @@
 	import Scroll from '@/components/Scroll/scrollBanner.vue'
 	import { usePlayerStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
+	import { SongData } from '@/types/store/player'
 	import {
 		useRoute
 	} from 'vue-router'
@@ -87,14 +88,24 @@
 		id: 0,
 		shareCount: 0,
 		commentCount: 0,
-		tags: []
+		tags: [],
+		picUrl: '',
+		name: '',
+		artist: {
+			img1v1Url: '',
+			name: ''
+		},
+		description: ''
 	})
-	const list = ref([])
+	const list = ref<SongData[]>([])
 	const scrollRef = ref < InstanceType<typeof Scroll> > ()
 	const playerStore = usePlayerStore()
 	const show = ref<boolean>(false)
 	const info = reactive({
-		tags: []
+		tags: [],
+		shareCount: 0,
+		likedCount: 0,
+		commentCount: 0
 	})
 
 	function PlayAll() {
@@ -107,14 +118,28 @@
 			// console.log(res)
 			list.value = res.data.songs
 			
-			for (const key in res.data.album.info) {
-				info[key] = res.data.album.info[key]
-			}
-			
-			for(const key in res.data.album) {
-				details[key] = res.data.album[key]
-			}
-			
+			// for (const key in res.data.album.info) {
+			// 	info[key] = res.data.album.info[key]
+			// }
+			const infoData = res.data.album.info
+			info.commentCount = infoData.commentCount
+			info.likedCount = infoData.likedCount
+			info.shareCount = infoData.shareCount
+			info.tags = infoData.tags
+
+			// for(const key in res.data.album) {
+			// 	details[key] = res.data.album[key]
+			// }
+			const detailsData = res.data.album
+			details.artist = detailsData.artist
+			details.commentCount = detailsData.commentCount
+			details.description = detailsData.description
+			details.id = detailsData.id
+			details.name = detailsData.name
+			details.picUrl = detailsData.picUrl
+			details.shareCount = detailsData.shareCount
+			details.tags = detailsData.tags
+
 			nextTick(() => {
 				scrollRef.value && scrollRef.value.refresh()
 			})

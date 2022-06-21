@@ -216,6 +216,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '播客dj分类'
 		}
+	},
+	{
+		path: '/cloudDisk',
+		name: 'CloudDisk',
+		component: () => import('@/views/mine/cloudDisk.vue'),
+		meta: {
+			title: '播客dj分类'
+		}
 	}
 ]
 

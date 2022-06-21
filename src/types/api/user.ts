@@ -34,3 +34,8 @@ export interface LikeParams{
 	id: number; // 歌曲id
 	like?: boolean; // 默认为 true 即喜欢 , 若传 false, 则取消喜欢
 }
+// 云盘音乐
+export interface CloudDiskParams{
+	limit: number
+	offset: number
+}

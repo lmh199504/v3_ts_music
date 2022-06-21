@@ -28,8 +28,8 @@
 	interface Props{
 		// eslint-disable-next-line
 		sheetData: any;
-		hideEdit: boolean;
-		showEdit: boolean
+		hideEdit: boolean; // 菜单中的编辑
+		showEdit: boolean // 菜单
 	}
 	const props = withDefaults(defineProps < Props > (), {
 		sheetData: () => { return {} },

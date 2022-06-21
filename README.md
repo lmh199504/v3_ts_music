@@ -1,4 +1,6 @@
-# device_v3
+# 网易云音乐
+
+## vue3、typeScript、pinia 
 
 ## Project setup
 ```

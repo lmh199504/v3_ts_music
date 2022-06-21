@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<van-list v-model:loading="loading" :finished="finished"  @load="onLoad">
-			<SheetItem v-for="item in list" :key="item.id" :hide-edit="false" :sheet-data="item" @delsuccess="delSuccess(item.id)" @edit="edit(item)" />
+			<SheetItem v-for="item in list" :key="item.id" :hide-edit="false" :show-edit="true" :sheet-data="item" @delsuccess="delSuccess(item.id)" @edit="edit(item)" />
 		</van-list>
 		
 		<CreatePopup v-model:showPopup="show" @success="refreshList" />

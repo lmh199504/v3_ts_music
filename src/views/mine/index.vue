@@ -29,7 +29,7 @@
 				
 				<div class="box_white_container application_box">
 					<van-row>
-						<van-col span="6" v-for="item in appList" :key="item.icon">
+						<van-col span="6" v-for="item in appList" :key="item.icon" @click="tapApp(item.path)">
 							<div class="icon">
 								<i class="iconfont" :class="item.icon"></i>
 							</div>
@@ -60,6 +60,7 @@
 	import LikeList from './components/likeList.vue'
 	import Sheet from './components/sheet.vue'
 	import { Mode } from '@/store/system'
+import router from '@/router'
 
 	const userStore = useUserStore()
 	const systemStore = useSystemStore()
@@ -74,7 +75,7 @@
 	const appList = ref([
 		{ name: '最近播放', icon: 'icon-bofang1' },
 		{ name: '本地下载', icon: 'icon-shouyinji' },
-		{ name: '云盘', icon: 'icon-rili' },
+		{ name: '云盘', icon: 'icon-rili', path: '/cloudDisk' },
 		{ name: '已购', icon: 'icon-zhongchengdujiaoyi' },
 		{ name: '我的好友', icon: 'icon-guanzhu' },
 		{ name: '收藏和赞', icon: 'icon-paihangbang' },
@@ -121,7 +122,15 @@
 			}
 		}
 	}
-	
+	function tapApp(path: string | undefined) {
+		if (!path) {
+			return
+		}
+		router.push({
+			path
+		})
+	}
+
 	Init()
 	
 </script>

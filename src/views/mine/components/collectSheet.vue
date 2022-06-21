@@ -7,7 +7,7 @@
 			</div>
 		</div>
 		<van-list v-model:loading="loading" :finished="finished"  @load="onLoad">
-			<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" @delsuccess="delSuccess(item.id)" :hide-edit="true" />
+			<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" @delsuccess="delSuccess(item.id)" :hide-edit="true" :show-edit="true" />
 		</van-list>
 	</div>
 </template>
