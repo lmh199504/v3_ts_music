@@ -26,7 +26,7 @@
 <script setup lang="ts">
 	import { storeToRefs } from 'pinia'
 	import { useUserStore } from '@/store'
-	import { computed } from 'vue'
+	import { computed, WritableComputedRef } from 'vue'
 	interface Props{
 		show: boolean
 		showdel: boolean
@@ -44,7 +44,7 @@
 		(e: 'addToSheet'): void,
 		(e: 'del'): void
 	}>()
-	const showShare: boolean = computed({
+	const showShare: WritableComputedRef<boolean> = computed({
 		get() {
 			return props.show
 		},

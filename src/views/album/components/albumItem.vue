@@ -16,7 +16,13 @@
 		albumData: albumDataInterface
 	}
 	const props = withDefaults(defineProps<Props>(), {
-		albumData: () => { return {} }
+		albumData: () => { return {
+			albumId: 0,
+			albumName: '',
+			coverUrl: '',
+			price: 0,
+			artistName: ''
+		} }
 	})
 	function tapAlbum() {
 		router.push({

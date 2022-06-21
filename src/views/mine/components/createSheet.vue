@@ -22,10 +22,11 @@
 	import { reqUserPlayList, reqUserSubCount } from '@/api/user'
 	import { useRouter } from 'vue-router'
 	import { useUserStore } from '@/store'
+	import type { SheetDataInterface } from '@/types/public/sheet'
 	const userStore = useUserStore()
 	const { userInfo } = storeToRefs(userStore)
 	const show = ref<boolean>(false)
-	const list = ref([]) // 列表
+	const list = ref<SheetDataInterface[]>([]) // 列表
 	const limit = 30 // 条数
 	let offset = -1 // 分页
 	const total = ref<number>(0) // 总条数
@@ -43,7 +44,7 @@
 		loading.value = true
 		reqUserPlayList(params)
 		.then(res => {
-			list.value = list.value.concat(res.data.playlist.filter(item => item.creator.userId === userInfo.value.userId))
+			list.value = list.value.concat(res.data.playlist.filter((item: SheetDataInterface) => item.creator.userId === userInfo.value.userId))
 			finished.value = !res.data.more
 		})
 		.finally(() => {
@@ -70,13 +71,13 @@
 		list.value = []
 		getList()
 	}
-	function delSuccess(id) {
+	function delSuccess(id: number) {
 		const index = list.value.findIndex(item => item.id === id)
 		list.value.splice(index, 1)
 		total.value -= 1
 	}
 	// 编辑
-	function edit(item) {
+	function edit(item: SheetDataInterface) {
 		router.push({
 			path: '/editSheet',
 			query: {

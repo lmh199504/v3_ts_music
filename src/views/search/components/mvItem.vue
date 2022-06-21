@@ -12,27 +12,27 @@
 
 <script setup lang="ts">
 	import { useRouter } from 'vue-router'
-	import { MvInterface } from '@/types/public/mv'
+	import type { MvInterface } from '@/types/public/mv'
 	interface Props{
 		mvData: MvInterface
 	}
 	const router = useRouter()
 	const props = withDefaults(defineProps<Props>(), {
-		mvData: {
+		mvData: () => { return{
 			id: 0,
 			cover: '',
 			name: '',
 			playCount: 0,
 			artistName: '',
 			artistId: 0
-		}
+		} }
 	})
 
 	function tapAlbum() {
 		router.push({
 			path: '/albumDetail',
 			query: {
-				id: props.albumData.id
+				id: props.mvData.id
 			}
 		})
 	}

@@ -7,7 +7,8 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
 	import { reqHistoryRecommend } from '@/api/home'
-	import SongItem from '@/components/songItem'
+	import type { SongData } from '@/types/store/player'
+	import SongItem from '@/components/songItem/index.vue'
 	import { Toast } from 'vant'
 	interface Props{
 		date: string
@@ -15,7 +16,7 @@
 	const props = withDefaults(defineProps<Props>(), {
 		date: ''
 	})
-	const songList = ref([])
+	const songList = ref<SongData[]>([])
 	
 	const emit = defineEmits(['refresh'])
 	function getList() {

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-	import { songListFace } from '@/types/public'
+	import type { songListFace } from '@/types/public'
 	import { formatCountNumber } from '@/utils'
 	import { useRouter } from 'vue-router'
 	const router = useRouter()

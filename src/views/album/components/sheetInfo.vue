@@ -29,6 +29,9 @@
 	} from 'vue'
 	interface Info{
 		tags: Array<string>
+		picUrl: string
+		name: string
+		description: string
 	}
 	interface Props {
 		showPopup: boolean;
@@ -36,7 +39,12 @@
 	}
 	const props = withDefaults(defineProps < Props > (), {
 		showPopup: false,
-		info: () => { return {} }
+		info: () => { return {
+			tags: [],
+			picUrl: '',
+			name: '',
+			description: ''
+		} }
 	})
 	const emit = defineEmits < {
 		(e: 'update:show-popup', value: boolean): void

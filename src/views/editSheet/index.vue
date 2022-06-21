@@ -32,17 +32,19 @@
 	import { useRoute, useRouter } from 'vue-router'
 	import { reqSheetDetail } from '@/api/song'
 	import { reqUpdateCover } from '@/api/sheet' 
-	
 	const route = useRoute()
 	const router = useRouter()
 	const { id } = route.query
 	const details = reactive({
 		tags: '',
-		coverImgUrl: ''
+		coverImgUrl: '',
+		name: '',
+		description: ''
 	})
-	function afterRead(file) {
+	// eslint-disable-next-line
+	function afterRead(file: any) {
 		const params = {
-			id: id,
+			id: Number(id),
 			timestamp: Date.now()
 		}
 		const formData = new FormData()
@@ -61,11 +63,14 @@
 		})
 	}
 	function getDetail() {
-		reqSheetDetail({ id, timestamp: Date.now() })
+		reqSheetDetail({ id: Number(id), timestamp: Date.now() })
 		.then(res => {
-			for(const key in res.data.playlist) {
-				details[key] = res.data.playlist[key]
-			}
+			// for(const key in res.data.playlist) {
+			// 	details[key] = res.data.playlist[key]
+			// }
+			details.coverImgUrl = res.data.playlist.coverImgUrl
+			details.name = res.data.playlist.name
+			details.description = res.data.playlist.description
 			details.tags = res.data.playlist['tags'].join(';')
 		})
 	}

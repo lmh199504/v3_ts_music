@@ -22,15 +22,15 @@
 </template>
 
 <script setup lang="ts">
-	import ScrollBanner from '@/components/Scroll/scrollBanner'
-	import { ref, Component, nextTick } from 'vue'
+	import ScrollBanner from '@/components/Scroll/scrollBanner.vue'
+	import { ref, nextTick, Ref } from 'vue'
 	import {
 		reqGetRecommendDate
 	} from '@/api/home'
 	import DateList from './components/dateList.vue'
 	import { onClickLeft } from '@/utils/back' 
-	const scroll = ref<Component>()
-	const active: number = ref(0)
+	const scroll = ref<InstanceType<typeof ScrollBanner>>()
+	const active: Ref<number> = ref(0)
 	const dataList = ref<Array<string>>([])
 	
 	async function initData() {
@@ -40,7 +40,7 @@
 
 	function refresh() {
 		nextTick(() => {
-			scroll.value.refresh()
+			scroll.value?.refresh()
 		})	
 	}
 	initData()

@@ -101,7 +101,7 @@
 		shareCount: 0,
 		commentCount: 0,
 		subscribedCount: 0,
-		description: 0,
+		description: '',
 		nickname: '',
 		avatarUrl: '',
 		coverImgUrl: '',
@@ -134,9 +134,25 @@
 				id: Number(id)
 			})
 			.then(res => {
-				for (const key in details) {
-					details[key] = res.data.playlist[key]
-				}
+				const data = res.data.playlist
+				// for (const key in details) {
+				// 	details[key] = res.data.playlist[key]
+				// }
+				details.avatarUrl = data.avatarUrl
+				details.creator = data.creator
+				details.tags = data.tags
+				details.shareCount = data.shareCount
+				details.commentCount = data.commentCount
+				details.subscribedCount = data.subscribedCount
+				details.description = data.subscribedCount
+				details.nickname = data.nickname
+				details.avatarUrl = data.avatarUrl
+				details.coverImgUrl = data.coverImgUrl
+				details.name = data.name
+				details.playCount = data.playCount
+				details.subscribed = data.subscribed
+
+
 				Toast.clear()
 			})
 			.catch(() => {

@@ -18,7 +18,7 @@
 	import { ref } from 'vue'
 	import { reqAlbumList } from '@/api/album'
 	import { albumDataInterface } from '@/types/public/album'
-	import AlbumItem from './albumItem'
+	import AlbumItem from './albumItem.vue'
 	const list = ref<Array<albumDataInterface>>([])
 	function getAlbumList() {
 		reqAlbumList({ limit: 6 })

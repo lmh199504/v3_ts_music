@@ -29,7 +29,7 @@ export interface UpdateCoverParams{
 // 更新名称
 export interface UpdateNameParams{
 	id: number;
-	name: number;
+	name: string;
 }
 // 更新标签
 export interface UpdateTagsParams{

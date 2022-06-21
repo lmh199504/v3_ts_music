@@ -24,18 +24,30 @@
 <script setup lang="ts">
 	import { usePlayerStore } from '@/store'
 	import { computed } from 'vue'
-	import { songData as songDataInterface } from '@/types/public'
+	import type { songData as songDataInterface } from '@/types/public'
+	import type { arData} from '@/types/store/player'
 	const playerStore = usePlayerStore()
 	interface Props{
 		songData: songDataInterface
 	}
 	
 	const props = withDefaults(defineProps < Props > (), {
-		songData: (): songDataInterface => { return {} }
+		songData: (): songDataInterface => { return {
+			alg: '',
+			canDislike: false,
+			copywriter: '',
+			id: 0,
+			name: '',
+			picUrl: '',
+			// eslint-disable-next-line
+			song: {},
+			trackNumberUpdateTime: 0,
+			type: 0
+		} }
 	})
 	const singerName = computed(() => {
 		if (props.songData.song.artists) {
-			return props.songData.song.artists.map(item => item.name).join('/')
+			return props.songData.song.artists.map((item: arData) => item.name).join('/')
 		} 
 		return '-'
 	})

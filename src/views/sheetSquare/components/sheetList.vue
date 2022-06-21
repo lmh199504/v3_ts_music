@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 	import SheetItem from './sheetItem.vue'
+	import type { SheetDataFace } from '@/types/public'
 	import {
 		reqSheetList
 	} from '@/api/song'
@@ -27,7 +28,7 @@
 	})
 	const reloading = ref < boolean > (false)
 	const loading = ref < boolean > (false)
-	const list = ref([])
+	const list = ref<SheetDataFace[]>([])
 	let updateTime = 0
 	let total = 0
 	const finished = ref<boolean>(false)

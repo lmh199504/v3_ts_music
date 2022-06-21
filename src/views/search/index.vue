@@ -70,11 +70,14 @@
 	import SuggestResult from './components/suggestResult.vue'
 	import Cookies from 'js-cookie'
 
+	interface SuggestList{
+		keyword: string
+	}
 	const LOCAL_KEY = 'historySearch'
 	const defaultPlaceholder = ref < string > ('')
 	const showClose = ref < boolean > (false)
 	const keyWord = ref < string > ('')
-	const suggestList = ref([])
+	const suggestList = ref<SuggestList[]>([])
 	const showSuggest = ref < boolean > (false)
 	const suggestLoading = ref < boolean > (false)
 	const showResult = ref < boolean > (false)
@@ -86,7 +89,7 @@
 	const localHistory = (Cookies.get(LOCAL_KEY) && JSON.parse(Cookies.get(LOCAL_KEY))) || []
 	const historyList = ref < Array < string >> (localHistory)
 
-	let timer = null
+	let timer: number| undefined = undefined
 	// 获取默认搜索关键词
 	function getSearchDefault() {
 		reqSearchDefault()
@@ -172,7 +175,7 @@
 		Cookies.remove(LOCAL_KEY)
 	}
 
-	function pushHistoryList(val) {
+	function pushHistoryList(val: string) {
 		const MAX_LENGTH = 5
 		const index: number = historyList.value.findIndex((item: string): boolean => val === item)
 		const isMax: boolean = historyList.value.length >= MAX_LENGTH

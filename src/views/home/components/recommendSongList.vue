@@ -16,11 +16,12 @@
 <!-- 推荐歌单列表 -->
 <script setup lang="ts">
 	import { reqRecommendList } from '@/api/home'
-	import SongListItem from '@/components/songListItem'
+	import SongListItem from '@/components/songListItem/index.vue'
 	import { ref, defineExpose } from 'vue'
+	import type { songListFace } from '@/types/public'
 	import { useRouter } from 'vue-router'
 	const router = useRouter()
-	const songsList = ref([])
+	const songsList = ref<songListFace[]>([])
 	const loading = ref<boolean>(false)
 	function getList() {
 		loading.value = true

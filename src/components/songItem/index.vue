@@ -26,12 +26,12 @@
 	import { reqSheetTracks } from '@/api/sheet'
 	import { Toast } from 'vant'
 	import type { arData } from '@/types/store/player'
-	import { SheetDataInterface } from '@/types/public/sheet'
-
+	import type { SheetDataInterface } from '@/types/public/sheet'
+	import type { SongData } from '@/types/store/player'
 	const playerStore = usePlayerStore()
 	interface Props{
 		// eslint-disable-next-line
-		songData: any;
+		songData: SongData;
 		showdel: boolean;
 	}
 	const props = withDefaults(defineProps < Props > (), {
@@ -40,7 +40,13 @@
 			name: '',
 			id: 0,
 			ar: [],
-			al: {},
+			al: {
+				id: 0,
+				name: '',
+				pic: 0,
+				picUrl: '',
+				pic_str: ''
+			},
 			dt: 0
 		} },
 		showdel: false

@@ -25,6 +25,6 @@ export interface singerSongParams{
 // 获取歌手专辑
 export interface singerAlbum{
 	id: number;
-	limit: number;
-	offset: number;
+	limit?: number;
+	offset?: number;
 }

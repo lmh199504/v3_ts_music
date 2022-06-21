@@ -24,7 +24,13 @@
 		singerData: singerInterface
 	}
 	const props = withDefaults(defineProps<Props>(), {
-		singerData: () => { return {} }
+		singerData: () => { return {
+			name: '',
+			picUrl: '',
+			id: 0,
+			followed: false, // 是否已经关注了
+			accountId: 0
+		} }
 	})
 	const followed = ref<boolean>(false)
 	// 获取原始值

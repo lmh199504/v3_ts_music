@@ -24,8 +24,9 @@
 
 <script lang="ts" setup>
 	import { onClickLeft } from '@/utils/back' 
+	import type { SongData } from '@/types/store/player'
 	import {
-		ref, toRaw, Component, nextTick
+		ref, toRaw, nextTick
 	} from 'vue'
 	import {
 		reqDaysRecommend
@@ -33,14 +34,14 @@
 	import {
 		useRouter
 	} from 'vue-router'
-	import SongItem from '@/components/songItem'
-	import ScrollBanner from '@/components/Scroll/scrollBanner'
+	import SongItem from '@/components/songItem/index.vue'
+	import ScrollBanner from '@/components/Scroll/scrollBanner.vue'
 	import { Toast } from 'vant'
 	import { usePlayerStore } from '@/store'
 	const router = useRouter()
 	const playerStore = usePlayerStore()
-	const scroll = ref<Component>()
-	const list = ref([])
+	const scroll = ref<InstanceType<typeof ScrollBanner>>()
+	const list = ref<SongData[]>([])
 	const loading = Toast.loading({
 		message: '加载中...',
 		duration: 0
@@ -49,7 +50,7 @@
 		.then(res => {
 			list.value = res.data.data.dailySongs
 			nextTick(() => {
-				scroll.value.refresh()
+				scroll.value?.refresh()
 			})	
 		})
 		.finally(() => {

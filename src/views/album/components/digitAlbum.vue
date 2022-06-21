@@ -33,7 +33,7 @@
 	import { albumDataInterface } from '@/types/public/album'
 	import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
 	import "swiper/swiper.min.css";
-	import AlbumItem from './albumItem'
+	import AlbumItem from './albumItem.vue'
 	const menuList = ref([
 		{ name: '日榜', type: 'daily' },
 		{ name: '周榜', type: 'week' },

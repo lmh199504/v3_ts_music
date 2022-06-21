@@ -8,7 +8,7 @@
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import RadioStationItem from './radioStationItem.vue'
-	import { singerInterface } from '@/types/public/singer'
+	import type { RadioInterface } from '@/types/public/radio'
 	interface Props{
 		keyword: string;
 		type: number
@@ -16,7 +16,7 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<singerInterface>>([])
+	const list = ref<Array<RadioInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })

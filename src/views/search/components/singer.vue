@@ -8,7 +8,7 @@
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import SingerItem from '@/views/singer/components/singerItem.vue'
-	import { singerInterface } from '@/types/public/singer'
+	import type { singerInterface } from '@/types/public/singer'
 	interface Props{
 		keyword: string;
 		type: number

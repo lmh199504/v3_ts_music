@@ -27,7 +27,7 @@
 			return
 		}
 		const params = {
-			id: id,
+			id: Number(id),
 			name: name.value
 		}
 		const loading = Toast.loading({

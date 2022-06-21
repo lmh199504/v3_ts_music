@@ -1,6 +1,6 @@
 <template>
 	<div class="single_list box_white_container">
-		<UserItem v-for="item in list" :key="item.id" :user-data="item"  />
+		<UserItem v-for="item in list" :key="item.userId" :user-data="item"  />
 	</div>
 </template>
 
@@ -8,7 +8,7 @@
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import UserItem from './userItem.vue'
-	import { singerInterface } from '@/types/public/singer'
+	import type { UserInterface } from '@/types/public/user'
 	interface Props{
 		keyword: string;
 		type: number
@@ -16,7 +16,7 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<singerInterface>>([])
+	const list = ref<Array<UserInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })

@@ -16,11 +16,12 @@
 	import { reqSingerSongs } from '@/api/singer'
 	import { usePlayerStore } from '@/store'
 	import { ref, toRaw } from 'vue'
-	import SongItem from '@/components/songItem'
+	import SongItem from '@/components/songItem/index.vue'
+	import { SongData } from '@/types/store/player'
 	
 	const route = useRoute()
 	const playerStore = usePlayerStore()
-	const list = ref([])
+	const list = ref<SongData[]>([])
 	let offset = -1
 	const loading = ref<boolean>(false)
 	const finished = ref<boolean>(false)
@@ -40,12 +41,12 @@
 		const params = {
 			offset: offset * 30,
 			limit: 30,
-			id: id
+			id: Number(id)
 		}
 		loading.value = true
 		reqSingerSongs(params)
 		.then(res => {
-			list.value = list.value.concat(res.data.songs.map(item => {
+			list.value = list.value.concat(res.data.songs.map((item: SongData) => {
 				if (!item.al.picUrl) {
 					item.al.picUrl = require('@/assets/images/public/heijiao.png')
 				}

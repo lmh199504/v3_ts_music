@@ -4,6 +4,7 @@ export interface singerInterface{
 	picUrl: string;
 	id: number;
 	followed: boolean; // 是否已经关注了
+	accountId: number
 }
 // 歌手专辑
 export interface singerAlbumInterface{

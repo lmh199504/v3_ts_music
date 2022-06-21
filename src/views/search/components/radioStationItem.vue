@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-	import { RadioInterface } from '@/types/public/radiot'
+	import type { RadioInterface } from '@/types/public/radio'
 	interface Props{
 		radioData: RadioInterface
 	}

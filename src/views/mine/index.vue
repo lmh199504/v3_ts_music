@@ -65,9 +65,12 @@
 	const systemStore = useSystemStore()
 	const { isLogin, userInfo } = storeToRefs(userStore)
 	const { mode } = storeToRefs(systemStore)
-	const profile = reactive({})
+	const profile = reactive({
+		follows: 0,
+		followeds: 0
+	})
 	const level = ref<number>(0)
-	const mine = ref<HTMLDivElement>(null)
+	const mine = ref<HTMLDivElement | null>(null)
 	const appList = ref([
 		{ name: '最近播放', icon: 'icon-bofang1' },
 		{ name: '本地下载', icon: 'icon-shouyinji' },
@@ -95,15 +98,17 @@
 	function getUserDetail() {
 		reqUserDetail({ uid: userInfo.value.userId })
 		.then(res => {
-			for(const key in res.data.profile) {
-				profile[key] = res.data.profile[key]
-			}
+			// for(const key in res.data.profile) {
+			// 	profile[key] = res.data.profile[key]
+			// }
+			profile.follows = res.data.profile.follow
+			profile.followeds = res.data.profile.followeds
 			level.value = res.data.level
 		})
 	}
 	
 	function scroll() {
-		const top = mine.value.scrollTop
+		const top = mine.value?.scrollTop || 0
 		if (top>50) {
 			navStyle.background = 'var(--my-back-color-white)'
 		} else if (top == 0) {

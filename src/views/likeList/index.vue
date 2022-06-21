@@ -25,20 +25,22 @@
 	import { reqLikeList } from '@/api/user'
 	import { onClickLeft } from '@/utils/back' 
 	import {
-		ref, toRaw, Component, nextTick
+		ref, toRaw, nextTick
 	} from 'vue'
-	import SongItem from '@/components/songItem'
-	import ScrollBanner from '@/components/Scroll/scrollBanner'
+	import SongItem from '@/components/songItem/index.vue'
+	import ScrollBanner from '@/components/Scroll/scrollBanner.vue'
 	import { Toast } from 'vant'
 	import { usePlayerStore, useUserStore } from '@/store'
 	import { storeToRefs } from 'pinia'
 	import { reqSongDetail } from '@/api/song'
-	
+	import type { SongData } from '@/types/store/player'
+
 	const userStore = useUserStore()
 	const playerStore = usePlayerStore()
-	const scroll = ref<Component>()
-	const list = ref([])
-	const imgUrl = ref('')
+	const scroll = ref<InstanceType<typeof ScrollBanner>>()
+
+	const list = ref<SongData[]>([])
+	const imgUrl = ref<string>('')
 	const loading = Toast.loading({
 		message: '加载中...',
 		duration: 0
@@ -55,7 +57,7 @@
 			getSongDetail(res.data.ids.join(','))
 		})
 	}
-	function getSongDetail(ids) {
+	function getSongDetail(ids: string) {
 		reqSongDetail({ ids })
 		.then(res => {
 			list.value = res.data.songs
@@ -63,7 +65,7 @@
 				imgUrl.value = list.value[0].al.picUrl
 			}
 			nextTick(() => {
-				scroll.value.refresh()
+				scroll.value?.refresh()
 			})
 			loading.clear()	
 		})

@@ -35,6 +35,7 @@ export interface SheetDataFace{
 	updateTime: number;
 	name: string;
 	playCount: number;
+	id: number
 }
 
 // 歌单广场列表歌曲

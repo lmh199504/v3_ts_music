@@ -1,6 +1,6 @@
 import { arData } from '@/types/store/player'
 export interface AlbumInterface{
-	name: string
+	name: string;
 	picUrl: string
 	id: number
 	artists: Array<ArtistsInterface>
@@ -14,6 +14,7 @@ interface ArtistsInterface{
 export interface SheetInterface{
 	name: string;
 	coverImgUrl: string
+	id: number
 }
 // 歌词
 export interface LyricInterface{

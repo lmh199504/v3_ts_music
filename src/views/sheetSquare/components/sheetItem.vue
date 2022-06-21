@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-	import { SheetDataFace } from '@/types/public'
+	import type { SheetDataFace } from '@/types/public'
 	import { formatCountNumber } from '@/utils'
 	import { useRouter } from 'vue-router'
 	const router = useRouter()
@@ -20,7 +20,16 @@
 		sheetData: SheetDataFace
 	}
 	const props = withDefaults(defineProps < Props > (), {
-		sheetData: {}
+		sheetData: () => {
+			return {
+				coverImgUrl: '',
+				tags: [],
+				updateTime: 0,
+				name: '',
+				playCount: 0,
+				id: 0
+			}
+		}
 	})
 	function goDetail() {
 		router.push({

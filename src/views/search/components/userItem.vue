@@ -13,17 +13,18 @@
 </template>
 
 <script setup lang="ts">
-	import { UserInterface } from '@/types/public/user'
+	import type { UserInterface } from '@/types/public/user'
 	interface Props{
 		userData: UserInterface
 	}
 	withDefaults(defineProps<Props>(), {
 		userData: () => { return {
-			nickname: '',
-			userId: '',
+			nickname: 'string',
+			userId: 0,
 			avatarUrl: '',
 			followed: false
-		}}
+			}
+		}
 	})
 
 	

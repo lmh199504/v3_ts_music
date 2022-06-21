@@ -23,7 +23,7 @@
 	import { ref } from 'vue'
 	import { reqDigitAlbum } from '@/api/album'
 	import { albumDataInterface } from '@/types/public/album'
-	import AlbumItem from './albumItem'
+	import AlbumItem from './albumItem.vue'
 	const menuList = ref([
 		{ name: '日榜', type: 'daily' },
 		{ name: '周榜', type: 'week' },

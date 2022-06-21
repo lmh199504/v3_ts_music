@@ -25,13 +25,14 @@
 		ref
 	} from 'vue'
 	import SingerItem from './components/singerItem.vue'
+	import type { singerInterface } from '@/types/public/singer'
 	const pushLoading = ref < boolean > (false)
 	const loading = ref < boolean > (false)
 	const type = ref<number>(-1) // 歌手类型
 	const area  = ref<number>(-1) // 歌手地区
 	let limit = 30
 	let page = 0
-	const list = ref([])
+	const list = ref<singerInterface[]>([])
 	const finished = ref < boolean > (false)
 
 	function getList(): void {

@@ -37,13 +37,15 @@
 		keyword: string
 	}
 	const props = withDefaults(defineProps<Props>(),{
-		lyricData: {
+		lyricData: () => {
+			return {
 			name: '',
 			id: 0,
 			lyrics: {
 				txt: ''
 			},
 			artists: []
+		}
 		},
 		keyword: ''
 	})
@@ -64,7 +66,7 @@
 	}
 	function play() {
 		reqSongDetail({
-			ids: props.lyricData.id
+			ids: props.lyricData.id + ''
 		})
 		.then(res => {
 			if (res.data.songs.length) {

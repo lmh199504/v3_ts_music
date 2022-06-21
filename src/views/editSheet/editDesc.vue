@@ -28,7 +28,7 @@
 			return
 		}
 		const params = {
-			id: id,
+			id: Number(id),
 			desc: desc.value
 		}
 		const loading = Toast.loading({
@@ -46,7 +46,7 @@
 	}
 	//  获取描述
 	function getDetail() {
-		reqSheetDetail({ id, timestamp: Date.now() })
+		reqSheetDetail({ id: Number(id), timestamp: Date.now() })
 		.then(res => {
 			desc.value = res.data.playlist.description
 		})

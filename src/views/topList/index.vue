@@ -14,13 +14,18 @@
 
 <script setup lang="ts">
 	import {
-		ref
+		ref, Ref
 	} from 'vue'
 	import { reqTopList } from '@/api/toplist'
 	import TopItem from './components/topItem.vue'
 	import { onClickLeft } from '@/utils/back' 
-	const active: number = ref(0)
-	const tags = ref([])
+	const active: Ref<number> = ref(0)
+	interface Tag{
+		name: string
+		id: number
+		coverImgUrl: string
+	}
+	const tags = ref<Tag[]>([])
 	function getTopList() {
 		reqTopList()
 		.then(res => {

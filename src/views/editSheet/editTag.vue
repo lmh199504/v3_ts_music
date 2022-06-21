@@ -39,16 +39,23 @@
 	import { reqSheetDetail } from '@/api/song'
 	const route = useRoute()
 	const { id } = route.query
-	const parentList = ref([])
-	const router = useRouter()
-	const selectList = ref<Array<string>>([])
 	interface Tag{
 		name: string;
 		category: string;
 	}
+	interface Parent{
+		name: string
+		icon: string
+		children: Array<Tag>
+		category: string
+	}
+	const parentList = ref<Parent[]>([])
+	const router = useRouter()
+	const selectList = ref<Array<string>>([])
+	
 	function handleSave() {
 		const params = {
-			id: id,
+			id: Number(id),
 			tags: selectList.value.join(';')
 		}
 		const loading = Toast.loading({
@@ -109,7 +116,7 @@
 	}
 	//  获取已经选择的标签
 	function getDetail() {
-		reqSheetDetail({ id, timestamp: Date.now() })
+		reqSheetDetail({ id: Number(id), timestamp: Date.now() })
 		.then(res => {
 			selectList.value = res.data.playlist.tags || []
 		})

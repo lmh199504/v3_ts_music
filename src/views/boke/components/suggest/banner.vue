@@ -12,7 +12,12 @@
 	import { reqDjBanner } from '@/api/dj'
 	import { ref } from 'vue'
 	
-	const imgList = ref([])
+	interface ImgList{
+		typeTitle: string
+		pic: string
+		bannerId: number
+	}
+	const imgList = ref<ImgList[]>([])
 	function getBanner() {
 		reqDjBanner()
 		.then(res => {

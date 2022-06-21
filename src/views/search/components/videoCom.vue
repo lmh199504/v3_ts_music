@@ -1,6 +1,6 @@
 <template>
 	<div class="single_list box_white_container">
-		<VideoItem v-for="item in list" :key="item.id" :video-data="item"  />
+		<VideoItem v-for="item in list" :key="item.vid" :video-data="item"  />
 	</div>
 </template>
 
@@ -8,7 +8,7 @@
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import VideoItem from './videoItem.vue'
-	import { singerInterface } from '@/types/public/singer'
+	import type { VideoInterface } from '@/types/public/video'
 	interface Props{
 		keyword: string;
 		type: number
@@ -16,7 +16,7 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<singerInterface>>([])
+	const list = ref<Array<VideoInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })

@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 	import { storeToRefs } from 'pinia'
-	import MiniPlayer from '@/components/MiniPlayer'
+	import MiniPlayer from '@/components/MiniPlayer/index.vue'
 	import { usePlayerStore } from '@/store'
 	import { reactive } from 'vue'
 	const palyerStore = usePlayerStore()

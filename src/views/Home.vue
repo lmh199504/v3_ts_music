@@ -1,8 +1,6 @@
 <template>
 	<div class="home">
 		{{ token }}
-		<div>{{ count }}</div>
-		<van-button type="primary" @click="tapFun">dsfads</van-button>
 	</div>
 </template>
 
@@ -10,10 +8,7 @@
 	import { useUserStore } from '@/store'
 	import { storeToRefs } from 'pinia'
 	const userStore = useUserStore()
-	const { token, count } = storeToRefs(userStore)
-	const tapFun = () => {
-		userStore.setCount()
-	}
+	const { token } = storeToRefs(userStore)
 </script>
 
 <style scoped lang="less">

@@ -27,6 +27,7 @@ import { storeToRefs } from 'pinia'
 import { reqSongDetail, reqPlayModeList } from '@/api/song'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { SongData } from '@/types/store/player'
 
 const router = useRouter()
 const playerStore = usePlayerStore()
@@ -48,7 +49,7 @@ function getLikeList() {
 		getSongDetail(ids.join(','))
 	})
 }
-function getSongDetail(ids) {
+function getSongDetail(ids: string) {
 	reqSongDetail({ ids })
 	.then(res => {
 		list = res.data.songs
@@ -60,7 +61,11 @@ function getSongDetail(ids) {
 function playBeckoning() {
 	reqPlayModeList({ id: ids[0], pid: pid })
 	.then(res => {
-		const playList = res.data.data.map(item => { return item.songInfo }).filter(item => item && item.id)
+		interface Beck{
+			id: number
+			songInfo: SongData
+		}
+		const playList = res.data.data.map((item: Beck) => { return item.songInfo }).filter((item: SongData) => item && item.id)
 		playerStore.resetList(playList)
 	})
 }

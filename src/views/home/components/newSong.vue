@@ -26,7 +26,7 @@
 	} from 'vue'
 	import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
 	import "swiper/swiper.min.css";	
-	import NewSongItem from './newSongItem'
+	import NewSongItem from './newSongItem.vue'
 	import { songData } from '@/types/public'
 	const list = ref<Array<Array<songData>>>([])
 	const songList = ref<Array<songData>>([])
@@ -38,7 +38,8 @@
 		reqRecommendNewSongs({ limit: 12 })
 			.then(res => {
 				const { data } = res
-				const tempList = []
+				// eslint-disable-next-line
+				const tempList: Array<any> = []
 				const len = data.result.length
 				songList.value = data.result
 				for(let i = 0;i < len; i++) {

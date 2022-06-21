@@ -120,13 +120,14 @@
 	import {
 		storeToRefs
 	} from 'pinia'
+	import { useRouter } from 'vue-router'
 	const useStore = useUserStore()
 	const systemStore = useSystemStore()
 	const {
 		isLogin,
 		userInfo
 	} = storeToRefs(useStore)
-	import { useRouter } from 'vue-router'
+	
 	const router = useRouter()
 	const checked = computed({
 		get() {
@@ -138,7 +139,7 @@
 		}
 	})
 	
-	function changeMode(value) {
+	function changeMode(value: boolean) {
 		if (!value) {
 			systemStore.setMode(Mode.light)
 		} else {

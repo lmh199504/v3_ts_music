@@ -8,7 +8,7 @@
 	import { ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import MvItem from './mvItem.vue'
-	import { singerInterface } from '@/types/public/singer'
+	import { MvInterface } from '@/types/public/mv'
 	interface Props{
 		keyword: string;
 		type: number
@@ -16,7 +16,7 @@
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
-	const list = ref<Array<singerInterface>>([])
+	const list = ref<Array<MvInterface>>([])
 	
 	async function getData() {
 		const songList = await reqSearchByType({ keywords: props.keyword, type: props.type })

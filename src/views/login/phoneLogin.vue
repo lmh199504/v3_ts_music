@@ -23,11 +23,10 @@
 	const phone = ref<number>()
 	function sendCode() {
 		const reg = /^[1][3,4,5,7,8,9][0-9]{9}$/
-		if (reg.test(phone.value)) {
+		if (phone.value && reg.test(phone.value + '')) {
 			reqSendCode({ phone: phone.value })
 			.then(() => {
-				// console.log(res)
-				sessionStorage.setItem('loginPhone', phone.value)
+				sessionStorage.setItem('loginPhone', phone.value + '')
 				Toast.success('验证码发送成功')
 				router.push('/inputCode')
 			})

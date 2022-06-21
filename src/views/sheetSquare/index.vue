@@ -13,13 +13,18 @@
 
 <script setup lang="ts">
 	import {
-		ref
+		ref, Ref
 	} from 'vue'
 	import { reqSheetTags } from '@/api/song'
 	import { onClickLeft } from '@/utils/back' 
 	import SheetList from './components/sheetList.vue'
-	const active: number = ref(0)
-	const tags = ref([])
+
+	interface SheetTags{
+		name: string
+		id: number
+	}
+	const active: Ref<number> = ref(0)
+	const tags = ref<SheetTags[]>([])
 	function getSheetTags() {
 		reqSheetTags()
 		.then(res => {

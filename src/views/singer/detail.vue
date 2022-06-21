@@ -65,19 +65,21 @@
 </template>
 
 <script setup lang="ts">
-	import { reactive, ref, Component, nextTick, toRaw } from 'vue'
+	import { reactive, ref, nextTick, toRaw } from 'vue'
 	import { useRouter, useRoute } from 'vue-router'
-	import ScrollBanner from '@/components/Scroll/scrollBanner'
+	import ScrollBanner from '@/components/Scroll/scrollBanner.vue'
 	import { reqSingerDetail, reqSingerDesc, reqSingerFans, reqSubSinger, reqSingHotSongs, reqSingerAlbum } from '@/api/singer'
 	import { Toast } from 'vant'
 	import { formatCountNumber } from '@/utils'
-	import SongItem from '@/components/songItem'
+	import SongItem from '@/components/songItem/index.vue'
 	import { usePlayerStore } from '@/store'
-	import SingerAlbumItem from '@/components/SingerAlbumItem'
+	import SingerAlbumItem from '@/components/SingerAlbumItem/index.vue'
 	import { onClickLeft } from '@/utils/back' 
-	
+	import type { singerAlbumInterface } from '@/types/public/singer'
+	import type { SongData } from '@/types/store/player'
+
 	const playerStore = usePlayerStore()
-	const hotList = ref([])
+	const hotList = ref<SongData[]>([])
 	const loading = ref<boolean>(false)
 	const fansData = reactive({
 		fansCnt: 0,
@@ -87,7 +89,7 @@
 		isFollow: false
 	})
 	const identify = ref<string>('') // 身份
-	const scrollRef = ref<Component>(null)
+	const scrollRef = ref<InstanceType<typeof ScrollBanner>>()
 	const router = useRouter()
 	const route = useRoute()
 	const artist = reactive({
@@ -97,7 +99,7 @@
 		briefDesc: '',
 		albumSize: ''
 	})
-	const albumList = ref([])
+	const albumList = ref<singerAlbumInterface[]>([])
 	
 	// 歌手详情
 	function getSingerDetail() :void {
@@ -107,14 +109,19 @@
 			message: '加载中...',
 			overlay: true
 		})
-		reqSingerDetail({ id })
+		reqSingerDetail({ id: Number(id) })
 		.then(res => {
 			const resArtist = res.data.data.artist
-			for(const key in resArtist) {
-				artist[key] = resArtist[key]
-			}
+			// for(const key in resArtist) {
+			// 	artist[key] = resArtist[key]
+			// }
+			artist.albumSize = resArtist.albumSize
+			artist.briefDesc = resArtist.briefDesc
+			artist.cover = resArtist.cover
+			artist.id = resArtist.id
+			artist.name = resArtist.name
 			nextTick(() => {
-				scrollRef.value.refresh()
+				scrollRef.value?.refresh()
 			})
 			identify.value = res.data.data.identify.imageDesc
 		})
@@ -125,7 +132,7 @@
 	// 歌手介绍
 	function getSingerDesc() :void {
 		const { id } = route.query
-		reqSingerDesc({ id })
+		reqSingerDesc({ id: Number(id) })
 		.then(res => {
 			console.log(res)
 		})
@@ -133,19 +140,24 @@
 	// 歌手粉丝
 	function genFans() :void {
 		const { id } = route.query
-		reqSingerFans({ id })
+		reqSingerFans({ id: Number(id) })
 		.then(res => {
 			const resFans = res.data.data
-			for(const key in fansData) {
-				fansData[key] = resFans[key]
-			}
+			// for(const key in fansData) {
+			// 	fansData[key] = resFans[key]
+			// }
+			fansData.fansCnt = resFans.fansCnt
+			fansData.follow = resFans.follow
+			fansData.followCnt = resFans.followCnt
+			fansData.followDay = resFans.followDay
+			fansData.isFollow = resFans.isFollow
 		})
 	}
 	// 关注
 	function subSinger(t: number) :void {
 		const data = {
 			t: t,
-			id: route.query.id
+			id: Number(route.query.id)
 		}
 		loading.value = true
 		reqSubSinger(data)
@@ -165,11 +177,11 @@
 	// 歌曲
 	function getSingHotSongs() {
 		const { id } = route.query
-		reqSingHotSongs({ id })
+		reqSingHotSongs({ id: Number(id) })
 		.then(res => {
 			hotList.value = res.data.songs
 			nextTick(() => {
-				scrollRef.value.refresh()
+				scrollRef.value?.refresh()
 			})
 		})
 	}
@@ -180,12 +192,12 @@
 	// 获取歌手专辑
 	function getAlbum() {
 		reqSingerAlbum({
-			id: route.query.id
+			id: Number(route.query.id)
 		})
 		.then(res => {
 			albumList.value = res.data.hotAlbums
 			nextTick(() => {
-				scrollRef.value.refresh()
+				scrollRef.value?.refresh()
 			})
 		})
 	}

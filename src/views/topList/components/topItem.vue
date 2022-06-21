@@ -19,7 +19,11 @@
 		topData: TopInterface
 	}
 	const props = withDefaults(defineProps<Props>(), {
-		topData: () => { return {} }
+		topData: () => { return {
+			name: '',
+			id: 0,
+			coverImgUrl: ''
+		} }
 	})
 	function topDetail() {
 		router.push({

@@ -19,12 +19,12 @@
 	}
 	const router = useRouter()
 	const props = withDefaults(defineProps<Props>(), {
-		albumData: {
+		albumData: () => {return {
 			name: '',
 			picUrl: '',
 			id: 0,
 			artists: []
-		}
+		}}
 	})
 	const singer: ComputedRef<string> = computed(() => {
 		return props.albumData.artists.map(item => { return item.name }).join('/')

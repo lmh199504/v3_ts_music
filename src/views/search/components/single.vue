@@ -9,7 +9,7 @@
 	import { reqSearchByType } from '@/api/search'
 	import SongItem from '@/components/songItem/index.vue'
 	import { reqSongDetail } from '@/api/song'
-	import { SongData } from '@/types/store/player'
+	import type { SongData } from '@/types/store/player'
 	interface Props{
 		keyword: string;
 		type: number

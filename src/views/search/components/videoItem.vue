@@ -14,21 +14,23 @@
 
 <script setup lang="ts">
 	import { reqVideoUrl } from '@/api/video'
-	import { VideoInterface } from '@/types/public/video'
+	import type { VideoInterface } from '@/types/public/video'
 	interface Props{
 		videoData: VideoInterface
 	}
 	
 	const props = withDefaults(defineProps<Props>(), {
-		videoData: {
-			title: '',
-			coverUrl: '',
-			vid: 0,
-			durationms: 0,
-			playTime: 0,
-			creator: {
-				userId: 0,
-				userName: ''
+		videoData: () => {
+			return {
+				title: '',
+				coverUrl: '',
+				vid: 0,
+				durationms: 0,
+				playTime: 0,
+				creator: {
+					userId: 0,
+					userName: ''
+				}
 			}
 		}
 	})
