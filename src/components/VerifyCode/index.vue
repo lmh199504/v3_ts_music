@@ -5,7 +5,7 @@
 				<li v-for="(item, index) in len" :key="index">{{ splitNum[index] ? splitNum[index] : '' }}</li>
 			</ul>
 		</div>
-		<van-field class="input" v-model="codeVal" type="number" :maxlength="len" placeholder="验证码" />
+		<van-field class="input" v-model="codeVal" type="number" autofocus :maxlength="len" placeholder="验证码" />
 		<!-- <input class="input" v-model="codeVal" @input="codeInput" type="number" :maxlength="len" > -->
 	</div>
 </template>

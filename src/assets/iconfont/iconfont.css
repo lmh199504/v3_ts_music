@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3367645 */
-  src: url('iconfont.woff2?t=1655455409558') format('woff2'),
-       url('iconfont.woff?t=1655455409558') format('woff'),
-       url('iconfont.ttf?t=1655455409558') format('truetype');
+  src: url('iconfont.woff2?t=1655862597087') format('woff2'),
+       url('iconfont.woff?t=1655862597087') format('woff'),
+       url('iconfont.ttf?t=1655862597087') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-yunshangchuan_o:before {
+  content: "\ebb4";
 }
 
 .icon-icon_tianjia:before {

@@ -38,4 +38,13 @@ export interface LikeParams{
 export interface CloudDiskParams{
 	limit: number
 	offset: number
+	timestamp?: number
+}
+// 上传云盘音乐
+export interface UpCloudMusicParams{
+	songFile: File
+}
+// 删除云盘歌曲
+export interface DelCloudMusicParams{
+	id: number | string
 }

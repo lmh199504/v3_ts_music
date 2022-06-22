@@ -1,6 +1,16 @@
 import request from '@/utils/request'
 import type { AxiosResponse } from 'axios'
-import type { SendCodeParams, PhoneLoginParams, EmaiLoginParams, UserPlayList, UserFollow, UidParams, LikeParams, CloudDiskParams } from '@/types/api/user'
+import type { 
+	SendCodeParams, 
+	PhoneLoginParams, 
+	EmaiLoginParams, 
+	UserPlayList, 
+	UserFollow, 
+	UidParams, 
+	LikeParams, 
+	CloudDiskParams,
+	DelCloudMusicParams
+ } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams): Promise<AxiosResponse> => request({
 	url: '/captcha/sent',
@@ -78,6 +88,18 @@ export const reqUserSubCount = (): Promise<AxiosResponse> => request({
 // 用户云盘音乐
 export const reqCloudMusic = (params: CloudDiskParams): Promise<AxiosResponse> => request({
 	url: '/user/cloud',
+	method: 'GET',
+	params
+})
+// 云盘上传音乐
+export const reqUpCloudMusic = (data: FormData): Promise<AxiosResponse> => request({
+	url: '/cloud',
+	method: 'POST',
+	data
+})
+// 云盘歌曲删除
+export const reqDelCloudMusic = (params: DelCloudMusicParams): Promise<AxiosResponse> => request({
+	url: '/user/cloud/del',
 	method: 'GET',
 	params
 })

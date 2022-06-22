@@ -46,6 +46,8 @@ service.interceptors.response.use(
 		switch (code) {
 			case 200:
 				return Promise.resolve(response)
+			case 201:
+				return Promise.resolve(response)	
 			case 401:
 				return Promise.reject()
 			case 403:

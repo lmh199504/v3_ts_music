@@ -12,17 +12,42 @@
 			<i class="iconfont icon-Androidgengduo" @click="showShareMenu"></i>
         </div>
     </div>
+
+    <van-popup v-model:show="show" teleport="body" position="bottom" round>
+        <div class="content">
+                <van-cell-group>
+                    <van-cell title="播放" is-link @click="playThis">
+                        <template #right-icon>
+                            <van-icon name="play-circle-o" />
+                        </template>
+                    </van-cell>
+            
+                    <van-cell title="删除" is-link @click="handleDel">
+                        <template #right-icon>
+                            <van-icon name="delete-o" />
+                        </template>
+                    </van-cell>
+                </van-cell-group>
+            </div>
+    </van-popup>
+
 </template>
 <script setup lang="ts">
     import { toRaw, ref } from 'vue'
     import { usePlayerStore } from '@/store'
 	import { reqGetSongUrl } from '@/api/song'
     import type { SongData } from '@/types/store/player'
+    import { reqDelCloudMusic } from '@/api/user'
+    import { Toast } from 'vant'
+
     interface Props{
         songData: SongData
         index: number
         songId: number
     }
+    const emit = defineEmits<{
+        (e: 'reload'): void
+    }>()
     const show = ref<boolean>(false)
     const playerStore = usePlayerStore()
     const props = withDefaults(defineProps<Props>(), {
@@ -53,7 +78,27 @@
 		const result = await reqGetSongUrl({ id: toRaw(props.songId)})
 		data.url = result.data.data[0].url
 		playerStore.setCurSong(data)
+        show.value = false
 	}
+    function handleDel() {
+        const params = {
+            id: props.songId
+        }
+        const loading = Toast.loading({
+            message: '上传中...',
+            overlay: true,
+            duration: 0
+        })
+        reqDelCloudMusic(params)
+        .then(() => {
+            show.value = false
+            emit('reload')
+            Toast.success('删除成功')
+        })
+        .finally(() => {
+            loading.clear()
+        })
+    }
 </script>
 <style scoped lang="less">
     .cloudItem{
