@@ -17,3 +17,15 @@ export interface SheetListFace{
 	trackNumberUpdateTime: number;
 	type: number;
 }
+// 最近播放-歌单
+export interface RecentSheet{
+	coverImgUrl: string
+	name: string
+	id: number
+	creator: Creator
+}
+// 
+interface Creator{
+	userId: number
+	nickname: string
+}

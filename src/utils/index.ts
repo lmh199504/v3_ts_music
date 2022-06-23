@@ -8,7 +8,7 @@ interface deviceType {
 }
 export function CheckIsAndroid(): boolean {
 	const browser = {
-		versions: function(): deviceType {
+		versions: function (): deviceType {
 			const u = navigator.userAgent
 			return { //移动终端浏览器版本信息 
 				ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端 
@@ -70,5 +70,36 @@ function addZero(num: number): string {
 		return num + ''
 	} else {
 		return '0' + num
+	}
+}
+
+
+export function dateFormat(time: number, type: string) {
+	let formatTime
+	let date
+	if (time === 0) {
+		date = new Date()
+	} else {
+		date = new Date(time)
+	}
+	let Year = date.getFullYear()
+	let month = date.getMonth() + 1
+	let Month = month >= 10 ? month : '0' + month
+	let day = date.getDate()
+	let Day = day >= 10 ? day : '0' + day
+	let Hour = date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()
+	let Minute = date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()
+	let Second = date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds()
+	if (type === 'yyyy-MM-dd') {
+		formatTime = Year + '-' + month + '-' + day
+		return formatTime
+	} else if (type === 'yyyy-MM-dd hh:mm:ss') {
+		formatTime = Year + '-' + month + '-' + day + ' ' + Hour + ':' + Minute + ':' + Second
+		return formatTime
+	} else if (type === 'hh:mm:ss') {
+		formatTime = Hour + ':' + Minute + ':' + Second
+		return formatTime
+	} else {
+		return "error type!"
 	}
 }

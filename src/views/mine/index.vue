@@ -8,7 +8,7 @@
 				<div class="search_wrapper">
 					个人中心
 				</div>
-				<div class="flex_box_center_column">
+				<div class="flex_box_center_column" @click="toSearch">
 					<i class="iconfont icon-sousuo"></i>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 	import LikeList from './components/likeList.vue'
 	import Sheet from './components/sheet.vue'
 	import { Mode } from '@/store/system'
-import router from '@/router'
+	import router from '@/router'
 
 	const userStore = useUserStore()
 	const systemStore = useSystemStore()
@@ -73,7 +73,7 @@ import router from '@/router'
 	const level = ref<number>(0)
 	const mine = ref<HTMLDivElement | null>(null)
 	const appList = ref([
-		{ name: '最近播放', icon: 'icon-bofang1' },
+		{ name: '最近播放', icon: 'icon-bofang1', path: '/recentPlay' },
 		{ name: '本地下载', icon: 'icon-shouyinji' },
 		{ name: '云盘', icon: 'icon-rili', path: '/cloudDisk' },
 		{ name: '已购', icon: 'icon-zhongchengdujiaoyi' },
@@ -102,7 +102,7 @@ import router from '@/router'
 			// for(const key in res.data.profile) {
 			// 	profile[key] = res.data.profile[key]
 			// }
-			profile.follows = res.data.profile.follow
+			profile.follows = res.data.profile.follows
 			profile.followeds = res.data.profile.followeds
 			level.value = res.data.level
 		})
@@ -128,6 +128,12 @@ import router from '@/router'
 		}
 		router.push({
 			path
+		})
+	}
+	
+	function toSearch() {
+		router.push({
+			path: '/search'
 		})
 	}
 

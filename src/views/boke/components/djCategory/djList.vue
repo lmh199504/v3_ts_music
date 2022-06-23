@@ -2,6 +2,7 @@
     <van-list :loading="loading" @load="onLoad" :finished="finished">
         <div class="list">
             <DjItem v-for="item in list" :key="item.id" :dj-data="item" :box-type="BoxType.line"/>
+            <van-empty v-if="!loading && list.length == 0" description="暂无数据" />
         </div>
     </van-list>
 </template>

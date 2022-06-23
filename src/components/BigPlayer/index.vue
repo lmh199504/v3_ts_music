@@ -199,6 +199,9 @@
 		.then(res => {
 			if (res.data?.lrc?.lyric) {
 				initPlayer(res.data.lrc.lyric)
+			} else { // 么有歌词
+				lyricLines.value = []
+				playerStore.setCurrentText('歌词跑丢了')
 			}
 		})
 	}

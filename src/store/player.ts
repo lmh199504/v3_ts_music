@@ -81,7 +81,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		setPlayerVisible(val: boolean): void {
 			this.showBigPlayer = val
 		},
-		resetList(list: Array<SongData>, romote = false): void {
+		resetList(list: Array<SongData>, romote = true): void {
 			const ids = list.map((item: SongData) => { return item.id }).join(',')
 			reqGetSongUrl({ id: ids })
 				.then(res => {
@@ -101,13 +101,16 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 					this.setCurSong(this.playList[0])
 				})
 		},
-		setCurSong(song: SongData) {
+		setCurSong(song: SongData, remote = true) {
 			if (!song.url) {
 				reqGetSongUrl({ id: song.id })
-					.then(() => {
-						// const resList = res.data.data
-						// song.url = resList[0].url
-						song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
+					.then((res) => {
+						if (remote) {
+							const resList = res.data.data
+							song.url = resList[0].url
+						} else {
+							song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
+						}
 						console.log(song.url)
 						this.currentSong = song
 						this.playing = true

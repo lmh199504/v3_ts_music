@@ -5,11 +5,6 @@
             <van-tab v-for="item in categoryList" :key="item.id" :title="item.name">
                 <DjList :cate-id="item.id" />
             </van-tab>
-            <template #nav-right>
-                <div>
-                    <van-icon name="apps-o" />
-                </div>
-            </template>
         </van-tabs>
     </MiniPlayOut>
 </template>

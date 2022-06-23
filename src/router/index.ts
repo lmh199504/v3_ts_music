@@ -224,6 +224,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '播客dj分类'
 		}
+	},
+	{
+		path: '/recentPlay',
+		name: 'RecentPlay',
+		component: () => import('@/views/mine/recentPlay.vue'),
+		meta: {
+			title: '播客dj分类'
+		}
 	}
 ]
 
