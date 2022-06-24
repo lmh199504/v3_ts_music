@@ -1,5 +1,5 @@
 <template>
-    <div class="video_item">
+    <div class="video_item" @click="toVideoDetail">
         <div class="left">
             <div class="cover">
                 <img :src="videoData.coverUrl + '?param=140y140'" alt="">
@@ -9,7 +9,7 @@
             <div class="title text_over_line">{{ videoData.title }}</div>
             <div class="info">
                 <span style="margin-right: 5px;">{{ formatMusicTime(videoData.duration) }}</span>
-                <span v-if="videoData.creator">{{videoData.creator.nickname}}</span>
+                <span v-if="videoData.creator">{{ videoData.creator.nickname }}</span>
             </div>
         </div>
         <div class="right">{{ dateFormat(playTime, 'yyyy-MM-dd') }}</div>
@@ -18,11 +18,16 @@
 <script setup lang="ts">
 import { recentVideoInterface } from '@/types/public/video'
 import { dateFormat, formatMusicTime } from '@/utils'
+import { useRouter } from 'vue-router'
+import { reqMlogToVideo } from '@/api/video'
+
+const router = useRouter()
 interface Props {
     videoData: recentVideoInterface
     playTime: number
+    resourceType: string
 }
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     videoData: () => {
         return {
             coverUrl: '',
@@ -34,8 +39,28 @@ withDefaults(defineProps<Props>(), {
             }
         }
     },
-    playTime: 0
+    playTime: 0,
+    resourceType: ''
 })
+async function toVideoDetail() {
+    let vid = props.videoData.id
+    let type = ''
+    if (props.resourceType == 'MLOG') {
+        const mlog = await reqMlogToVideo({ id: props.videoData.id })
+        vid = mlog.data.data
+        type = 'MLOG'
+    } else if (props.resourceType == 'MV') {
+        type = 'MV'
+    }
+    router.push({
+        path: '/videoDetail',
+        query: {
+            id: vid,
+            type: type
+        }
+    })
+}
+
 </script>
 <style scoped lang="less">
 .video_item {

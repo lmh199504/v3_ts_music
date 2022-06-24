@@ -193,7 +193,7 @@
 	watch(currentSong, val => {
 		if (val.id) getLyric(val.id)
 	}, { immediate: true })
-	
+	// 获取歌词
 	function getLyric(id: number): void {
 		reqGetLyric({ id: id })
 		.then(res => {
@@ -220,6 +220,7 @@
 		}
 		playerStore.setCurrentText(txt)
 	}
+	// 初始化播放器
 	function initPlayer(lyricText: string) :void {
 		if (lyric) {
 			lyric.stop()
@@ -286,7 +287,14 @@
 	// 下一首
 	function playNext() {
 		if (isLast.value) { // 最后一首
-			playerStore.setCurSong(toRaw( playList.value[0] ))
+			if (playList.value.length == 1) { // 列表就一首歌
+				audio.value && (audio.value.currentTime = 0)
+				lyric?.seek(0)
+				// playerStore.setCurSong(toRaw( playList.value[0] ))
+			} else {
+				playerStore.setCurSong(toRaw( playList.value[0] ))
+			}
+			
 		} else {
 			playerStore.setCurSong(toRaw( playList.value[playIndex.value + 1] ))
 		}

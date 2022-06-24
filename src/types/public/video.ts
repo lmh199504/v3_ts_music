@@ -6,6 +6,7 @@ export interface VideoInterface{
 	durationms: number
 	creator: VideoCreator
 	playTime: number
+	type: number
 }
 interface VideoCreator{
 	userId: number

@@ -1,5 +1,5 @@
 <template>
-	<div class="album_item">
+	<div class="album_item" @click="toVideoDetail">
 		<div class="cover">
 			<img :src="videoData.coverUrl + '?param=140y140'" alt="">
 			<!-- <video src=""></video> -->
@@ -13,12 +13,12 @@
 </template>
 
 <script setup lang="ts">
-	import { reqVideoUrl } from '@/api/video'
 	import type { VideoInterface } from '@/types/public/video'
+	import { useRouter } from 'vue-router'
 	interface Props{
 		videoData: VideoInterface
 	}
-	
+	const router = useRouter()
 	const props = withDefaults(defineProps<Props>(), {
 		videoData: () => {
 			return {
@@ -27,6 +27,7 @@
 				vid: 0,
 				durationms: 0,
 				playTime: 0,
+				type: 0,
 				creator: {
 					userId: 0,
 					userName: ''
@@ -34,14 +35,21 @@
 			}
 		}
 	})
-	function getVideoUrl() {
-		reqVideoUrl({ id: props.videoData.vid })
-		.then(res => {
-			console.log(res)
-		})
+
+	function toVideoDetail() {
+		if (props.videoData.type  == 1) {
+			router.push({
+				path: '/videoDetail',
+				query: {
+					id: props.videoData.vid
+				}
+			})
+		} else {
+			console.log('mv')
+		}
 	}
-	
-	getVideoUrl()
+
+
 </script>
 
 <style scoped lang="less">

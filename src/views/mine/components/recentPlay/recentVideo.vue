@@ -1,6 +1,6 @@
 <template>
     <div class="list">
-        <VideoItem v-for="item in list" :key="item.resourceId" :video-data="item.data" :play-time="item.playTime" />
+        <VideoItem v-for="item in list" :key="item.resourceId" :video-data="item.data" :play-time="item.playTime" :resourceType="item.resourceType" />
         <van-empty v-if="list.length == 0"/>
     </div>
 </template>

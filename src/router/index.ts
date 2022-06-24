@@ -232,6 +232,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '播客dj分类'
 		}
+	},
+	{
+		path: '/videoDetail',
+		name: 'VideoDetail',
+		component: () => import('@/views/videoDetail/index.vue'),
+		meta: {
+			title: '播客dj分类'
+		}
 	}
 ]
 
