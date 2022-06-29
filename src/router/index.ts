@@ -240,6 +240,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '播客dj分类'
 		}
+	},
+	{
+		path: '/mv',
+		name: 'Mv',
+		component: () => import('@/views/mv/index.vue'),
+		meta: {
+			title: 'mv'
+		}
 	}
 ]
 

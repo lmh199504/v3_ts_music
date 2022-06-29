@@ -5,8 +5,8 @@
 </template>
 <script setup lang="ts">
     import { ref, watch, nextTick } from 'vue'
-    import { reqVideoUrl } from '@/api/video'
-    const props = defineProps(['videoData', 'index', 'curIndex'])
+    import { reqVideoUrl, reqMvUrl } from '@/api/video'
+    const props = defineProps(['videoData', 'index', 'curIndex', 'type'])
     const videoRef = ref<HTMLVideoElement>()
     const url = ref<string>('')
     function getVideoUrl() {
@@ -15,6 +15,14 @@
             url.value = res.data.urls[0].url
         })
     }
+    // mv视频
+    function getMvUrl() {
+        reqMvUrl({ id: props.videoData.id })
+        .then(res => {
+            url.value = res.data.data.url
+        })
+    }
+
     watch(() => props.curIndex, () => {
         nextTick(() => {
             if (videoRef.value) {
@@ -29,7 +37,14 @@
             }
         })
     }, { immediate: true })
-    getVideoUrl()
+    function initUrl() {
+        if (props.type == 1) {
+            getVideoUrl()
+        } else {
+            getMvUrl()
+        }
+    }
+    initUrl()
 </script>
 <style scoped lang="less">
     .container{

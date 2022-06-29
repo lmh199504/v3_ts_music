@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="center">
-            <div class="title text_over_line">{{ videoData.title }}</div>
+            <div class="title text_over_line">{{ videoData.title || videoData.name }}</div>
             <div class="info">
                 <span style="margin-right: 5px;">{{ formatMusicTime(videoData.duration) }}</span>
                 <span v-if="videoData.creator">{{ videoData.creator.nickname }}</span>
@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<Props>(), {
             duration: 0,
             id: '',
             title: '',
+            name: '',
             creator: {
                 userId: 0
             }

@@ -37,15 +37,21 @@
 	})
 
 	function toVideoDetail() {
-		if (props.videoData.type  == 1) {
+		if (props.videoData.type == 1) {
 			router.push({
 				path: '/videoDetail',
 				query: {
 					id: props.videoData.vid
 				}
 			})
-		} else {
-			console.log('mv')
+		} else if (props.videoData.type == 0) {
+			router.push({
+				path: '/videoDetail',
+				query: {
+					id: props.videoData.vid,
+					type: 'MV'
+				}
+			})
 		}
 	}
 

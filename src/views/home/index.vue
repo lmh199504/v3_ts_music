@@ -23,6 +23,7 @@
 				<div class="line"></div>
 				<RecommendSongList ref="recommendSongList" />
 				<NewSong ref="newSong" />
+				<NewMvVue />
 			</div>
 		</van-pull-refresh>	
 	</div>
@@ -35,6 +36,7 @@
 	import Menu from './components/menu.vue'
 	import RecommendSongList from './components/recommendSongList.vue'
 	import NewSong from './components/newSong.vue'
+	import NewMvVue from './components/newMv.vue'
 	import { reqSearchDefault } from '@/api/search'
 	import { useRouter } from 'vue-router'
 	

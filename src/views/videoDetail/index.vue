@@ -7,24 +7,24 @@
         </div>
         <swiper direction="vertical" @slide-change="slideChange">
             <swiper-slide v-for="(item, index) in list" :key="index">
-                <PlayVideo :video-data="item.data" :index="index" :cur-index="curIndex" />
+                <PlayVideo :video-data="item.data" :index="index" :cur-index="curIndex" :type="item.type" />
             </swiper-slide>
         </swiper>
     </div>
 </template>
 <script setup lang="ts">
     import { onClickLeft } from '@/utils/back'
+    import { usePlayerStore } from '@/store'
     import { ref } from 'vue'
     import { useRoute } from 'vue-router'
-    import { reqAllVideo, reqVideoDetail } from '@/api/video'
+    import { reqAllVideo, reqVideoDetail, reqMvDetail } from '@/api/video'
     import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js"
     import PlayVideo from './components/playVideo.vue'
 	import "swiper/swiper.min.css";	
-	
-	// 视频最长50个
-	const MAX_LENTH = 10
+
+    const playerStore = usePlayerStore()
     interface ListData{
-        type: number
+        type: number | string
         // eslint-disable-next-line
         data: any
     }
@@ -35,7 +35,6 @@
     
     // eslint-disable-next-line
     function slideChange({ realIndex }: any) {
-		console.log(realIndex)
         curIndex.value = realIndex
 		if (curIndex.value + 4 >= list.value.length) {
 			getMore()
@@ -44,17 +43,25 @@
 	async function getMore() {
 		const res = await reqAllVideo({ timestamp: Date.now() })
 		list.value = list.value.concat(res.data.datas.filter((item: ListData) => item.type == 1))
-        while (list.value.length > MAX_LENTH) {
-            list.value.pop()
-			curIndex.value--
-        }
 	}
 	
     async function initPage() {
         const { id, type } = route.query
         if (id) {
             if (type == 'MLOG') {
-                const detailVideo = await reqVideoDetail({ id: String(route.query.id)})
+                const detailVideo = await reqVideoDetail({ id: String(id)})
+                list.value.push({
+                    type: 1,
+                    data: detailVideo.data.data
+                })
+            } else if (type == 'MV') {
+                const mvData =  await reqMvDetail({ mvid: String(id) })
+                list.value.push({
+                    type: type,
+                    data: mvData.data.data
+                })
+            } else {
+                const detailVideo = await reqVideoDetail({ id: String(id)})
                 list.value.push({
                     type: 1,
                     data: detailVideo.data.data
@@ -63,6 +70,7 @@
         }
 		await getMore()
 		curIndex.value = 0
+        playerStore.setPlaying(false)
     }
     initPage()
 

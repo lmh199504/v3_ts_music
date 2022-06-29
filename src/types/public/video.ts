@@ -20,4 +20,15 @@ export interface recentVideoInterface{
 	id: string
 	title: string
 	creator: VideoCreator
+	name?: string
+}
+// mv数据
+export interface MvDataInterface{
+	cover: string
+	id: number
+	subed: boolean
+	name: string
+	artistName: string
+	artistId: number
+	playCount: number
 }

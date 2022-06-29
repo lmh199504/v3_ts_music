@@ -21,9 +21,9 @@
                 <van-tab title="歌单">
                     <RecentSheet />
                 </van-tab>
-                <van-tab title="专辑">
+                <!-- <van-tab title="专辑">
                     <RecentAlbum />
-                </van-tab>
+                </van-tab> -->
                 <van-tab title="播客">
                     <RecentDj />
                 </van-tab>
@@ -39,7 +39,7 @@
     import RecentVoice from './components/recentPlay/recentVoice.vue'
     import RecentSheet from './components/recentPlay/recentSheet.vue'
     import RecentDj from './components/recentPlay/recentDj.vue'
-    import RecentAlbum from './components/recentPlay/recentAlbum.vue'
+    // import RecentAlbum from './components/recentPlay/recentAlbum.vue'
     const active = ref<number>(0)
 </script>
 <style scoped lang="less">
