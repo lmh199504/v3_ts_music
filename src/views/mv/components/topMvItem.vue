@@ -1,7 +1,7 @@
 <template>
     <div class="top_item" @click="tapMv">
         <div class="cover">
-            <img :src="mvData.cover + 'param=200y200'" alt="">
+            <img :src="mvData.cover + '?param=200y200'" alt="">
         </div>
         <div class="info">
             <div class="number">{{ index + 1 }}</div>
