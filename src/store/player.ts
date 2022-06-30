@@ -91,6 +91,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 						if (find) {
 							if (romote) {
 								item.url = find.url
+								if (!find.url) {
+									item.url = `https://music.163.com/song/media/outer/url?id=${find.id}.mp3`
+								}
 							} else {
 								item.url = `https://music.163.com/song/media/outer/url?id=${find.id}.mp3`
 							}
@@ -108,6 +111,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 						if (remote) {
 							const resList = res.data.data
 							song.url = resList[0].url
+							if (!resList[0].url) {
+								song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
+							}
 						} else {
 							song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
 						}
