@@ -116,7 +116,7 @@
 			font-size: 24px;
 			min-height: 60px;
 			.name{
-				color: var(--my-text-color-gray);
+				color: var(--my-text-color-black);
 			}
 		}
 	}

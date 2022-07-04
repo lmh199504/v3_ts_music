@@ -248,6 +248,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: 'mv'
 		}
+	},
+	{
+		path: '/msg',
+		name: 'Msg',
+		component: () => import('@/views/msg/index.vue'),
+		meta: {
+			title: '我的消息'
+		}
 	}
 ]
 

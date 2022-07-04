@@ -10,7 +10,7 @@
 <script setup lang="ts">
 	import { storeToRefs } from 'pinia'
 	import { usePlayerStore } from '@/store'
-	import MiniPlayer from '@/components/MiniPlayer'
+	import MiniPlayer from '@/components/MiniPlayer/index.vue'
 	const playerStore = usePlayerStore()
 	const { currentSong } = storeToRefs(playerStore)
 </script>

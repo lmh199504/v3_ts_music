@@ -72,9 +72,7 @@ function addZero(num: number): string {
 		return '0' + num
 	}
 }
-
-
-export function dateFormat(time: number, type: string) {
+export function dateFormat(time: number, type?: string) {
 	let formatTime
 	let date
 	if (time === 0) {
@@ -98,6 +96,9 @@ export function dateFormat(time: number, type: string) {
 		return formatTime
 	} else if (type === 'hh:mm:ss') {
 		formatTime = Hour + ':' + Minute + ':' + Second
+		return formatTime
+	} else if (type === 'MM-dd') {
+		formatTime = Month + '-' + Day
 		return formatTime
 	} else {
 		return "error type!"

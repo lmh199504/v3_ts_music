@@ -1,7 +1,11 @@
 <template>
     <van-list :loading="loading" @load="onLoad" :finished="finished">
         <div class="list">
-            <DjItem v-for="item in list" :key="item.id" :dj-data="item" :box-type="BoxType.line"/>
+            <van-row gutter="10">
+                <van-col :span="8" v-for="item in list" :key="item.id" >
+                    <DjItem :dj-data="item" :box-type="BoxType.box"/>
+                </van-col>
+            </van-row>
             <van-empty v-if="!loading && list.length == 0" description="暂无数据" />
         </div>
     </van-list>

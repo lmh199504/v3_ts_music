@@ -36,7 +36,8 @@ import {
 	Uploader,
 	Empty,
 	Loading,
-	Skeleton
+	Skeleton,
+	Badge
 } from 'vant'
 export default {
 	install(app: App): void {
@@ -77,5 +78,6 @@ export default {
 		app.use(Empty)
 		app.use(Loading)
 		app.use(Skeleton)
+		app.use(Badge)
 	}
 }

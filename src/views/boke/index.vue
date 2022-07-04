@@ -1,11 +1,15 @@
 <template>
 	<div class="box-container">
 		<van-tabs v-model:active="active" swipeable sticky>
-			<van-tab title="听听">听听</van-tab>
+			<van-tab title="听听">
+				<Listen />
+			</van-tab>
 			<van-tab title="推荐">
 				<Suggest />
 			</van-tab>
-			<van-tab title="故事">故事</van-tab>
+			<van-tab title="故事">
+				<Story :cate-id="10001" />
+			</van-tab>
 			<template #nav-left>
 				<div class="tab_right">
 					<i class="iconfont icon-caidan" @click="openMenu"></i>
@@ -24,7 +28,8 @@
 	import { ref } from 'vue'
 	import $bus from '@/utils/eventBus'
 	import Suggest from './components/suggest/index.vue'
-	
+	import Listen from './components/listen/index.vue'
+	import Story from './components/story/index.vue'
 	const active = ref<number>(1)
 	
 	// 侧边菜单

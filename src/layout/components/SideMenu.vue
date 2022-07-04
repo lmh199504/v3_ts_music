@@ -27,7 +27,7 @@
 			</div>
 			<div class="box-container">
 				<van-cell-group inset>
-					<van-cell title="我的消息" is-link>
+					<van-cell title="我的消息" is-link to="/msg">
 						<template #icon>
 							<i class="iconfont icon-xiaoxitongzhi"></i>
 						</template>

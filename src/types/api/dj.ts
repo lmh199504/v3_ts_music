@@ -13,3 +13,13 @@ export interface DjHotByTypeParams{
 	offset?: number
 	cateId: number
 }
+// 电台 - 新晋电台榜/热门电台榜
+export interface TopListParams{
+	limit?: number
+	offset?: number
+	type?: string 
+}
+// 热门主播
+export interface TopPopularParams{
+	limit?: number
+}
