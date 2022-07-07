@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios'
 import request from '@/utils/request'
-import type { SongUrlParams, SheetListParams, idsParams, ModeParams } from '@/types/api/song'
+import type { SongUrlParams, SheetListParams, idsParams, ModeParams, LikeParams } from '@/types/api/song'
 // 获取歌曲播放地址
 export const reqGetSongUrl = (params: SongUrlParams) :Promise<AxiosResponse> => request({
 	url: '/song/url',
@@ -49,8 +49,14 @@ export const reqSongDetail = (params: idsParams ) :Promise<AxiosResponse> => req
 	params
 })
 // 心动模式
-export const reqPlayModeList  = (params: ModeParams) :Promise<AxiosResponse> => request({
+export const reqPlayModeList = (params: ModeParams) :Promise<AxiosResponse> => request({
 	url: '/playmode/intelligence/list',
+	method: 'GET',
+	params
+})
+// 喜欢歌曲
+export const reqLikeSong = (params: LikeParams): Promise<AxiosResponse> => request({
+	url: '/like',
 	method: 'GET',
 	params
 })

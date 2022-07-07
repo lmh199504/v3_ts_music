@@ -52,7 +52,7 @@
 	}
 	
 	function getLikeList() {
-		reqLikeList({ uid: userInfo.value.userId })
+		reqLikeList({ uid: userInfo.value.userId, timestamp: Date.now() })
 		.then(res => {
 			getSongDetail(res.data.ids.join(','))
 		})

@@ -19,3 +19,8 @@ export interface ModeParams{
 	pid: number; // 歌单id
 	sid?: number; // 要开始播放的歌曲id
 }
+// 喜欢歌曲
+export interface LikeParams{
+	id: number | string
+	like: boolean
+}

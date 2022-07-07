@@ -1,6 +1,6 @@
 <template>
 	<div class="playList">
-		<SongItem v-for="item in playList" :key="item.id" :song-data="item" />
+		<SongItem v-for="item in playList" :key="item.id" :song-data="item" :showdel="false" />
 	</div>
 </template>
 <script setup lang="ts">

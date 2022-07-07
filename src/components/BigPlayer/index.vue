@@ -40,31 +40,18 @@
 			<div class="menu_wrapper">
 				<!-- 操作按钮 -->
 				<div class="action_menu">
-					<template>
-						<div class="action_menu_item" v-if="playMode === PlayModeData.beckoning">
-							<i class="iconfont icon-xihuan1"></i>
-						</div>
-						<div class="action_menu_item" v-if="playMode === PlayModeData.list">
-							<i class="iconfont icon-xihuan1"></i>
-						</div>
-						<div class="action_menu_item" v-if="playMode === PlayModeData.random">
-							<i class="iconfont icon-xihuan1"></i>
-						</div>
-						<div class="action_menu_item" v-if="playMode === PlayModeData.loop">
-							<i class="iconfont icon-xihuan1"></i>
-						</div>
-						<div class="action_menu_item" v-if="playMode === PlayModeData.single">
-							<i class="iconfont icon-xihuan1"></i>
-						</div>
-					</template>
-					
+					<div class="action_menu_item" @click="likeSong">
+						<i v-if="!isLike" class="iconfont icon-xihuan1"></i>
+						<i v-else class="iconfont icon-xihuan redcolor"></i>
+					</div>
 					<div class="action_menu_item">
 						<i class="iconfont icon-xiazai"></i>
 					</div>
 					<div class="action_menu_item">
 						<i class="iconfont icon-yichang"></i>
 					</div>
-					<div class="action_menu_item">
+					<div class="action_menu_item" @click="showComment=true">
+						<div class="commentNum">{{ commentNum }}</div>
 						<i class="iconfont icon-31xiaoxi"></i>
 					</div>
 					<div class="action_menu_item">
@@ -81,9 +68,23 @@
 				</div>
 				<!-- 播放菜单 -->
 				<div class="play_menu">
-					<div class="play_menu_item">
+			
+					<!-- <div class="play_menu_item" v-if="playMode === PlayModeData.beckoning" @click="switchMode(PlayModeData.beckoning)">
 						<i class="iconfont icon-huaban"></i>
+					</div> -->
+					<div class="play_menu_item" v-if="playMode === PlayModeData.list" @click="switchMode(PlayModeData.list)">
+						<i class="iconfont icon-shuzishunxu"></i>
 					</div>
+					<div class="play_menu_item" v-if="playMode === PlayModeData.random" @click="switchMode(PlayModeData.random)">
+						<i class="iconfont icon-24gl-shuffle"></i>
+					</div>
+					<div class="play_menu_item" v-if="playMode === PlayModeData.loop" @click="switchMode(PlayModeData.loop)">
+						<i class="iconfont icon-icon-"></i>
+					</div>
+					<div class="play_menu_item" v-if="playMode === PlayModeData.single" @click="switchMode(PlayModeData.single)">
+						<i class="iconfont icon-hanhan-01-01"></i>
+					</div>
+
 					<div class="play_menu_item" @click="playPre">
 						<i class="iconfont icon-shangyishou"></i>
 					</div>
@@ -104,37 +105,48 @@
 		</div>
 		<div class="player_bg" :style="bgStyle"></div>
 		<div class="player_mask"></div>
-		<audio :src="currentSong.url" autoplay ref="audio" @ended="onPlayEnd" @timeupdate="onTimeupdate" @error="onPlayError"></audio>
+		<audio :src="songUrl" autoplay ref="audio" @ended="onPlayEnd" @timeupdate="onTimeupdate" @error="onPlayError"></audio>
 		<PlayListPopup v-model:showPopup="showList" />
+		<CommentPopup v-model:visible="showComment" :id="currentSong.id" />
 	</div>
 </template>
 
 <script setup lang="ts">
 	import PlayListPopup from '@/components/PlayList/listPopup.vue'
+	import CommentPopup from './commentPopup.vue'
 	import { PlayModeData } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
 	import { ref, watch, nextTick, computed, toRaw } from 'vue'
+	import { reqSongComment } from '@/api/comment'
 	import {
 		storeToRefs
 	} from 'pinia'
 	import {
-		usePlayerStore
+		usePlayerStore,
+		useUserStore
 	} from '@/store'
 	import Scroll from '@/components/Scroll/index.vue'
-	import { reqGetLyric } from '@/api/song'
+	import { reqGetLyric, reqLikeSong } from '@/api/song'
+	import { Toast } from 'vant'
 	const playerStore = usePlayerStore()
+	const userStore = useUserStore()
 	const showList = ref<boolean>(false)
 	const {
-		showBigPlayer, currentSong, singerName, coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList, isFirst
+		showBigPlayer, currentSong, singerName,
+		coverImg, playing, currentTime, percent, playMode, playIndex, isLast, playList, isFirst
 	} = storeToRefs(playerStore)
+	const { likeList } = storeToRefs(userStore)
 	const srcoll = ref<InstanceType<typeof Scroll>>()
 	const showLyric = ref<boolean>(false)
+	const commentNum = ref<number|string>(0) // 评论数量
 	// 播放器对象
 	const audio = ref<HTMLAudioElement>()
 	function hidePlayer(): void {
 		playerStore.setPlayerVisible(false)
 	}
+	// 是否显示评论
+	const showComment = ref<boolean>(false)
 	// 当前第几行歌词
 	const activeIndex = ref<number>(0)
 	// 是否拖拽进度条
@@ -150,7 +162,12 @@
 	}
 	// 歌词列表
 	const lyricLines = ref<Array<LinesData>>([])
-
+	// 是否为喜欢的歌曲
+	const isLike = computed(() => {
+		return likeList.value.includes(currentSong.value.id)
+	})
+	// 歌曲播放url
+	const songUrl = ref<string>('')
 	watch(showBigPlayer, (val) => {
 		if (val) {
 			showLyric.value = false
@@ -191,7 +208,11 @@
 		}
 	}
 	watch(currentSong, val => {
-		if (val.id) getLyric(val.id)
+		if (val.id) {
+			songUrl.value = val.url
+			getComment()
+			getLyric(val.id)
+		}
 	}, { immediate: true })
 	// 获取歌词
 	function getLyric(id: number): void {
@@ -236,6 +257,13 @@
 		lyric?.play()
 		audio.value && lyric?.seek(audio.value.currentTime*1000)
 	}
+	// 获取评论
+	function getComment() {
+		reqSongComment({ id: currentSong.value.id })
+		.then(res => {
+			commentNum.value = res.data.total > 999 ? '999+' : res.data.total
+		})
+	}
 	const bgStyle = computed(() => {
 		return { 'background-image': `url(${coverImg.value})` }
 	})
@@ -263,26 +291,61 @@
 	// 播放事件监听
 	function onPlayEnd() {
 		console.log('播放结束')
-		if (lyric) {
-			lyric.stop()
-			activeIndex.value = 0
-			lyric = null
-		}
-		if (playList.value.length) {
-			playNext()
+		if (playMode.value === PlayModeData.list) { // 列表播放
+			if (lyric) {
+				lyric.stop()
+				activeIndex.value = 0
+				lyric = null
+			}
+			if (!isLast.value) {
+				if (playList.value.length) {
+					playNext()
+				}
+			}
+		} else if (playMode.value === PlayModeData.loop) { // 列表循环
+			if (lyric) {
+				lyric.stop()
+				activeIndex.value = 0
+				lyric = null
+			}
+			if (playList.value.length) {
+				playNext()
+			}
+		} else if (playMode.value === PlayModeData.random) { // 随机播放
+			if (lyric) {
+				lyric.stop()
+				activeIndex.value = 0
+				lyric = null
+			}
+			const randomIndex = Math.ceil(Math.random() * (playList.value.length - 1))
+			playerStore.setCurSong(playList.value[randomIndex])
+		} else if (playMode.value === PlayModeData.single) { //单曲循环
+			audio.value && (audio.value.currentTime = 0)
+			if (lyric) {
+				lyric?.seek(0)
+			}
+			audio.value?.play()
 		}
 	}
 	function onTimeupdate() {
 		audio.value && playerStore.setCurrentTime(audio.value?.currentTime * 1000)
 	}
-	function onPlayError() {
-		console.log('播放错误')
-		
-		if (playList.value.length) {
-			playNext()
-			// playerStore.delSong(toRaw(currentSong.value))
+	function onPlayError(e: Event) {
+		if (!currentSong.value.url) {
+			return
 		}
-		
+		console.log(e)
+		console.log('播放错误')
+		// 播放403 错误时 尝试使用id播放
+		if (songUrl.value.indexOf(String(currentSong.value.id)) === -1) {
+			const url = `https://music.163.com/song/media/outer/url?id=${currentSong.value.id}.mp3`
+			songUrl.value = url
+		} else {
+			if (playList.value.length) {
+				console.log('播放下一首')
+				playNext()
+			}
+		}
 	}
 	// 下一首
 	function playNext() {
@@ -290,13 +353,18 @@
 			if (playList.value.length == 1) { // 列表就一首歌
 				audio.value && (audio.value.currentTime = 0)
 				lyric?.seek(0)
-				// playerStore.setCurSong(toRaw( playList.value[0] ))
 			} else {
 				playerStore.setCurSong(toRaw( playList.value[0] ))
 			}
-			
 		} else {
-			playerStore.setCurSong(toRaw( playList.value[playIndex.value + 1] ))
+			let index = playIndex.value + 1
+			if (playMode.value === PlayModeData.random) {
+				const randomIndex = Math.ceil(Math.random() * (playList.value.length - 1))
+				if (randomIndex !== index) {
+					index = randomIndex
+				}
+			}
+			playerStore.setCurSong(toRaw( playList.value[index] ))
 		}
 	}
 	// 上一首
@@ -306,6 +374,50 @@
 		} else {
 			playerStore.setCurSong(toRaw( playList.value[playIndex.value - 1] ))
 		}
+	}
+	// 播放模式
+	function switchMode(mode: PlayModeData) {
+		console.log(mode)
+		Toast.clear()
+		switch (mode) {
+			case PlayModeData.beckoning:
+				playerStore.setPlayMode(PlayModeData.list)
+				Toast('列表播放')
+				break;
+			case PlayModeData.list:
+				playerStore.setPlayMode(PlayModeData.random)
+				Toast('随机播放')
+				break;
+			case PlayModeData.random:
+				playerStore.setPlayMode(PlayModeData.loop)
+				Toast('列表循环')
+				break;
+			case PlayModeData.loop:
+				playerStore.setPlayMode(PlayModeData.single)
+				Toast('单曲循环')
+				break;	
+			case PlayModeData.single:
+				playerStore.setPlayMode(PlayModeData.list)
+				Toast('列表播放')
+				break;		
+			default:
+				break;
+		}
+	}
+	// 喜欢歌曲
+	function likeSong() {
+		reqLikeSong({
+			id: currentSong.value.id,
+			like: !isLike.value
+		})
+		.then(() => {
+			if (isLike.value) {
+				Toast.success('取消喜欢')
+			} else {
+				Toast.success('添加喜欢')
+			}
+			userStore.getLikeList()
+		})
 	}
 </script>
 
@@ -504,9 +616,23 @@
 					display: flex;
 					justify-content: space-between;
 					padding: 30px 40px;
+					.action_menu_item{
+						position: relative;
+						.commentNum{
+							color: var(--my-icon-color);
+							font-size: 24px;
+							position: absolute;
+							top: 15px;
+							z-index: 2;
+							right: -20px;
+						}
+					}
 					.iconfont{
 						font-size: 46px;
 						color: var(--my-icon-color);
+					}
+					.redcolor{
+						color: red;
 					}
 				}
 				.process{
@@ -572,7 +698,7 @@
 		}
 	}
 	.animate__rotate{
-		animation: rotating 4s linear infinite;
+		animation: rotating 6s linear infinite;
 	}
 	.rotate_pause{
 		animation-play-state: paused;

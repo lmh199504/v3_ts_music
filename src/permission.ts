@@ -7,6 +7,7 @@ router.beforeEach(async (to, from, next) => {
 	try{
 		if (getToken() && !userStore.$state.userInfo.userId) {
 			await userStore.getInfo()
+			await userStore.getLikeList()
 		}
 		next()
 	}catch(e){

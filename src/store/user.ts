@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { reqLoginByPhone, reqGetUserInfo, reqLogout, reqLoginByEmail } from '@/api/user' 
+import { reqLoginByPhone, reqGetUserInfo, reqLogout, reqLoginByEmail, reqLikeList } from '@/api/user' 
 import { PhoneLoginParams, EmaiLoginParams } from '@/types/api/user'
 import { setToken, getToken, removeToken } from '@/utils/auth'
 export interface userInfo {
@@ -51,6 +51,7 @@ export interface userInfo {
 export interface userState {
 	token: string;
 	userInfo: userInfo;
+	likeList: Array<number>
 }
 export const useUserStore = defineStore('user', {  //导出 pinia仓库
 	state: (): userState => ({
@@ -94,7 +95,8 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 			vipType: 0,
 			viptypeVersion: 0
 			
-		}
+		},
+		likeList: []
 	}),
 	getters: {
 		isLogin: (state) => {
@@ -194,6 +196,18 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 				})
 				.catch((err) => {
 					reject(err)
+				})
+			})
+		},
+		getLikeList() {
+			return new Promise((resolve, reject) => {
+				reqLikeList({ uid: this.userInfo.userId, timestamp: Date.now() })
+				.then(res => {
+					this.likeList = res.data.ids || []
+					resolve(res)
+				})
+				.catch(() => {
+					reject()
 				})
 			})
 		}

@@ -37,11 +37,11 @@ const total = ref<number>(0)
 const url = () => require('@/assets/images/public/heijiao.png')
 const imgUrl = ref<string>(url())
 let list = []
-let pid = 0
+let pid = 0 // 歌单id 心动模式播放需要
 let ids: Array<number> = []
 
 function getLikeList() {
-	reqLikeList({ uid: userInfo.value.userId })
+	reqLikeList({ uid: userInfo.value.userId, timestamp: Date.now() })
 	.then(res => {
 		total.value = res.data.ids.length
 		ids = res.data.ids

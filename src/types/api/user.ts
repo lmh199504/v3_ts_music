@@ -28,6 +28,7 @@ export interface UserFollow{
 //  uid 
 export interface UidParams{
 	uid: number
+	timestamp?: number
 }
 // 喜欢音乐
 export interface LikeParams{

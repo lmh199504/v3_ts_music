@@ -33,7 +33,7 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 		playing: false,
 		currentTime: 0,
 		currentText: '',
-		playMode: PlayModeData.list
+		playMode: PlayModeData.loop
 	}),
 	getters: {
 		singerName(): string {
@@ -151,6 +151,9 @@ export const usePlayerStore = defineStore('player', {  //导出 pinia仓库
 			if (index != -1) {
 				this.playList.splice(index, 1)
 			}
+		},
+		setPlayMode(mode: PlayModeData) {
+			this.playMode = mode
 		}
 	}
 })
