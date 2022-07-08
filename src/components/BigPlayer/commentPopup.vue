@@ -1,11 +1,13 @@
 <template>
-    <van-popup v-model:show="show" position="bottom" round>
-        <div class="content">
-            <van-list :loading="loading" :finished="finished" @load="onLoad">
-                <CommentItem v-for="item in list" :key="item.commentId" :comment="item" />
-            </van-list>
-        </div>
-    </van-popup>
+    <teleport to="body">
+        <van-popup v-model:show="show" position="bottom" round>
+            <div class="content">
+                <van-list :loading="loading" :finished="finished" @load="onLoad">
+                    <CommentItem v-for="item in list" :key="item.commentId" :comment="item" :songid="id" />
+                </van-list>
+            </div>
+        </van-popup>
+    </teleport>
 </template>
 <script setup lang="ts">
     import { computed } from 'vue'
@@ -36,7 +38,10 @@
         }
     })
     watch(() => props.id, (val) => {
-        if (val)  getList()
+        if (val)  {
+            list.value = []
+            getList()
+        }
        
     })
     function getList() {
@@ -60,6 +65,10 @@
 </script>
 <style scoped lang="less">
 .content{
-    height: 60vh;
+    height: 70vh;
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 </style>

@@ -8,7 +8,8 @@
 			<div class="singer">{{ singer }}</div>
 		</div>
 		<div class="right">
-			<i class="iconfont icon-24gf-play" @click="playThis"></i>
+			<img class="active_img" v-if="currentSong.id === songData.id" src="@/assets/images/public/active.gif" alt="">
+			<i v-else class="iconfont icon-24gf-play" @click="playThis"></i>
 			<i class="iconfont icon-Androidgengduo" @click="showShareMenu"></i>
 		</div>
 	</div>
@@ -28,12 +29,14 @@
 	import type { arData } from '@/types/store/player'
 	import type { SheetDataInterface } from '@/types/public/sheet'
 	import type { SongData } from '@/types/store/player'
+	import { storeToRefs } from 'pinia'
 	const playerStore = usePlayerStore()
 	interface Props{
 		// eslint-disable-next-line
 		songData: SongData;
 		showdel: boolean;
 	}
+	const { currentSong } = storeToRefs(playerStore)
 	const props = withDefaults(defineProps < Props > (), {
 		songData: () => { return {
 			url: '',
@@ -140,6 +143,9 @@
 			}
 		}
 		.right{
+			.active_img{
+				width: 30px;
+			}
 			.iconfont{
 				color: var(--my-text-color-gray);
 				padding-left: 20px;
