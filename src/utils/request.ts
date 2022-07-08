@@ -90,8 +90,8 @@ service.interceptors.response.use(
 			case 503:
 				Toast.fail(error.response.data?.message || '登录状态失效')
 				return Promise.reject(error)
-			case -462:
-				Toast.fail(error.response.data?.message || '登录状态失效')	
+			case 400:
+				Toast.fail(error.response.data?.message || '请先登录')	
 				router.push('/login')
 				return Promise.reject(error)
 			default:
