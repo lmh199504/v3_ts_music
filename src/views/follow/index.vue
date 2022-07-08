@@ -37,6 +37,7 @@ function getList() {
 	})
 	.catch(() => {
 		loading.value = false
+		finished.value = true
 	})
 }
 </script>
