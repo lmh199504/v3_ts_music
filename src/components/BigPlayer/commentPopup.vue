@@ -42,9 +42,9 @@
             list.value = []
             getList()
         }
-       
     })
     function getList() {
+        if (!props.id) return
         loading.value = true
         reqSongComment({
             id: props.id

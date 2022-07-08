@@ -8,7 +8,7 @@ const service = axios.create({
 	timeout: 60 * 1000,
 	withCredentials: true
 })
-
+import router from '@/router'
 service.interceptors.request.use(
 	(config: AxiosRequestConfig) => {
 		const token = getToken()
@@ -53,18 +53,24 @@ service.interceptors.response.use(
 			case 403:
 				return Promise.reject()
 			case 400:
-				msg = res && res.msg
+				msg = res && res.message
 				Toast.fail(msg ? msg : '网络异常稍后再试~')
 				return Promise.reject(res)
 			case 500:
-				msg = res && res.msg
+				msg = res && res.message
 				Toast.fail(msg ? msg : '网络异常稍后再试~')
 				return Promise.reject(res)
 			case 301:
 				Toast.fail('请先登录')
+				router.push('/login')
+				return Promise.reject(res)
+			case -462:
+				msg = res && res.message
+				Toast.fail(msg ? msg : '网络异常稍后再试~')	
+				router.push('/login')
 				return Promise.reject(res)
 			default:
-				msg = res && res.msg
+				msg = res && res.message
 				Toast.fail(msg ? msg : '网络异常稍后再试~')
 				return Promise.reject(response)
 		}

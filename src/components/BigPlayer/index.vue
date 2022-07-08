@@ -259,6 +259,7 @@
 	}
 	// 获取评论
 	function getComment() {
+		console.log(currentSong.value.id)
 		reqSongComment({ id: currentSong.value.id })
 		.then(res => {
 			commentNum.value = res.data.total > 999 ? '999+' : res.data.total
