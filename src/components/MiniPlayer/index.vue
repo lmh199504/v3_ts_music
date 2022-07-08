@@ -14,7 +14,7 @@
 					<div class="m_singer">- {{ singerName }}</div>
 				</div>
 				<div class="current_text" v-if="currentText">
-					<van-notice-bar scrollable :text="currentText" />
+					<van-notice-bar :scrollable="currentText.length>20" :text="currentText" />
 				</div>
 			</div>
 			<!-- 操作按钮 -->

@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<div class="flex_box_center_column" v-if="loading">
+			<van-loading />
+		</div>
 		<!-- 单曲 -->
 		<div class="box_white_container">
 			<div class="box_top">
@@ -82,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-	import { reactive } from 'vue'
+	import { reactive, ref } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import type { SongData } from '@/types/store/player'
 	import { singerInterface } from '@/types/public/singer'
@@ -97,6 +100,7 @@
 		keyword: string;
 		type: number
 	}
+	const loading = ref<boolean>(false)
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
 	})
@@ -149,6 +153,7 @@
 		(e: 'switchActive', value: number): void
 	}>()
 	function getData() {
+		loading.value = true
 		reqSearchByType({ keywords: props.keyword, type: props.type })
 		.then(res => {
 			const result = res.data.result
@@ -167,6 +172,9 @@
 			// 用户
 			userData.users = result.user?.users || []
 			userData.moreText = result.user?.moreText || ''
+		})
+		.finally(() => {
+			loading.value = false
 		})
 	}
 	// 查看更多歌曲
