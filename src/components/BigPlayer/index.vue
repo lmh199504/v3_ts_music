@@ -354,6 +354,7 @@
 			if (playList.value.length == 1) { // 列表就一首歌
 				audio.value && (audio.value.currentTime = 0)
 				lyric?.seek(0)
+				audio.value?.play()
 			} else {
 				playerStore.setCurSong(toRaw( playList.value[0] ))
 			}
