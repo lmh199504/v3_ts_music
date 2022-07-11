@@ -2,6 +2,8 @@
 
 ## vue3、typeScript、pinia 
 
+## 接口地址项目 https://github.com/Binaryify/NeteaseCloudMusicApi
+
 ## Project setup
 ```
 npm install

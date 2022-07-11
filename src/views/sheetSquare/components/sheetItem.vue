@@ -75,6 +75,7 @@
 			position: absolute;
 		}
 		.song_list_title {
+			color: var(--my-text-color-black);
 			font-size: 24px;
 			margin: auto;
 			margin-top: 5px;

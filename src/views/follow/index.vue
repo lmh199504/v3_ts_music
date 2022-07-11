@@ -37,6 +37,7 @@ function getList() {
 	})
 	.catch(() => {
 		loading.value = false
+		finished.value = true
 	})
 }
 </script>
@@ -47,6 +48,7 @@ function getList() {
 	overflow: auto;
 	padding-bottom: 180px;
 	box-sizing: border-box;
+	background-color: var(--my-back-color-white);
 	.list{
 		padding: 30px;
 	}
