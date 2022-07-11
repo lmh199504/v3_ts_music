@@ -256,6 +256,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '我的消息'
 		}
+	},
+	{
+		path: '/userInfo',
+		name: 'UserInfo',
+		component: () => import('@/views/userInfo/index.vue'),
+		meta: {
+			title: '个人中心'
+		}
 	}
 ]
 

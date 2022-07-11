@@ -107,13 +107,14 @@
 		<div class="player_mask"></div>
 		<audio :src="songUrl" autoplay ref="audio" @ended="onPlayEnd" @timeupdate="onTimeupdate" @error="onPlayError"></audio>
 		<PlayListPopup v-model:showPopup="showList" />
-		<CommentPopup v-model:visible="showComment" :id="currentSong.id" />
+		<CommentPopup v-model:visible="showComment" :source-id="currentSong.id" :comment-type="CommentType.song" />
 	</div>
 </template>
 
 <script setup lang="ts">
+	import { CommentType } from '@/types/public/comment'
 	import PlayListPopup from '@/components/PlayList/listPopup.vue'
-	import CommentPopup from './commentPopup.vue'
+	import CommentPopup from '@/components/Comment/commentPopup.vue'
 	import { PlayModeData } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
@@ -171,6 +172,9 @@
 	watch(showBigPlayer, (val) => {
 		if (val) {
 			showLyric.value = false
+		}
+		if (val === false) {
+			showComment.value = false
 		}
 		nextTick(() => {
 			srcoll.value && srcoll.value.refresh()

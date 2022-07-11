@@ -99,9 +99,6 @@
 	function getUserDetail() {
 		reqUserDetail({ uid: userInfo.value.userId })
 		.then(res => {
-			// for(const key in res.data.profile) {
-			// 	profile[key] = res.data.profile[key]
-			// }
 			profile.follows = res.data.profile.follows
 			profile.followeds = res.data.profile.followeds
 			level.value = res.data.level

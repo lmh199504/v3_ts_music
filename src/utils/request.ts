@@ -12,24 +12,22 @@ const service = axios.create({
 service.interceptors.request.use(
 	(config: AxiosRequestConfig) => {
 		const token = getToken()
-		if (token && config.headers) {
-			config.headers['X-Auth-Token'] = token
-		}
-		if (!config.data) {
-			config.data = {
-				cookie: encodeURIComponent(token)
+		if (token) {
+			if (!config.data) {
+				config.data = {
+					cookie: encodeURIComponent(token)
+				}
+			} else {
+				config.data = Object.assign(config.data, { cookie: encodeURIComponent(token) })
 			}
-		} else {
-			config.data = Object.assign(config.data, { cookie: encodeURIComponent(token) })
-		}
-		if (!config.params) {
-			config.params = {
-				cookie: encodeURIComponent(token)
+			if (!config.params) {
+				config.params = {
+					cookie: encodeURIComponent(token)
+				}
+			} else {
+				config.params = Object.assign(config.params, { cookie: token })
 			}
-		} else {
-			config.params = Object.assign(config.params, { cookie: token })
 		}
-
 		return config
 	},
 	error => {
