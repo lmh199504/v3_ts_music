@@ -37,3 +37,8 @@ export const reqGetRecommendDate = () :Promise<AxiosResponse> => request({
 	url: '/history/recommend/songs',
 	method: 'GET'
 })
+// 国家编码列表
+export const reqCountryCode = (): Promise<AxiosResponse> => request({
+	url: '/countries/code/list',
+	method: 'GET'
+})

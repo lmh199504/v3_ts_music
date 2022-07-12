@@ -111,7 +111,7 @@
     function toUser() {
         playerStore.setPlayerVisible(false)
         router.push({
-            path: '/userPage',
+            path: '/userInfo',
             query: {
                 id: props.comment.user.userId
             }

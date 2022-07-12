@@ -1,8 +1,8 @@
 <template>
     <MiniPlayOut>
-        <div class="userPage">
-            <div class="nav">
-                <div class="left flex_box_center_column">
+        <div class="userPage" ref="mine" @scroll="scroll">
+            <div class="nav" :style="navStyle">
+                <div class="left flex_box_center_column" @click="onClickLeft">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
                 <div class="center"></div>
@@ -12,63 +12,160 @@
                 <div class="back_ground">
                     <img v-if="userProfile.backgroundUrl" :src="userProfile.backgroundUrl" />
                 </div>
+                <div class="main_content">
+                    <div class="box_white_container user_info">
+                        <div class="user_img">
+                            <img v-if="userProfile.avatarUrl" :src="userProfile.avatarUrl + '?param=140y140'" alt="">
+                        </div>
+                        <div class="user_name">{{ userProfile.nickname }}</div>
+                        <div class="other_info">
+                            <div class="other_info_item"><span>{{ userProfile.follows }}</span>关注</div>
+                            <div class="other_info_item"><span>{{ userProfile.followeds }}</span>粉丝</div>
+                            <div class="other_info_item">Lv.{{ userProfile.level }}</div>
+                        </div>
+                        <div class="tags">
+                            <div class="tag">{{ cityName }}</div>
+                            <div class="tag">
+                                村龄{{ userProfile.createDays }}年
+                            </div>
+                        </div>
+                        <div v-if="userProfile.followed" class="follow_btn">
+                            <van-button type="danger" :loading="followLoding" round size="small" @click="followUser(2)">
+                                取消关注</van-button>
+                        </div>
+                        <div v-else class="follow_btn">
+                            <van-button type="danger" :loading="followLoding" round size="small" @click="followUser(1)">
+                                关注</van-button>
+                        </div>
+                    </div>
+                    <van-tabs>
+                        <van-tab title="主页">
+                            <MusicTaste :listenSongs="userProfile.listenSongs" :user-id="Number(route.query.id)"/>
+                            <CreateSheet :user-id="Number(route.query.id)" />
+                            <CollectSheet :user-id="Number(route.query.id)" />
+                        </van-tab>
+                        <van-tab>
+                            <template #title>
+                                <van-badge :content="userProfile.eventCount" :show-zero="false" :offset="[-10, 8]">
+                                    <div style="padding: 0 25px;">动态</div>
+                                </van-badge>
+                            </template>
+                            2
+                        </van-tab>
+                    </van-tabs>
+                </div>
             </div>
         </div>
     </MiniPlayOut>
 </template>
 <script setup lang="ts">
-    import { useRoute } from 'vue-router'
-    import { reqUserDetail } from '@/api/user'
-    import { watch, reactive } from 'vue'
-    import type { UserProfileData } from '@/types/public/user'
-    const route = useRoute()
-    const userProfile = reactive<UserProfileData>({
-        avatarUrl: '',
-        backgroundUrl: '',
-        city: 0,
-        createTime: 0,
-        nickname: '',
-        province: 0,
-        signature: '',
-        userId: 0,
-        follows: 0,
-        followeds: 0,
-        followed: false,
-        level: 0,
-        listenSongs: 0
-    })
-    watch(() => route.query.id, (val) => {
-        console.log(val)
-        if (val) {
-            getUserInfo()
-        }
-    }, { immediate: true })
+import { useSystemStore } from '@/store'
+import { onClickLeft } from '@/utils/back'
+import { useRoute } from 'vue-router'
+import { reqUserDetail } from '@/api/user'
+import { watch, reactive, ref } from 'vue'
+import type { UserProfileData } from '@/types/public/user'
+import { getCityName } from '@/utils'
+import { reqFollow } from '@/api/user'
+import { Toast } from 'vant'
+import MusicTaste from './components/musicTaste.vue'
+import CollectSheet from './components/collectSheet.vue'
+import CreateSheet from './components/createSheet.vue'
+import { Mode } from '@/store/system'
+import { storeToRefs } from 'pinia'
 
-    function getUserInfo() {
-        reqUserDetail({ uid: Number(route.query.id) })
+const mine = ref<HTMLDivElement | null>(null)
+const systemStore = useSystemStore()
+const { mode } = storeToRefs(systemStore)
+const route = useRoute()
+const userProfile = reactive<UserProfileData>({
+    avatarUrl: '',
+    backgroundUrl: '',
+    city: 0,
+    createTime: 0,
+    nickname: '',
+    province: 0,
+    signature: '',
+    userId: 0,
+    follows: 0,
+    followeds: 0,
+    followed: false,
+    level: 0,
+    listenSongs: 0,
+    createDays: 0,
+    eventCount: 0
+})
+const cityName = ref<string>('')
+const followLoding = ref<boolean>(false)
+const navStyle = reactive({
+    background: 'transparent'
+})
+watch(() => route.query.id, (val) => {
+    console.log(val)
+    if (val && route.path === '/userInfo') {
+        getUserInfo()
+    }
+}, { immediate: true })
+
+function getUserInfo() {
+    reqUserDetail({ uid: Number(route.query.id) })
         .then(res => {
             console.log(res.data)
-            userProfile.avatarUrl = res.data.profile
-            userProfile.backgroundUrl = res.data.backgroundUrl
-            userProfile.city = res.data.city
-            userProfile.createTime = res.data.createTime
-            userProfile.nickname = res.data.nickname
-            userProfile.province = res.data.province
-            userProfile.signature = res.data.signature
-            userProfile.userId = res.data.userId
-            userProfile.follows = res.data.follows
-            userProfile.followeds = res.data.followeds
+            userProfile.avatarUrl = res.data.profile.avatarUrl
+            userProfile.backgroundUrl = res.data.profile.backgroundUrl
+            userProfile.city = res.data.profile.city
+            userProfile.createTime = res.data.profile.createTime
+            userProfile.nickname = res.data.profile.nickname
+            userProfile.province = res.data.profile.province
+            userProfile.signature = res.data.profile.signature
+            userProfile.userId = res.data.profile.userId
+            userProfile.follows = res.data.profile.follows
+            userProfile.followeds = res.data.profile.followeds
             userProfile.level = res.data.level
             userProfile.listenSongs = res.data.listenSongs
+            userProfile.createDays = Math.round(res.data.createDays / 365)
+            userProfile.eventCount = res.data.profile.eventCount
+            cityName.value = getCityName(userProfile.province, userProfile.city)
         })
+}
+function followUser(type: number) {
+    followLoding.value = true
+    reqFollow({
+        id: Number(route.query.id),
+        t: type
+    })
+        .then(() => {
+            Toast.success(type == 1 ? '关注成功' : '取消关注')
+            userProfile.followed = !userProfile.followed
+            followLoding.value = false
+        })
+        .catch(() => {
+            followLoding.value = false
+        })
+}
+function scroll() {
+    const top = mine.value?.scrollTop || 0
+    if (top>50) {
+        navStyle.background = 'var(--my-back-color-white)'
+    } else if (top == 0) {
+        navStyle.background = 'transparent'
+    } else {
+        if (mode.value == Mode.light) { 
+            navStyle.background = `rgba(255,255,255, ${ top*2/100 })`
+        } else {
+            navStyle.background = `rgba(0,0,0, ${ top*2/100 })`
+        }
     }
+}
 </script>
 <style scoped lang="less">
-.userPage{
+.userPage {
     height: 100%;
     overflow-y: auto;
     background-color: var(--my-back-color-gray);
-    .nav{
+    width: 100%;
+
+    .nav {
         position: fixed;
         top: 0;
         left: 0;
@@ -78,14 +175,130 @@
         height: 90px;
         box-sizing: border-box;
         padding: 30px;
-        background-color: transparent;
-        .left{
-            .iconfont{
+        z-index: 10;
+        .left {
+            .iconfont {
                 font-size: 36px;
                 font-weight: bold;
-                color: var(--my-text-color-white);
+                color: var(--van-nav-bar-icon-color);
             }
         }
     }
+
+    .content {
+        width: 100%;
+
+        .back_ground {
+            background-color: var(--my-back-color-gray);
+            height: 400px;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .main_content {
+            padding: 30px;
+            min-height: 60vh;
+            margin-top: -50px;
+            position: relative;
+            z-index: 1;
+            :deep(.van-tabs__nav){
+                background-color: transparent;
+            }
+        }
+
+        .user_info {
+            .user_img {
+                height: 100px;
+                width: 100px;
+                margin: auto;
+                margin-top: -60px;
+                border-radius: 50%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                }
+            }
+
+            .user_name {
+                font-size: 28px;
+                font-weight: bold;
+                color: var(--my-text-color-black);
+                text-align: center;
+                margin-top: 15px;
+            }
+
+            .other_info {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+
+                .other_info_item {
+                    padding: 0 20px;
+                    position: relative;
+                    font-size: 24px;
+                    color: var(--my-text-color-gray);
+
+                    span {
+                        margin-right: 5px;
+                    }
+
+                    &:last-child {
+                        &:after {
+                            display: none;
+                        }
+                    }
+
+                    &:after {
+                        content: "";
+                        display: block;
+                        height: 20px;
+                        width: 2px;
+                        background: var(--my-text-color-gray);
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+
+            .tags {
+                display: flex;
+                justify-content: center;
+
+                .tag {
+                    color: var(--my-text-color-black);
+                    font-size: 24px;
+                    height: 60px;
+                    border: 2px solid var(--van-gray-3);
+                    min-width: 100px;
+                    text-align: center;
+                    line-height: 60px;
+                    padding: 0 20px;
+                    box-sizing: border-box;
+                    border-radius: 30px;
+                    margin: 20px 10px;
+                }
+            }
+
+            .follow_btn {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}
+.event_count{
+    font-size: 24px;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 10px;
+    background: #fff;
 }
 </style>

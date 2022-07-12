@@ -1,5 +1,6 @@
 /* eslint-disable */
 // JS判断手机是安卓还是IOS
+import cityJson from '@/libs/city'
 interface deviceType {
 	ios: boolean
 	android: boolean
@@ -103,4 +104,13 @@ export function dateFormat(time: number, type?: string) {
 	} else {
 		return "error type!"
 	}
+}
+
+export function getCityName(province: number, city: number): string {
+	const provinceData = cityJson.find(item => item.PCODE === province+'')
+	const cityData = cityJson.find(item => item.REGIONCODE === city+'')
+	if (provinceData && cityData) {
+		return provinceData.REGIONNAME + ' ' + cityData.REGIONNAME
+	}
+	return '外星人'
 }

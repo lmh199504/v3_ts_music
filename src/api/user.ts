@@ -9,7 +9,8 @@ import type {
 	UidParams, 
 	LikeParams, 
 	CloudDiskParams,
-	DelCloudMusicParams
+	DelCloudMusicParams,
+	FollowParams
  } from '@/types/api/user'
 // 发送手机验证码
 export const reqSendCode = (params: SendCodeParams): Promise<AxiosResponse> => request({
@@ -100,6 +101,12 @@ export const reqUpCloudMusic = (data: FormData): Promise<AxiosResponse> => reque
 // 云盘歌曲删除
 export const reqDelCloudMusic = (params: DelCloudMusicParams): Promise<AxiosResponse> => request({
 	url: '/user/cloud/del',
+	method: 'GET',
+	params
+})
+// 关注/取消关注用户
+export const reqFollow = (params: FollowParams): Promise<AxiosResponse> => request({
+	url: '/follow',
 	method: 'GET',
 	params
 })

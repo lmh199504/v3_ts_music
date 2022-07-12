@@ -49,3 +49,8 @@ export interface UpCloudMusicParams{
 export interface DelCloudMusicParams{
 	id: number | string
 }
+// 取消关注用户
+export interface FollowParams{
+	id: number //用户 id
+	t: number //1为关注,其他为取消关注
+}

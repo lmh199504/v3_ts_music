@@ -40,7 +40,7 @@
 									<div class="flex_box_center_column"><i class="iconfont icon-shoucangjia" :class="{'iconfont_active': details.subscribed}"></i></div>
 									<div class="text">{{ details.subscribedCount }}</div>
 								</div>
-								<div class="btn_item">
+								<div class="btn_item" @click="showComment=true">
 									<div class="flex_box_center_column"><i class="iconfont icon-pinglun"></i></div>
 									<div class="text">{{ details.commentCount }}</div>
 								</div>
@@ -62,6 +62,7 @@
 		</MiniPlayOut>
 		
 		<SheetInfo v-model:showPopup="show" :info="details" />
+		<CommentPopup v-model:visible="showComment" :comment-type="CommentType.sheet" :source-id="Number(id)" />
 	</div>
 </template>
 
@@ -72,7 +73,9 @@
 	import { usePlayerStore, useUserStore } from '@/store'
 	import SheetInfo from './components/sheetInfo.vue'
 	import { Toast } from 'vant'
+	import CommentPopup from '@/components/Comment/commentPopup.vue'
 	import { SongData } from '@/types/store/player'
+	import { CommentType } from '@/types/public/comment'
 	import {
 		reqSheetDetail, reqSheetSongs
 	} from '@/api/song'
@@ -109,6 +112,7 @@
 		playCount: 0,
 		subscribed: false
 	})
+
 	const list = ref<Array<SongData>>([])
 	const scrollRef = ref < InstanceType<typeof Scroll> > ()
 	const playerStore = usePlayerStore()
@@ -123,50 +127,47 @@
 			return details.creator?.userId === userInfo.value.userId
 		}
 	})
-	
+	// 显示评论
+	const showComment = ref<boolean>(false)
+
 	function getDetail() {
+		reqSheetDetail({
+			id: Number(id)
+		})
+		.then(res => {
+			const data = res.data.playlist
+			details.avatarUrl = data.avatarUrl
+			details.creator = data.creator
+			details.tags = data.tags
+			details.shareCount = data.shareCount
+			details.commentCount = data.commentCount
+			details.subscribedCount = data.subscribedCount
+			details.description = data.subscribedCount
+			details.nickname = data.nickname
+			details.avatarUrl = data.avatarUrl
+			details.coverImgUrl = data.coverImgUrl
+			details.name = data.name
+			details.playCount = data.playCount
+			details.subscribed = data.subscribed
+		})
+	}
+	
+	function getSheetSongs() {
 		Toast.loading({
 			duration: 0,
 			message: '加载中...',
 			overlay: true
 		})
-		reqSheetDetail({
-				id: Number(id)
-			})
-			.then(res => {
-				const data = res.data.playlist
-				// for (const key in details) {
-				// 	details[key] = res.data.playlist[key]
-				// }
-				details.avatarUrl = data.avatarUrl
-				details.creator = data.creator
-				details.tags = data.tags
-				details.shareCount = data.shareCount
-				details.commentCount = data.commentCount
-				details.subscribedCount = data.subscribedCount
-				details.description = data.subscribedCount
-				details.nickname = data.nickname
-				details.avatarUrl = data.avatarUrl
-				details.coverImgUrl = data.coverImgUrl
-				details.name = data.name
-				details.playCount = data.playCount
-				details.subscribed = data.subscribed
-
-
-				Toast.clear()
-			})
-			.catch(() => {
-				Toast.clear()
-			})
-	}
-	
-	function getSheetSongs() {
 		reqSheetSongs({ id: Number(id), time: Date.now() })
 		.then(res => {
 			list.value = res.data.songs
+			Toast.clear()
 			nextTick(() => {
 				scrollRef.value && scrollRef.value.refresh()
 			})
+		})
+		.catch(() => {
+			Toast.clear()
 		})
 	}
 
@@ -215,7 +216,6 @@
 			loading.clear()
 		})
 	}
-	
 	getDetail()
 	getSheetSongs()
 	

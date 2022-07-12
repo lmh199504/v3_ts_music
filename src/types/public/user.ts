@@ -21,4 +21,6 @@ export interface UserProfileData{
 	followed: boolean
 	level: number
 	listenSongs: number
+	createDays: number
+	eventCount: number
 }
