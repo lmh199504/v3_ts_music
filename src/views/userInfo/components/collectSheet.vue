@@ -41,6 +41,9 @@
 			list.value = list.value.concat(res.data.playlist)
 			finished.value = !res.data.more
 		})
+        .catch(() => {
+			finished.value = true
+		})
 		.finally(() => {
 			loading.value = false
 		})

@@ -43,6 +43,9 @@
 			list.value = list.value.concat(res.data.playlist.filter((item: SheetDataInterface) => item.creator.userId === props.userId))
 			finished.value = !res.data.more
 		})
+		.catch(() => {
+			finished.value = true
+		})
 		.finally(() => {
 			loading.value = false
 		})
