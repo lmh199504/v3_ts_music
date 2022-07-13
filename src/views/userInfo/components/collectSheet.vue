@@ -5,6 +5,7 @@
 		</div>
 		<van-list v-model:loading="loading" :finished="finished"  @load="onLoad">
 			<SheetItem v-for="item in list" :key="item.id" :sheet-data="item" :hide-edit="true" :show-edit="false" />
+			<van-empty v-if="!loading && list.length == 0" />
 		</van-list>
 	</div>
 </template>

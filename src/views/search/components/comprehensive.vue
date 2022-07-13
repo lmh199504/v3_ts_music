@@ -8,7 +8,7 @@
 			<div class="box_top">
 				<div class="title">单曲</div>
 				<div class="flex_box_center_column">
-					<van-button icon="play" round size="mini">播放</van-button>
+					<van-button icon="play" round size="mini" @click="playAll">播放</van-button>
 				</div>
 			</div>
 			<div>
@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-	import { reactive, ref } from 'vue'
+	import { reactive, ref, toRaw } from 'vue'
 	import { reqSearchByType } from '@/api/search'
 	import type { SongData } from '@/types/store/player'
 	import { singerInterface } from '@/types/public/singer'
@@ -95,11 +95,13 @@
 	import AlbumItem from './albumItem.vue'
 	import SheetItem from '@/views/mine/components/sheetItem.vue'
 	import { UserInterface } from '@/types/public/user'
-	import UserItem from './userItem.vue'
+	import UserItem from '@/components/UserItem/index.vue'
+	import { usePlayerStore } from '@/store'
 	interface Props{
 		keyword: string;
 		type: number
 	}
+	const playerStore = usePlayerStore()
 	const loading = ref<boolean>(false)
 	const props = withDefaults(defineProps<Props>(), {
 		keyword: ''
@@ -182,6 +184,10 @@
 		emit('switchActive', number)
 	}
 	getData()
+
+	function playAll() {
+		playerStore.resetList(toRaw(songData.songs))
+	}
 </script>
 
 <style scoped lang="less">

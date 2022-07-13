@@ -24,3 +24,12 @@ export interface UserProfileData{
 	createDays: number
 	eventCount: number
 }
+// 粉丝信息
+export interface FansData{
+	followed: boolean
+	gender: number
+	nickname: string
+	avatarUrl: string
+	userId: number
+	userType: number
+}

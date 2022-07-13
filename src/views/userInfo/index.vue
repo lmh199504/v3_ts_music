@@ -102,7 +102,6 @@ const navStyle = reactive({
     background: 'transparent'
 })
 watch(() => route.query.id, (val) => {
-    console.log(val)
     if (val && route.path === '/userInfo') {
         getUserInfo()
     }
@@ -123,6 +122,7 @@ function getUserInfo() {
             userProfile.userId = res.data.profile.userId
             userProfile.follows = res.data.profile.follows
             userProfile.followeds = res.data.profile.followeds
+            userProfile.followed = res.data.profile.followed
             userProfile.level = res.data.level
             userProfile.listenSongs = res.data.listenSongs
             userProfile.createDays = Math.round(res.data.createDays / 365)

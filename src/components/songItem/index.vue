@@ -14,7 +14,16 @@
 		</div>
 	</div>
 	
-	<SongMenu v-if="show" :song-data="songData" :showdel="showdel" v-model:show="show" @play="playThis" @addToSheet="addToSheet" @del="del" />
+	<SongMenu 
+		v-if="show" 
+		:song-data="songData" 
+		:showdel="showdel" 
+		v-model:show="show" 
+		:music-type="songData.type"
+		@play="playThis" 
+		@addToSheet="addToSheet" 
+		@del="del"
+	/>
 	<MySheetList v-if="showSheet" v-model:show="showSheet" @select="selectSheet" />
 	
 </template>
@@ -30,6 +39,7 @@
 	import type { SheetDataInterface } from '@/types/public/sheet'
 	import type { SongData } from '@/types/store/player'
 	import { storeToRefs } from 'pinia'
+	
 	const playerStore = usePlayerStore()
 	interface Props{
 		// eslint-disable-next-line

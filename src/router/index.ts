@@ -264,6 +264,22 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '个人中心'
 		}
+	},
+	{
+		path: '/fansFollows',
+		name: 'FansFollows',
+		component: () => import('@/views/fansFollows/index.vue'),
+		meta: {
+			title: '关注和粉丝'
+		}
+	},
+	{
+		path: '/djDetail',
+		name: 'DjDetail',
+		component: () => import('@/views/boke/djDetail.vue'),
+		meta: {
+			title: '电台详情'
+		}
 	}
 ]
 

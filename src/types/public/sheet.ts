@@ -8,7 +8,7 @@ export interface SheetListFace{
 	alg: string;
 	canDislike: boolean;
 	copywriter: string;
-	highQuality: false;
+	highQuality: boolean;
 	id: number;
 	name: string;
 	picUrl: string;

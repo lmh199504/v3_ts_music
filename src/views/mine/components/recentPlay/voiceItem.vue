@@ -39,7 +39,7 @@
     import { ref, toRaw } from 'vue'
     import { usePlayerStore } from '@/store'
     import { formatSheet } from '@/utils/song'
-
+    import { MusicType } from '@/types/store/player'
     const playerStore = usePlayerStore()
     const props = defineProps(['videoData'])
     const show = ref<boolean>(false)
@@ -49,7 +49,7 @@
     }
     function handlePlay() {
         show.value = false
-        const data = formatSheet(toRaw(props.videoData.pubDJProgramData.mainSong))
+        const data = formatSheet(toRaw(props.videoData.pubDJProgramData.mainSong), MusicType.dj)
         playerStore.setCurSong(data, true)
     }
 

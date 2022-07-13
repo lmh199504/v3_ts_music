@@ -8,7 +8,7 @@
 					</template>
 				</van-cell>
 				
-				<van-cell v-if="isLogin" title="添加到" is-link @click="addToSheet">
+				<van-cell v-if="isLogin && musicType == MusicType.song" title="添加到" is-link @click="addToSheet">
 					<template #right-icon>
 						<van-icon name="plus" />
 					</template>
@@ -26,17 +26,20 @@
 <script setup lang="ts">
 	import { storeToRefs } from 'pinia'
 	import { useUserStore } from '@/store'
+	import { MusicType } from '@/types/store/player'
 	import { computed, WritableComputedRef } from 'vue'
 	interface Props{
 		show: boolean
 		showdel: boolean
+		musicType: MusicType
 	}
 	
 	const userStore = useUserStore()
 	const { isLogin } = storeToRefs(userStore)
 	const props = withDefaults(defineProps<Props>(), {
 		show: false,
-		showdel: false
+		showdel: false,
+		musicType: MusicType.song
 	})
 	const emit = defineEmits<{
 		(e: 'update:show', value: boolean): void,

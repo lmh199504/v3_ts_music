@@ -18,8 +18,9 @@
         <div class="content" :class="{ childContent: ischild }">
             <div class="comment">{{ comment.content }}</div>
             <comment-item v-for="item in replyList" :ischild="true" :key="item.commentId" :comment-type="commentType" :source-id="sourceId" :comment="item" />
-            <div v-if="comment.replyCount&&!openReply" class="more_reply" @click="getReplyList">展开{{ comment.replyCount }}条评论>></div>
-            <div v-if="comment.replyCount&&openReply&&hasMore" class="more_reply" @click="getReplyList">查看更多>></div>
+            <div v-if="comment.replyCount&&!openReply&&!loading" class="more_reply" @click="getReplyList">展开{{ comment.replyCount }}条评论>></div>
+            <div v-if="comment.replyCount&&openReply&&hasMore&&!loading" class="more_reply" @click="getReplyList">查看更多>></div>
+            <van-loading v-if="loading" color="#e20001" />
         </div>
     </div>
 </template>
@@ -64,6 +65,7 @@
     const openReply = ref<boolean>(false) // 是否展开评论
     const hasMore = ref<boolean>(false) // 是否还有评论
     const replyList = ref<CommentDataNew[]>([]) // 回复列表
+    const loading = ref<boolean>(false)
     const liked = ref<boolean>(props.comment.liked)
     const likedCount = ref<number>(props.comment.likedCount)
     const replyParams = {
@@ -99,12 +101,16 @@
 
     // 获取回复列表
     function getReplyList() {
+        loading.value = true
         reqCommnetFloor(replyParams)
         .then(res => {
             openReply.value = true
             replyList.value = replyList.value.concat(res.data.data.comments)
             replyParams.time = res.data.data.time
             hasMore.value = res.data.data.hasMore
+        })
+        .finally(() => {
+            loading.value = false
         })
     }
     // 用户中心

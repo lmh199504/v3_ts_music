@@ -40,7 +40,7 @@
 			<div class="menu_wrapper">
 				<!-- 操作按钮 -->
 				<div class="action_menu">
-					<div class="action_menu_item" @click="likeSong">
+					<div v-if="currentSong.type !== MusicType.dj" class="action_menu_item" @click="likeSong">
 						<i v-if="!isLike" class="iconfont icon-xihuan1"></i>
 						<i v-else class="iconfont icon-xihuan redcolor"></i>
 					</div>
@@ -115,7 +115,7 @@
 	import { CommentType } from '@/types/public/comment'
 	import PlayListPopup from '@/components/PlayList/listPopup.vue'
 	import CommentPopup from '@/components/Comment/commentPopup.vue'
-	import { PlayModeData } from '@/types/store/player'
+	import { PlayModeData, MusicType } from '@/types/store/player'
 	import { formatMusicTime } from '@/utils'
 	import Lyric from 'lyric-parser'
 	import { ref, watch, nextTick, computed, toRaw } from 'vue'

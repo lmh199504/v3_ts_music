@@ -5,7 +5,10 @@ import type {
 	RecommendTypeParams, 
 	DjHotByTypeParams, 
 	TopListParams, 
-	TopPopularParams
+	TopPopularParams,
+	DjDetailParams,
+	DjprogramParams,
+	DjSubParams
  } from '@/types/api/dj'
 // 推荐电台 /personalized/djprogram
 export const reqSuggestDjprogram = (): Promise<AxiosResponse> => request({
@@ -59,6 +62,24 @@ export const reqTopList = (params?: TopListParams): Promise<AxiosResponse> => re
 // 主播排行
 export const reqTopPopular = (params: TopPopularParams): Promise<AxiosResponse> => request({
 	url: '/dj/toplist/popular',
+	method: 'GET',
+	params
+})
+// 获取电台详情
+export const reqDjDetail = (params: DjDetailParams): Promise<AxiosResponse> => request({
+	url: '/dj/detail',
+	method: 'GET',
+	params
+})
+// 获取电台节目/dj/program
+export const reqDjProgram = (params: DjprogramParams): Promise<AxiosResponse> => request({
+	url: '/dj/program',
+	method: 'GET',
+	params
+})
+// 订阅电台
+export const reqSubDj = (params: DjSubParams): Promise<AxiosResponse> => request({
+	url: '/dj/sub',
 	method: 'GET',
 	params
 })

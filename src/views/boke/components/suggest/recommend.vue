@@ -1,6 +1,8 @@
 <template>
 	<div class="">
-		<RecommendItem v-for="item in recommendList" :key="item.categoryId" :list="item" :box-type="Math.random() > 0.5 ? BoxType.box : BoxType.line" />
+		<van-skeleton title :row="3" :loading="loading">
+			<RecommendItem v-for="item in recommendList" :key="item.categoryId" :list="item" :box-type="Math.random() > 0.5 ? BoxType.box : BoxType.line" />
+		</van-skeleton>
 	</div>
 </template>
 
@@ -11,10 +13,15 @@
 	import type { DjCategoryRecommend } from '@/types/public/dj'
 	import { ref } from 'vue'
 	const recommendList = ref<DjCategoryRecommend[]>([])
+	const loading = ref<boolean>(false)
 	function getRecommend() {
+		loading.value = true
 		reqCategoryRecommend()
 		.then(res => {
 			recommendList.value = res.data.data
+		})
+		.finally(() => {
+			loading.value = false
 		})
 	}
 	

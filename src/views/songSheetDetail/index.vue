@@ -142,7 +142,7 @@
 			details.shareCount = data.shareCount
 			details.commentCount = data.commentCount
 			details.subscribedCount = data.subscribedCount
-			details.description = data.subscribedCount
+			details.description = data.description
 			details.nickname = data.nickname
 			details.avatarUrl = data.avatarUrl
 			details.coverImgUrl = data.coverImgUrl

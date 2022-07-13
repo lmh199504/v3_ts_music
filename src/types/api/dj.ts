@@ -23,3 +23,19 @@ export interface TopListParams{
 export interface TopPopularParams{
 	limit?: number
 }
+// 电台详情
+export interface DjDetailParams{
+	rid: number
+}
+// 电台节目
+export interface DjprogramParams{
+	rid: number
+	limit: number
+	offset: number
+	asc?: boolean
+}
+// 电台订阅
+export interface DjSubParams{
+	rid: number
+	t: number
+}

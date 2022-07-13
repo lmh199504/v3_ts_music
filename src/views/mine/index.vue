@@ -21,8 +21,8 @@
 					</div>
 					<div class="user_name">{{  userInfo.nickname }}</div>
 					<div class="other_info">
-						<div class="other_info_item"><span>{{ profile.follows }}</span>关注</div>
-						<div class="other_info_item"><span>{{ profile.followeds }}</span>粉丝</div>
+						<div class="other_info_item" @click="toFans"><span>{{ profile.follows }}</span>关注</div>
+						<div class="other_info_item" @click="toFans"><span>{{ profile.followeds }}</span>粉丝</div>
 						<div class="other_info_item">Lv.{{ level }}</div>
 					</div>
 				</div>
@@ -131,6 +131,14 @@
 	function toSearch() {
 		router.push({
 			path: '/search'
+		})
+	}
+	function toFans() {
+		router.push({
+			path: '/fansFollows',
+			query: {
+				id: userInfo.value.userId
+			}
 		})
 	}
 

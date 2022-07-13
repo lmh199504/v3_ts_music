@@ -5,8 +5,12 @@ export interface SongData{
 	ar: Array<arData>;
 	al: alData;
 	dt: number;
+	type?: MusicType
 }
-
+export enum MusicType {
+	song = 1,
+	dj = 2
+}
 export interface alData{
 	id: number;
 	name: string;

@@ -52,13 +52,13 @@ export const reqUserPlayList = (params: UserPlayList): Promise<AxiosResponse> =>
 	params
 })
 // 获取用户关注用户列表
-export const reqUserFollwos = (params: UserFollow): Promise<AxiosResponse> => request({
-	url: 'user/follows',
+export const reqUserFollows = (params: UserFollow): Promise<AxiosResponse> => request({
+	url: '/user/follows',
 	method: 'GET',
 	params
 })
 // 获取用户粉丝列表
-export const reqUserFolloweds = (params: UserFollow): Promise<AxiosResponse> => request({
+export const reqUserFans = (params: UserFollow): Promise<AxiosResponse> => request({
 	url: '/user/followeds',
 	method: 'GET',
 	params
@@ -110,3 +110,4 @@ export const reqFollow = (params: FollowParams): Promise<AxiosResponse> => reque
 	method: 'GET',
 	params
 })
+

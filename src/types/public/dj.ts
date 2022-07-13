@@ -1,4 +1,4 @@
-
+import type { songInterface } from '@/types/public'
 // 电台推荐分类
 export interface DjCategoryRecommend{
 	categoryId: number
@@ -30,4 +30,8 @@ export interface PopularData{
 	nickName: string
 	roomNo: number
 	userFollowedCount: number
+}
+// 电台节目
+export interface DjprogramData{
+	mainSong: songInterface
 }
