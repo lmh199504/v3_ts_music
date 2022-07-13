@@ -50,7 +50,6 @@ function getLikeList() {
     })
     .then(res => {
         total.value = res.data.ids.length
-        console.log(total.value)
     })
 }
 

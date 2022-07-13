@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 	import SheetItem  from '@/views/mine/components/sheetItem.vue'
-	import { ref } from 'vue'
+	import { ref, watch } from 'vue'
 
 	import { reqUserPlayList } from '@/api/user'
 
@@ -22,9 +22,10 @@
     const props = withDefaults(defineProps<Props>(), {
         userId: 0
     })
+
 	const list = ref<Array<SheetDataInterface>>([])
 	const limit = 30
-	let offset = -1
+	let offset = 0
 
 	const loading = ref<boolean>(true)
 	const finished = ref<boolean>(false)
@@ -49,9 +50,19 @@
 		})
 	}
 	function onLoad() {
+		if (loading.value) return
 		offset++
 		getList()
 	}
+	watch(() => props.userId, (val) => {
+		if (val) {
+			offset = 0
+			list.value = []
+			finished.value = false
+			getList()
+		}
+	}, { immediate: true })
+
 </script>
 
 <style scoped lang="less">

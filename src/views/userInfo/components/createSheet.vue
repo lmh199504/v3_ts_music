@@ -6,13 +6,12 @@
 		<van-list v-model:loading="loading" :finished="finished"  @load="onLoad">
 			<SheetItem v-for="item in list" :key="item.id" :hide-edit="true" :show-edit="false" :sheet-data="item" />
 		</van-list>
-		
 	</div>
 </template>
 
 <script setup lang="ts">
 	import SheetItem  from '@/views/mine/components/sheetItem.vue'
-	import { ref } from 'vue'
+	import { ref, watch } from 'vue'
 	import { reqUserPlayList } from '@/api/user'
 	import type { SheetDataInterface } from '@/types/public/sheet'
 	
@@ -22,10 +21,9 @@
 	const props = withDefaults(defineProps<Props>(), {
         userId: 0
     })
-	const show = ref<boolean>(false)
 	const list = ref<SheetDataInterface[]>([]) // 列表
 	const limit = 30 // 条数
-	let offset = -1 // 分页
+	let offset = 0 // 分页
 
 	const loading = ref<boolean>(true)
 	const finished = ref<boolean>(false)
@@ -51,9 +49,18 @@
 		})
 	}
 	function onLoad() {
+		if (loading.value) return
 		offset++
 		getList()
 	}
+	watch(() => props.userId, (val) => {
+		if (val) {
+			offset = 0
+			list.value = []
+			finished.value = false
+			getList()
+		}
+	}, { immediate: true })
 </script>
 
 <style scoped lang="less">

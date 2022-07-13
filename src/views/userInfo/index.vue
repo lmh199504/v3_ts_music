@@ -38,11 +38,11 @@
                                 关注</van-button>
                         </div>
                     </div>
-                    <van-tabs>
+                    <van-tabs :lazy-render="false">
                         <van-tab title="主页">
-                            <MusicTaste :listenSongs="userProfile.listenSongs" :user-id="Number(route.query.id)"/>
-                            <CreateSheet :user-id="Number(route.query.id)" />
-                            <CollectSheet :user-id="Number(route.query.id)" />
+                            <MusicTaste :listenSongs="userProfile.listenSongs" :user-id="userId"/>
+                            <CreateSheet :user-id="userId" />
+                            <CollectSheet :user-id="userId" />
                         </van-tab>
                         <van-tab>
                             <template #title>
@@ -50,7 +50,7 @@
                                     <div style="padding: 0 25px;">动态</div>
                                 </van-badge>
                             </template>
-                            2
+                            <EventList :user-id="userId" />
                         </van-tab>
                     </van-tabs>
                 </div>
@@ -63,7 +63,7 @@ import { useSystemStore } from '@/store'
 import { onClickLeft } from '@/utils/back'
 import { useRoute } from 'vue-router'
 import { reqUserDetail } from '@/api/user'
-import { watch, reactive, ref } from 'vue'
+import { watch, reactive, ref, computed, ComputedRef } from 'vue'
 import type { UserProfileData } from '@/types/public/user'
 import { getCityName } from '@/utils'
 import { reqFollow } from '@/api/user'
@@ -73,6 +73,7 @@ import CollectSheet from './components/collectSheet.vue'
 import CreateSheet from './components/createSheet.vue'
 import { Mode } from '@/store/system'
 import { storeToRefs } from 'pinia'
+import EventList from './components/eventList.vue'
 
 const mine = ref<HTMLDivElement | null>(null)
 const systemStore = useSystemStore()
@@ -106,11 +107,12 @@ watch(() => route.query.id, (val) => {
         getUserInfo()
     }
 }, { immediate: true })
-
+const userId: ComputedRef<number> = computed(() => {
+    return Number(route.query.id)
+})
 function getUserInfo() {
     reqUserDetail({ uid: Number(route.query.id) })
         .then(res => {
-            console.log(res.data)
             userProfile.avatarUrl = res.data.profile.avatarUrl
             userProfile.backgroundUrl = res.data.profile.backgroundUrl
             userProfile.city = res.data.profile.city
