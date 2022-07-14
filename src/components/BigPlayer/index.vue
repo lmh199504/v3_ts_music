@@ -432,7 +432,7 @@
 		position: fixed;
 		width: 100vw;
 		height: 100vh;
-		top: 100vh;
+		top: 110vh;
 		left: 0;
 		background-color: #fff;
 		z-index: 100;

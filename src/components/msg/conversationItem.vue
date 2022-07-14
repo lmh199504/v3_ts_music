@@ -1,5 +1,5 @@
 <template>
-    <div class="conversation">
+    <div class="conversation" @click="toChat">
         <div class="left">
             <div class="avatar">
                 <img class="avatarImg" :src="conData.fromUser.avatarUrl" alt="">
@@ -18,11 +18,13 @@
 <script setup lang="ts">
 import { dateFormat } from '@/utils'
 import type { ConversationData } from '@/types/public/msg'
+import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 interface Props{
     conData: ConversationData
 }
-const prop = withDefaults(defineProps<Props>(), {
+const router = useRouter()
+const props = withDefaults(defineProps<Props>(), {
     conData: () => {
         return {
             fromUser: {
@@ -48,10 +50,18 @@ const prop = withDefaults(defineProps<Props>(), {
 })
 
 const msgText = computed(() => {
-    console.log(JSON.parse(prop.conData.lastMsg))
-    const msgObj = (JSON.parse(prop.conData.lastMsg))
+    console.log(JSON.parse(props.conData.lastMsg))
+    const msgObj = (JSON.parse(props.conData.lastMsg))
     return msgObj.msg
 })
+function toChat() {
+    router.push({
+        path: '/conversation',
+        query: {
+            id: props.conData.fromUser.userId
+        }
+    })
+}
 </script>
 <style scoped lang="less">
 .conversation{

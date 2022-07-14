@@ -280,6 +280,14 @@ const routes: Array<RouteRecordRaw> = [
 		meta: {
 			title: '电台详情'
 		}
+	},
+	{
+		path: '/conversation',
+		name: 'Conversation',
+		component: () => import('@/views/conversation/index.vue'),
+		meta: {
+			title: '私信历史'
+		}
 	}
 ]
 

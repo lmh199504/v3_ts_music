@@ -14,3 +14,13 @@ interface MsgUser{
     signature: string
     gender: number
 }
+// 私信内容
+export interface MsgData{
+    fromUser: MsgUser
+    toUser: MsgUser
+    msg: string
+    time: number
+    id: number
+    batchId: number
+    realFromUser: null | MsgUser
+}
