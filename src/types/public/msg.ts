@@ -23,4 +23,11 @@ export interface MsgData{
     id: number
     batchId: number
     realFromUser: null | MsgUser
+    lock?: boolean
+}
+// 私信类型
+export enum MsgType{
+    text = 6, // 文本消息
+    together = 23, // 一起听
+    time = 10000  // 时间
 }

@@ -34,7 +34,8 @@ export const mode: modeOptions = {
 		'--my-mask-color': 'rgba(0, 0, 0, 0.6)',
 		'--van-nav-bar-icon-color': 'var(--my-text-color-black)',
 		'--my-color-oranger': '#ff7a38',
-		'--my-text-color-blue': '#007aff'
+		'--my-text-color-blue': '#007aff',
+		'--my-bubble-right-color': '#69bff1'
 	},
 	dark: {
 		'--my-primary-color': '#c8c9cc',
@@ -63,7 +64,8 @@ export const mode: modeOptions = {
 		'--my-mask-color': 'rgba(24, 25, 27, 0.5)',
 		'--van-nav-bar-icon-color': 'var(--my-text-color-black)',
 		'--my-color-oranger': '#ff7a38',
-		'--my-text-color-blue': '#007aff'
+		'--my-text-color-blue': '#007aff',
+		'--my-bubble-right-color': '#393e40'
 	}
 }
 const modeKey = 'mode'

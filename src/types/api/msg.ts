@@ -7,5 +7,11 @@ export interface MsgParams{
 export interface PrivateHistoryParams{
     uid: number
     limit: number
-    before?: number
+    before?: number | undefined
+    timestamp?: number
+}
+// 发送私信
+export interface SendTextParams{
+    user_ids: number | string
+    msg: string
 }

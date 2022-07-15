@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1222",
+      "name": "骂",
+      "font_class": "ma",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
       "icon_id": "22971820",
       "name": "排行",
       "font_class": "paihang",

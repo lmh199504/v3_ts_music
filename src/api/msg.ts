@@ -3,7 +3,8 @@ import request from '@/utils/request'
 import type { AxiosResponse } from 'axios'
 import type { 
     MsgParams,
-    PrivateHistoryParams
+    PrivateHistoryParams,
+    SendTextParams
 } from '@/types/api/msg'
 // 获取私信
 export const reqMsgList = (params: MsgParams): Promise<AxiosResponse> => request({
@@ -21,4 +22,10 @@ export const reqPrivateHistory = (params: PrivateHistoryParams): Promise<AxiosRe
 export const reqRecentcontact = (): Promise<AxiosResponse> => request({
     url: '/msg/recentcontact',
     method: 'GET'
+})
+// 发送私信
+export const reqSendText = (params: SendTextParams): Promise<AxiosResponse> => request({
+    url: '/send/text',
+    method: 'GET',
+    params
 })
