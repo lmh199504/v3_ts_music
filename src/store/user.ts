@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { reqLoginByPhone, reqGetUserInfo, reqLogout, reqLoginByEmail, reqLikeList } from '@/api/user' 
 import { PhoneLoginParams, EmaiLoginParams } from '@/types/api/user'
 import { setToken, getToken, removeToken } from '@/utils/auth'
+import { useMsgStore } from './msg'
 export interface userInfo {
 	accountStatus: number
 	accountType: number
@@ -148,6 +149,7 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 			})
 		},
 		logout() {
+			const msgStore = useMsgStore()
 			return new Promise((resolve, reject) => {
 				reqLogout()
 				.then(res => {
@@ -192,6 +194,7 @@ export const useUserStore = defineStore('user', {  //导出 pinia仓库
 						vipType: 0,
 						viptypeVersion: 0
 					}
+					msgStore.newMsgCount = 0
 					resolve(res)
 				})
 				.catch((err) => {

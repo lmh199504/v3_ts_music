@@ -7,7 +7,7 @@
         <div class="scroll_wrapper" @click="hideTool">
             <Scroll :probe-type="3" :stop-propagation="true" ref="srcollRef" @pulling-down="pullingDown">
                 <div class="list">
-                    <MsgItem v-for="item in list" :key="item.id" :msg-data="item" />
+                    <MsgItem v-for="item in list" :key="item.id" :msg-data="item" @previewImg="previewImg" />
                 </div>
                 <div class="end_el"></div>
             </Scroll>
@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { onClickLeft } from '@/utils/back'
 import { reqPrivateHistory } from '@/api/msg'
-import { nextTick, reactive, ref } from 'vue'
+import { computed, nextTick, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import type { MsgData } from '@/types/public/msg'
 import MsgItem from '@/components/msg/msgItem.vue'
@@ -26,11 +26,13 @@ import Scroll from '@/components/Scroll/index.vue'
 import { reqUserDetail } from '@/api/user'
 import { MsgType } from '@/types/public/msg'
 import SendBox from '@/components/msg/sendBox.vue'
+import { ImagePreview } from 'vant'
 
 const srcollRef = ref<InstanceType<typeof Scroll>>()
 const sendBox = ref<InstanceType<typeof SendBox>>()
 const route = useRoute()
 const uid = ref<number>(Number(route.query.id))
+// 消息列表
 const list = ref<MsgData[]>([])
 const userName = ref<string>('')
 let before: undefined | number = undefined // 分页
@@ -71,7 +73,7 @@ function getHistory(type = 'more') {
             result.push(cur)
             return result
         }, []) // 根据时间排序
-        before = list.value[0].time
+        before = list.value[0]?.time
         hasMore.value = res.data.more
         nextTick(() => {
             srcollRef.value?.refresh()
@@ -97,10 +99,12 @@ function getUserDetail() {
 }
 // 顶部加载
 function pullingDown() {
-    console.log('顶部加载')
-    if (pullingDownLoading.value || !hasMore.value) return
-    pullingDownLoading.value = true
-    getHistory('more')
+    if (pullingDownLoading.value || !hasMore.value) {
+        srcollRef.value?.finishPullDown()
+    } else {
+        pullingDownLoading.value = true
+        getHistory('more')
+    }
 }
 // 刷新scroll
 function refreshScroll() {
@@ -119,6 +123,25 @@ function sendSuccess(msgList: MsgData[]) {
         list.value.push(item)
     })
     refreshScroll()
+}
+// 图片列表
+const ImgList = computed(() => {
+    const imgs: string[] = []
+    list.value.forEach((item: MsgData)=> {
+        const msgJson = JSON.parse(item.msg)
+        if (msgJson.type === MsgType.img) {
+            imgs.push(msgJson.picInfo.picUrl)
+        }
+    })
+    return imgs
+})
+// 预览图片
+function previewImg(imgUrl: string) {
+    const index = ImgList.value.findIndex(item => item === imgUrl)
+    ImagePreview({
+        images: ImgList.value, 
+        startPosition: index
+    })
 }
 getUserDetail()
 getHistory('init')

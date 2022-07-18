@@ -44,7 +44,7 @@
 	interface Props{
 		// eslint-disable-next-line
 		songData: SongData;
-		showdel: boolean;
+		showdel?: boolean;
 	}
 	const { currentSong } = storeToRefs(playerStore)
 	const props = withDefaults(defineProps < Props > (), {
@@ -120,7 +120,10 @@
 	.song-item{
 		display: flex;
 		border-bottom: 1px solid var(--van-cell-border-color);
+		overflow: hidden;
+		width: 100%;
 		.left{
+			box-sizing: border-box;
 			margin-right: 10px;
 			.left_al_img{
 				width: 80px;
@@ -135,12 +138,15 @@
 			justify-content: center;
 			flex: 1;
 			overflow: hidden;
+			box-sizing: border-box;
+			flex-shrink: 1;
+			min-width: 0;
 			.song-name{
 				font-size: 26px;
 				color: var(--my-text-color-black);
 				text-overflow: ellipsis;
 				overflow: hidden;
-				max-width: 450px;
+				// max-width: 450px;
 				white-space: nowrap;
 			}
 			.singer{
@@ -148,11 +154,13 @@
 				font-size: 24px;
 				text-overflow: ellipsis;
 				overflow: hidden;
-				max-width: 450px;
+				// max-width: 450px;
 				white-space: nowrap;
+				box-sizing: border-box;
 			}
 		}
 		.right{
+			flex-shrink: 0;
 			.active_img{
 				width: 30px;
 			}

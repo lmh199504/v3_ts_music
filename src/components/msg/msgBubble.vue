@@ -25,6 +25,7 @@ const bubbleClass = computed(() => {
     padding: 20px;
     box-sizing: border-box;
     font-size: 30px;
+    min-width: 0;
     position: relative;
 }
 

@@ -4,11 +4,13 @@
             <Avatar :avatar-url="msgData.fromUser.avatarUrl" @tap-avatar="tapAvatar" />
         </div>
         <MsgBubble :is-mine="isMine" :is-center="messagePosition == 'position_center'">
-            <TextMsg v-if="payload.type === MsgType.text" :msg="msgData.msg" />
-            <TimeMsg v-else-if="payload.type === MsgType.time" :msg="msgData.msg" />
-            <listenTogetherVue v-else-if="payload.type === MsgType.together" :msg="msgData.msg"/>
+            <TextMsg v-if="msgType === MsgType.text" :msg="msgData.msg" />
+            <TimeMsg v-else-if="msgType === MsgType.time" :msg="msgData.msg" />
+            <listenTogetherVue v-else-if="msgType === MsgType.together" :msg="msgData.msg" />
+            <ImgMsg v-else-if="msgType === MsgType.img" :msg="msgData.msg" @previewImg="previewImg" />
+            <SongMsg v-else-if="msgType === MsgType.song" :msg="msgData.msg" />
             <div v-else>
-                消息类型：{{ payload.type }}
+                消息类型：{{ msgType }}
             </div>
         </MsgBubble>    
     </div>
@@ -25,6 +27,8 @@ import TextMsg from './messageElement/textMsg.vue'
 import TimeMsg from './messageElement/timeMsg.vue'
 import { MsgType } from '@/types/public/msg'
 import listenTogetherVue from './messageElement/listenTogether.vue'
+import ImgMsg from './messageElement/imgMsg.vue' 
+import SongMsg from './messageElement/songMsg.vue'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -32,6 +36,10 @@ const { userInfo } = storeToRefs(userStore)
 interface Props{
     msgData: MsgData
 }
+const emit = defineEmits<{
+    (e: 'previewImg', value: string): void
+}>()
+
 const props = withDefaults(defineProps<Props>(), {
     msgData: () => {
         return {
@@ -75,9 +83,9 @@ const messagePosition: ComputedRef<string> = computed(() => {
     }
 }) 
 
-const payload = computed(() => {
-    return JSON.parse(props.msgData.msg)
-})
+// const payload = computed(() => {
+//     return JSON.parse(props.msgData.msg)
+// })
 function tapAvatar() {
     router.push({
         path: '/userInfo',
@@ -86,12 +94,18 @@ function tapAvatar() {
         }
     })
 }
+function previewImg(picUrl: string) {
+    emit('previewImg', picUrl)
+}
+
 </script>
 <style scoped lang="less">
 .message_item{
     margin: 20px 0;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 .position_center{
     justify-content: center;

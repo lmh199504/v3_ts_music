@@ -29,5 +29,7 @@ export interface MsgData{
 export enum MsgType{
     text = 6, // 文本消息
     together = 23, // 一起听
+    img = 16, // 图片消息
+    song = 1, // 分享歌曲
     time = 10000  // 时间
 }

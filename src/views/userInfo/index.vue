@@ -5,7 +5,9 @@
                 <div class="left flex_box_center_column" @click="onClickLeft">
                     <i class="iconfont icon-fanhui"></i>
                 </div>
-                <div class="center"></div>
+                <div class="center">
+                    <div>{{ userProfile.nickname }}</div>
+                </div>
                 <div class="right"></div>
             </div>
             <div class="content">
@@ -19,8 +21,8 @@
                         </div>
                         <div class="user_name">{{ userProfile.nickname }}</div>
                         <div class="other_info">
-                            <div class="other_info_item"><span>{{ userProfile.follows }}</span>关注</div>
-                            <div class="other_info_item"><span>{{ userProfile.followeds }}</span>粉丝</div>
+                            <div class="other_info_item" @click="toFollow"><span>{{ userProfile.follows }}</span>关注</div>
+                            <div class="other_info_item" @click="toFollow"><span>{{ userProfile.followeds }}</span>粉丝</div>
                             <div class="other_info_item">Lv.{{ userProfile.level }}</div>
                         </div>
                         <div class="tags">
@@ -29,13 +31,12 @@
                                 村龄{{ userProfile.createDays }}年
                             </div>
                         </div>
-                        <div v-if="userProfile.followed" class="follow_btn">
-                            <van-button type="danger" :loading="followLoding" round size="small" @click="followUser(2)">
+                        <div class="follow_btn">
+                            <van-button v-if="userProfile.followed"  type="danger" :loading="followLoding" round size="small" @click="followUser(2)">
                                 取消关注</van-button>
-                        </div>
-                        <div v-else class="follow_btn">
-                            <van-button type="danger" :loading="followLoding" round size="small" @click="followUser(1)">
-                                关注</van-button>
+                            <van-button v-else type="danger" :loading="followLoding" round size="small" @click="followUser(1)">
+                                关注</van-button>    
+                            <van-button round size="small" class="msg_btn" @click="sendMsg">私信</van-button>
                         </div>
                     </div>
                     <van-tabs :lazy-render="false">
@@ -74,6 +75,7 @@ import CreateSheet from './components/createSheet.vue'
 import { Mode } from '@/store/system'
 import { storeToRefs } from 'pinia'
 import EventList from './components/eventList.vue'
+import router from '@/router'
 
 const mine = ref<HTMLDivElement | null>(null)
 const systemStore = useSystemStore()
@@ -159,6 +161,24 @@ function scroll() {
         }
     }
 }
+// 私信
+function sendMsg() {
+    router.push({
+        path: '/conversation',
+        query: {
+            id: userId.value
+        }
+    })
+}
+// 关注列表
+function toFollow() {
+    router.push({
+        path: '/fansFollows',
+        query: {
+            id: userId.value
+        }
+    })
+}
 </script>
 <style scoped lang="less">
 .userPage {
@@ -184,6 +204,11 @@ function scroll() {
                 font-weight: bold;
                 color: var(--van-nav-bar-icon-color);
             }
+        }
+        .center{
+            flex: 1;
+            text-align: center;
+            color: var(--my-text-color-black);
         }
     }
 
@@ -292,6 +317,9 @@ function scroll() {
             .follow_btn {
                 display: flex;
                 justify-content: center;
+                .msg_btn{
+                    margin-left: 20px;
+                }
             }
         }
     }

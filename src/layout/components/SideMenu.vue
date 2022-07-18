@@ -26,10 +26,16 @@
 				</div>
 			</div>
 			<div class="box-container">
-				<van-cell-group inset>
+				<van-cell-group inset v-if="isLogin">
 					<van-cell title="我的消息" is-link to="/msg">
 						<template #icon>
+							
 							<i class="iconfont icon-xiaoxitongzhi"></i>
+						</template>
+						<template #value>
+							<van-badge :content="newMsgCount" :offset="[-15, -5]" :show-zero="false" >
+								<div></div>
+							</van-badge>
 						</template>
 					</van-cell>
 					<van-cell title="云贝中心" is-link>
@@ -102,10 +108,8 @@
 					</van-cell>
 				</van-cell-group>
 			</div>
-			
 			<van-button v-if="isLogin" block round class="out-btn" :loading="btnLoading" @click="logout">退出登录</van-button>
 		</div>
-		
 	</div>
 </template>
 
@@ -115,7 +119,7 @@
 		computed, ref
 	} from 'vue'
 	import {
-		useUserStore, useSystemStore
+		useUserStore, useSystemStore, useMsgStore
 	} from '@/store'
 	import {
 		storeToRefs
@@ -123,11 +127,12 @@
 	import { useRouter } from 'vue-router'
 	const useStore = useUserStore()
 	const systemStore = useSystemStore()
+	const msgStore = useMsgStore()
 	const {
 		isLogin,
 		userInfo
 	} = storeToRefs(useStore)
-	
+	const { newMsgCount } = storeToRefs(msgStore)
 	const router = useRouter()
 	const checked = computed({
 		get() {

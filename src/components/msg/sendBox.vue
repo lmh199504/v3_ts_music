@@ -15,13 +15,23 @@
             </div>
         </div>
         <div class="tool_list" :style="{ height: showTools ? '250px' : '0px' }">
-            工具
+            <div class="tool_wrapper">
+                <van-row>
+                    <van-col>
+                        <van-uploader :after-read="afterRead" />
+                    </van-col>
+                </van-row>
+            </div>
         </div>
         <div class="emo_wrapper" :style="{ height: showEmo ? '250px' : '0px' }">
             <div class="emojis">
-                <div v-for="item in emojiName" class="emoji" :key="item" @click="chooseEmoji(item)">
-                    <img :src="emojiUrl + emojiMap[item]" class="emoji_img" />
-                </div>
+                <van-row>
+                    <van-col v-for="item in emojiName" :span="3" :key="item">
+                        <div class="flex_box_center_column" @click="chooseEmoji(item)">
+                            <img :src="emojiUrl + emojiMap[item]" class="emoji_img" />
+                        </div>
+                    </van-col>
+                </van-row>
             </div>
         </div>
     </div>
@@ -63,11 +73,13 @@ function handleTools() {
     }, 500)
 }
 function hideAll() {
-    showEmo.value = false
-    showTools.value = false
-    setTimeout(() => {
-        emit('changeHeight')
-    }, 500)
+    if (showEmo.value || showTools.value) {
+        showEmo.value = false
+        showTools.value = false
+        setTimeout(() => {
+            emit('changeHeight')
+        }, 500)
+    }
 }
 // 选择表情
 function chooseEmoji(emoji: string): void {
@@ -89,6 +101,11 @@ function sendTextMsg() {
     .finally(() => {
         loading.value = false
     })
+}
+// 发送图片 暂无接口
+// eslint-disable-next-line
+function afterRead(file: any) {
+    console.log(file)
 }
 defineExpose({
     hideAll
@@ -140,6 +157,13 @@ defineExpose({
         height: 0px;
         overflow: hidden;
         transition: all 0.5s ease;
+        .tool_wrapper{
+            padding: 30px;
+            box-sizing: border-box;
+            :deep(.van-uploader__upload){
+                background-color: var(--my-back-color-white);
+            }
+        }
     }
     .emo_wrapper{
         height: 0px;
@@ -150,21 +174,12 @@ defineExpose({
             height: 100%;
             width: fit-content;
             padding: 20px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            overflow: scroll;
             box-sizing: border-box;
-            justify-content: space-between;
-            .emoji{
-                height: 80px;
-                width: 80px;
-                box-sizing: border-box;
-                text-align: center;
-                .emoji_img{
-                    width: 60px;
-                    height: 60px;
-                }
+            overflow-y: auto;
+            .emoji_img{
+                width: 60px;
+                height: 60px;
+                margin-bottom: 10px;
             }
         }
     }

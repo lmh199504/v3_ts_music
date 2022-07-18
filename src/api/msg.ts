@@ -4,7 +4,8 @@ import type { AxiosResponse } from 'axios'
 import type { 
     MsgParams,
     PrivateHistoryParams,
-    SendTextParams
+    SendTextParams,
+    SendSongParams
 } from '@/types/api/msg'
 // 获取私信
 export const reqMsgList = (params: MsgParams): Promise<AxiosResponse> => request({
@@ -26,6 +27,12 @@ export const reqRecentcontact = (): Promise<AxiosResponse> => request({
 // 发送私信
 export const reqSendText = (params: SendTextParams): Promise<AxiosResponse> => request({
     url: '/send/text',
+    method: 'GET',
+    params
+})
+// 发送私信-歌曲
+export const reqSendSong = (params: SendSongParams): Promise<AxiosResponse> => request({
+    url: '/send/song',
     method: 'GET',
     params
 })
