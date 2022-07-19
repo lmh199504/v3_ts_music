@@ -5,7 +5,7 @@
         </div>
         <div class="center">
             <div class="song-name">{{ songData.name }}</div>
-            <div class="singer">{{ songData.al.name }}</div>
+            <div class="singer">{{ songData.al && songData.al.name }}</div>
         </div>
         <div class="right">
             <i class="iconfont icon-24gf-play" @click="playThis"></i>
@@ -72,6 +72,7 @@
     function showShareMenu() {
 		show.value = true
 	}
+    console.log(props.songData.name)
 	async function playThis() {
         const data = toRaw(props.songData)
         data.id = toRaw(props.songId)
