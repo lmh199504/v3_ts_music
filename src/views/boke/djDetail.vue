@@ -168,7 +168,9 @@ function getSheetSongs() {
             })
             Toast.clear()
             nextTick(() => {
-                scrollRef.value && scrollRef.value.refresh()
+                setTimeout(() => {
+                    scrollRef.value && scrollRef.value.refresh()
+                }, 100)
             })
         })
         .catch(() => {
