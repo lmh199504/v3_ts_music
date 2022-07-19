@@ -44,7 +44,7 @@
 									<div class="flex_box_center_column"><i class="iconfont icon-pinglun"></i></div>
 									<div class="text">{{ details.commentCount }}</div>
 								</div>
-								<div class="btn_item">
+								<div class="btn_item" @click="showShare = true">
 									<div class="flex_box_center_column"><i class="iconfont icon-fenxiang"></i></div>
 									<div class="text">{{ details.shareCount }}</div>
 								</div>
@@ -63,6 +63,7 @@
 		
 		<SheetInfo v-model:showPopup="show" :info="details" />
 		<CommentPopup v-model:visible="showComment" :comment-type="CommentType.sheet" :source-id="Number(id)" />
+		<ShareFriend v-if="showShare" v-model:visible="showShare" :source-id="Number(id)" :source="MsgType.sheet"  />
 	</div>
 </template>
 
@@ -93,6 +94,10 @@
 	} from 'vue'
 	import { formatCountNumber } from '@/utils'
 	import { reqSubscribeSheet, reqSheetTracks } from '@/api/sheet'
+	import ShareFriend from '@/components/ShareFriend/index.vue'
+	import { MsgType } from '@/types/public/msg'
+
+
 	const route = useRoute()
 	const details = reactive({
 		creator: {
@@ -112,7 +117,7 @@
 		playCount: 0,
 		subscribed: false
 	})
-
+	const showShare = ref<boolean>(false)
 	const list = ref<Array<SongData>>([])
 	const scrollRef = ref < InstanceType<typeof Scroll> > ()
 	const playerStore = usePlayerStore()

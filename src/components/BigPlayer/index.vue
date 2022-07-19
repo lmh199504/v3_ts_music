@@ -10,7 +10,7 @@
 					<div class="singer_name">{{ singerName }}</div>
 				</div>
 				<div class="right">
-					<van-icon name="share" />
+					<van-icon name="share" @click="showShare = true"/>
 				</div>
 			</div>
 			<div class="center_music" @click="showLyric = !showLyric">
@@ -117,6 +117,7 @@
 		<PlayListPopup v-model:showPopup="showList" />
 		<CommentPopup v-model:visible="showComment" :source-id="currentSong.id"
 			:comment-type="currentSong.type == MusicType.dj ? CommentType.dj : CommentType.song" />
+		<ShareFriend v-if="showShare" :source="MsgType.song" v-model:visible="showShare" :source-id="currentSong.id" />	
 	</div>
 </template>
 
@@ -139,6 +140,9 @@ import {
 import Scroll from '@/components/Scroll/index.vue'
 import { reqGetLyric, reqLikeSong } from '@/api/song'
 import { Toast } from 'vant'
+import { MsgType } from '@/types/public/msg'
+import ShareFriend from '@/components/ShareFriend/index.vue'
+
 const playerStore = usePlayerStore()
 const userStore = useUserStore()
 const showList = ref<boolean>(false)
@@ -155,6 +159,8 @@ const audio = ref<HTMLAudioElement>()
 function hidePlayer(): void {
 	playerStore.setPlayerVisible(false)
 }
+// 分享
+const showShare = ref<boolean>(false)
 // 是否显示评论
 const showComment = ref<boolean>(false)
 // 当前第几行歌词

@@ -31,5 +31,6 @@ export enum MsgType{
     together = 23, // 一起听
     img = 16, // 图片消息
     song = 1, // 分享歌曲
+    sheet = 4, // 分享歌单
     time = 10000  // 时间
 }

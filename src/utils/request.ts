@@ -85,6 +85,9 @@ service.interceptors.response.use(
 			case 403:
 				Toast.fail('登录状态失效')
 				return Promise.reject(error)
+			case 404:
+				Toast.fail(error.response.data?.message || '网络异常稍后再试~')
+				return Promise.reject(error)
 			case 503:
 				Toast.fail(error.response.data?.message || '登录状态失效')
 				return Promise.reject(error)

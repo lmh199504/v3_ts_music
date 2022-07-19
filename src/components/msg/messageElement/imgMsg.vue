@@ -1,6 +1,6 @@
 <template>
     <div class="img_msg" @click="previewImg">
-        <img :src="msgJson.picInfo.picUrl" alt="" :style="style">
+        <img :src="msgJson.picInfo.picUrl" alt="">
     </div>
 </template>
 <script setup lang="ts">
@@ -29,4 +29,10 @@ function previewImg() {
 }
 </script>
 <style scoped lang="less">
+.img_msg{
+    img{
+        max-width: 300px;
+        height: auto;
+    }
+}
 </style>
