@@ -17,13 +17,6 @@ const emit = defineEmits<{
 const msgJson = computed(() => {
     return JSON.parse(props.msg)
 })
-const style = computed(() => {
-    const payload = JSON.parse(props.msg)
-    return {
-        width: payload.picInfo.width / 2 + 'px',
-        height: payload.picInfo.height / 2 + 'px'
-    }
-})
 function previewImg() {
     emit('previewImg', msgJson.value.picInfo.picUrl)
 }
