@@ -44,6 +44,7 @@ function followUser() {
     })
     .then(() => {
         Toast.success(followed.value ? '取消成功' : '关注成功')
+        followed.value = !followed.value
     })
 }
 function toUser() {

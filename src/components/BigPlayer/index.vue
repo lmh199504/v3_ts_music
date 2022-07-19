@@ -116,7 +116,7 @@
 			@error="onPlayError"></audio>
 		<PlayListPopup v-model:showPopup="showList" />
 		<CommentPopup v-model:visible="showComment" :source-id="currentSong.id"
-			:comment-type="currentSong.type == MusicType.song ? CommentType.song : CommentType.dj" />
+			:comment-type="currentSong.type == MusicType.dj ? CommentType.dj : CommentType.song" />
 	</div>
 </template>
 
