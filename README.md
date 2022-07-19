@@ -35,57 +35,57 @@
 
 ## 项目截图
 ### 登录
-![image](./screenshot/login.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/login.jpg)
 ### 首页
-![image](./screenshot/home.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/home.jpg)
 ### 每日推荐
-![image](./screenshot/days.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/days.jpg)
 ### 历史日推
-![image](./screenshot/history.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/history.jpg)
 ### 歌单广场
-![image](./screenshot/sheetSquare.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/sheetSquare.jpg)
 ### 排行榜
-![image](./screenshot/toplist.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/toplist.jpg)
 ### 排行榜详情、歌单详情
-![image](./screenshot/sheetDetail.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/sheetDetail.jpg)
 ### 歌单评论
-![image](./screenshot/comment.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/comment.jpg)
 ### 歌手列表
-![image](./screenshot/singerlist.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/singerlist.jpg)
 ### 歌手详情
-![image](./screenshot/singerDetail.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/singerDetail.jpg)
 ### 数字专辑
-![image](./screenshot/digitAlbum.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/digitAlbum.jpg)
 ### 播客（电台）
-![image](./screenshot/boke.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/boke.jpg)
 ### 电台详情
-![image](./screenshot/djdetail.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/djdetail.jpg)
 ### 个人中心
-![image](./screenshot/mine.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/mine.jpg)
 ### 关注和粉丝
-![image](./screenshot/guanzhu.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/guanzhu.jpg)
 ### 云盘
-![image](./screenshot/cloud.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/cloud.jpg)
 ### 用户中心
-![image](./screenshot/userInfo.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/userInfo.jpg)
 ### 朋友圈
-![image](./screenshot/event.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/event.jpg)
 ### 侧边菜单
-![image](./screenshot/event.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/event.jpg)
 ### 聊天会话
-![image](./screenshot/conversation.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/conversation.jpg)
 ### 聊天界面
-![image](./screenshot/msg.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/msg.jpg)
 ### 歌曲播放
-![image](./screenshot/player.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/player.jpg)
 ### 歌曲评论
-![image](./screenshot/songComment.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/songComment.jpg)
 ### 歌词滚动
-![image](./screenshot/lyric.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/lyric.jpg)
 ### 夜间模式
-![image](./screenshot/dark01.jpg)
-![image](./screenshot/dark02.jpg)
-![image](./screenshot/dark03.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/dark01.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/dark02.jpg)
+![image](https://reactlmh.oss-cn-beijing.aliyuncs.com/cloudmusic/screenshot/dark03.jpg)
 ### 歌词滚动
 ![image](./screenshot/lyric.jpg)
 
