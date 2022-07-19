@@ -5,17 +5,29 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
+import { MsgType } from '@/types/public/msg'
 interface Props {
-    isMine: boolean,
-    isCenter: boolean
+    isMine: boolean
+    msgType: MsgType
 }
 const props = withDefaults(defineProps<Props>(), {
     isMine: false,
-    isCenter: false
+    msgType: MsgType.text
 })
 
 const bubbleClass = computed(() => {
-    return props.isCenter ? 'bubble_center' : props.isMine ? 'bubble_right' : 'bubble_left'
+    if (props.msgType == MsgType.time) {
+        return 'bubble_center'
+    } else if (props.isMine) {
+        if (props.msgType === MsgType.sheet) {
+            return 'bubble_right_white'
+        } else if (props.msgType === MsgType.song) {
+            return 'bubble_right_white'
+        }
+        return 'bubble_right'
+    } else {
+        return 'bubble_left'
+    }
 })
 
 </script>
@@ -42,6 +54,26 @@ const bubbleClass = computed(() => {
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
         border-left: 15px solid var(--my-bubble-right-color);
+        position: absolute;
+        right: -15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.bubble_right_white {
+    background-color: var(--my-back-color-white);
+    color: var(--my-text-color-black);
+    margin-right: 20px;
+
+    &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 15px solid var(--my-back-color-white);
         position: absolute;
         right: -15px;
         top: 50%;

@@ -3,12 +3,13 @@
         <div v-if="messagePosition != 'position_center'">
             <Avatar :avatar-url="msgData.fromUser.avatarUrl" @tap-avatar="tapAvatar" />
         </div>
-        <MsgBubble :is-mine="isMine" :is-center="messagePosition == 'position_center'">
+        <MsgBubble :is-mine="isMine" :msg-type="msgType">
             <TextMsg v-if="msgType === MsgType.text" :msg="msgData.msg" />
             <TimeMsg v-else-if="msgType === MsgType.time" :msg="msgData.msg" />
             <listenTogetherVue v-else-if="msgType === MsgType.together" :msg="msgData.msg" />
             <ImgMsg v-else-if="msgType === MsgType.img" :msg="msgData.msg" @previewImg="previewImg" />
             <SongMsg v-else-if="msgType === MsgType.song" :msg="msgData.msg" />
+            <SheetMsg v-else-if="msgType === MsgType.sheet" :msg="msgData.msg" />
             <div v-else>
                 消息类型：{{ msgType }}
             </div>
@@ -29,6 +30,7 @@ import { MsgType } from '@/types/public/msg'
 import listenTogetherVue from './messageElement/listenTogether.vue'
 import ImgMsg from './messageElement/imgMsg.vue' 
 import SongMsg from './messageElement/songMsg.vue'
+import SheetMsg from './messageElement/sheetMsg.vue'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -66,9 +68,9 @@ const props = withDefaults(defineProps<Props>(), {
     }
 })
 // 是否是我发送出去的
- const isMine: ComputedRef<boolean> = computed(() => {
-    return props.msgData.fromUser.userId === userInfo.value.userId
- })
+const isMine: ComputedRef<boolean> = computed(() => {
+return props.msgData.fromUser.userId === userInfo.value.userId
+})
 const msgType = computed(() => {
     return JSON.parse(props.msgData.msg).type
 })
@@ -83,9 +85,6 @@ const messagePosition: ComputedRef<string> = computed(() => {
     }
 }) 
 
-// const payload = computed(() => {
-//     return JSON.parse(props.msgData.msg)
-// })
 function tapAvatar() {
     router.push({
         path: '/userInfo',

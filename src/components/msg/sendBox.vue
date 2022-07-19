@@ -135,6 +135,8 @@ defineExpose({
                 box-sizing: border-box;
                 resize: none;
                 border: 1px solid var(--van-gray-3);
+                background-color: var(--my-back-color-white);
+                color: var(--my-text-color-black);
                 &::placeholder{
                     font-size: 28px;
                 }
