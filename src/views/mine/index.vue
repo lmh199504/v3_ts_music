@@ -54,7 +54,7 @@
 <script lang="ts" setup>
 	import { reqUserDetail } from '@/api/user'
 	import { storeToRefs } from 'pinia'
-	import { ref, reactive } from 'vue'
+	import { ref, reactive, computed } from 'vue'
 	import { useUserStore, useSystemStore } from '@/store'
 	import $bus from '@/utils/eventBus'
 	import LikeList from './components/likeList.vue'
@@ -72,17 +72,20 @@
 	})
 	const level = ref<number>(0)
 	const mine = ref<HTMLDivElement | null>(null)
-	const appList = ref([
-		{ name: '最近播放', icon: 'icon-bofang1', path: '/recentPlay' },
-		{ name: '本地下载', icon: 'icon-shouyinji' },
-		{ name: '云盘', icon: 'icon-rili', path: '/cloudDisk' },
-		{ name: '已购', icon: 'icon-zhongchengdujiaoyi' },
-		{ name: '我的好友', icon: 'icon-guanzhu' },
-		{ name: '收藏和赞', icon: 'icon-paihangbang' },
-		{ name: '我的播客', icon: 'icon-zhiboziyuan' },
-		{ name: '推歌精选', icon: 'icon-zhiboshenqing' },
-		{ name: '音乐罐子', icon: 'icon-zhiboshenqing' }
-	])
+	const appList = computed(() => {
+		return [
+			{ name: '最近播放', icon: 'icon-bofang1', path: '/recentPlay' },
+			{ name: '云盘', icon: 'icon-rili', path: '/cloudDisk' },
+			{ name: '我的好友', icon: 'icon-guanzhu', path: `/fansFollows?id=${userInfo.value.userId}` },
+			{ name: '收藏和赞', icon: 'icon-paihangbang' },
+			{ name: '我的播客', icon: 'icon-zhiboziyuan' },
+			{ name: '推歌精选', icon: 'icon-zhiboshenqing' },
+			{ name: '本地下载', icon: 'icon-shouyinji' },
+			{ name: '已购', icon: 'icon-zhongchengdujiaoyi' },
+			{ name: '音乐罐子', icon: 'icon-zhiboshenqing' }
+			
+		]
+	})
 	const navStyle = reactive({
 		background: 'transparent'
 	})
@@ -120,12 +123,8 @@
 		}
 	}
 	function tapApp(path: string | undefined) {
-		if (!path) {
-			return
-		}
-		router.push({
-			path
-		})
+		if (!path) return
+		router.push(path)
 	}
 	
 	function toSearch() {
