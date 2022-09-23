@@ -1,8 +1,9 @@
 # vue3网易云音乐
 
 ## 介绍
-个人练习vue3项目 使用Vue3 + TypeScript + Pinia + Vant 
-实现H5网易云音乐播放播放器H5
+> 个人练习vue3.0项目 使用Vue3 + TypeScript + Pinia + Vant 实现H5网易云音乐播放播放器
+## 在线演示地址
+[http://101.35.109.105/home](http://101.35.109.105/home)
 ## 项目
 - 开发框架：Vue3
 - 脚手架：Vue-cli
